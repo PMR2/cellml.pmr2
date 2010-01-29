@@ -1,0 +1,25 @@
+Metadata-Version: 1.0
+Name: cellml.pmr2
+Version: trunkdev
+Summary: CellML view plugins for PMR2.
+Home-page: http://www.cellml.org/
+Author: Tommy Yu
+Author-email: tommy.yu@auckland.ac.nz
+License: GPL
+Description: Introduction
+        ============
+        
+        
+        
+        Changelog
+        =========
+        
+        trunk - Unreleased
+        ----------------
+        
+        * Initial release
+        
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
