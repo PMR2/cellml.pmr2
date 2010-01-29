@@ -1,0 +1,26 @@
+<h1>Model Metadata</h1>
+
+<h3>CellML Model Authorship</h3>
+<dl>
+<dt>Title:</dt>
+<dd tal:content="view/note/model_title"/>
+<dt>Author:</dt>
+<dd tal:content="view/note/model_author"/>
+<dt>Organisation:</dt>
+<dd tal:content="view/note/model_author_org"/>
+</dl>
+
+<h3>Citation</h3>
+<dl>
+<dt>Authors:</dt>
+<dd tal:content="structure view/note/citation_authors_string"/>
+<dt>Title:</dt>
+<dd tal:content="view/note/citation_title"/>
+<dt>Source:</dt>
+<dd tal:content="view/note/citation_bibliographicCitation"/>
+<dt>Identifier:</dt>
+<dd tal:content="structure view/note/citation_id_html"/>
+<dt>Model Keywords:</dt>
+<dd tal:content="view/note/keywords_string"/>
+
+</dl>

@@ -1,3 +1,4 @@
+MANIFEST.in
 README.txt
 setup.cfg
 setup.py
@@ -8,6 +9,17 @@ cellml.pmr2.egg-info/dependency_links.txt
 cellml.pmr2.egg-info/entry_points.txt
 cellml.pmr2.egg-info/namespace_packages.txt
 cellml.pmr2.egg-info/not-zip-safe
+cellml.pmr2.egg-info/paster_plugins.txt
 cellml.pmr2.egg-info/requires.txt
 cellml.pmr2.egg-info/top_level.txt
 cellml/pmr2/__init__.py
+cellml/pmr2/annotator.py
+cellml/pmr2/basic_ccode.pt
+cellml/pmr2/browser.py
+cellml/pmr2/cellml.txt
+cellml/pmr2/cmeta_note.pt
+cellml/pmr2/configure.zcml
+cellml/pmr2/interfaces.py
+cellml/pmr2/note.py
+cellml/pmr2/tests/__init__.py
+cellml/pmr2/tests/test_doctest.py
