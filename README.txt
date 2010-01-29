@@ -1,0 +1,1 @@
+Standard SVN template.
