@@ -7,9 +7,9 @@ from pmr2.app.interfaces import *
 from pmr2.app.annotation.note import RawTextNote
 from pmr2.app.annotation.note import ExposureFileNoteBase
 from pmr2.app.annotation.note import ExposureFileEditableNoteBase
-import pmr2.app.util
 
 from interfaces import *
+from util import uri2http
 
 # CellML Specific notes storage classes.
 
@@ -47,7 +47,7 @@ class CmetaNote(ExposureFileNoteBase):
     def citation_id_html(self):
         if not self.citation_id:
             return u''
-        http = pmr2.app.util.uri2http(self.citation_id)
+        http = uri2http(self.citation_id)
         if http:
             return '<a href="%s">%s</a>' % (http, self.citation_id)
         return self.citation_id
