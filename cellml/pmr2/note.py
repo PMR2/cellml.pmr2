@@ -7,6 +7,7 @@ from pmr2.app.interfaces import *
 from pmr2.app.annotation.note import RawTextNote
 from pmr2.app.annotation.note import ExposureFileNoteBase
 from pmr2.app.annotation.note import ExposureFileEditableNoteBase
+from pmr2.app.util import normal_kw
 
 from interfaces import *
 from util import uri2http
@@ -54,18 +55,18 @@ class CmetaNote(ExposureFileNoteBase):
 
     def get_authors_family_index(self):
         if self.citation_authors:
-            return [pmr2.app.util.normal_kw(i[0]) 
+            return [normal_kw(i[0]) 
                     for i in self.citation_authors]
         else:
             return []
 
     def get_citation_title_index(self):
         if self.citation_title:
-            return pmr2.app.util.normal_kw(self.citation_title)
+            return normal_kw(self.citation_title)
 
     def get_keywords_index(self):
         if self.keywords:
-            results = [pmr2.app.util.normal_kw(i[1]) for i in self.keywords]
+            results = [normal_kw(i[1]) for i in self.keywords]
             results.sort()
             return results
         else:
