@@ -7,10 +7,9 @@ from pmr2.app.interfaces import *
 from pmr2.app.annotation.note import RawTextNote
 from pmr2.app.annotation.note import ExposureFileNoteBase
 from pmr2.app.annotation.note import ExposureFileEditableNoteBase
-from pmr2.app.util import normal_kw
 
 from interfaces import *
-from util import uri2http
+from util import uri2http, normal_kw
 
 # CellML Specific notes storage classes.
 

@@ -20,3 +20,10 @@ def uri2http(uri):
             return v % uri[len(k):]
     return None
 
+def normal_kw(input):
+    """\
+    Method to normalize keywords so we don't have to deal with cases
+    when searching and allow the usage of spaces to delimit terms.
+    """
+
+    return input.strip().replace(' ', '_').lower()
