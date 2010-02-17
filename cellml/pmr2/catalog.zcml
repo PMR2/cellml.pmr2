@@ -1,0 +1,33 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="pmr2">
+
+  <adapter 
+      factory=".catalog.pmr1_citation_authors_sortable" 
+      name="pmr1_citation_authors_sortable" />
+
+  <adapter 
+      factory=".catalog.pmr1_citation_authors_exposure" 
+      name="pmr1_citation_authors" />
+
+  <adapter 
+      factory=".catalog.pmr1_citation_title_exposure" 
+      name="pmr1_citation_title" />
+
+  <adapter 
+      factory=".catalog.pmr2_authors_family_name" 
+      name="pmr2_authors_family_name" />
+
+  <adapter 
+      factory=".catalog.pmr2_citation_title" 
+      name="pmr2_citation_title" />
+
+  <adapter 
+      factory=".catalog.pmr1_citation_authors_exposurefile" 
+      name="pmr1_citation_authors" />
+
+  <adapter 
+      factory=".catalog.pmr1_citation_title_exposurefile" 
+      name="pmr1_citation_title" />
+
+</configure> 

@@ -5,5 +5,6 @@
 
   <include file="annotator.zcml" />
   <include file="browser.zcml" />
+  <include file="catalog.zcml" />
 
 </configure>

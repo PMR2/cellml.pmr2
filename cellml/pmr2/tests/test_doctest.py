@@ -7,6 +7,7 @@ from Testing import ZopeTestCase as ztc
 from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite
 from Products.PloneTestCase.layer import onsetup
+from Products.Five import zcml
 
 import pmr2.app
 from pmr2.app.tests import base
@@ -18,6 +19,8 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
 
     def setUp(self):
         super(CellMLDocTestCase, self).setUp()
+        import cellml.pmr2
+        zcml.load_config('configure.zcml', cellml.pmr2)
         self.portal['exposure'] = ExposureContainer()
         rawrevs = [
             'b94d1701154be42acf63ee6b4bd4a99d09ba043c',
@@ -37,6 +40,7 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
         testform.update()
         exp_id = testform._data['id']
         context = self.portal.exposure[exp_id]
+        self.exposure1 = context
         rdfmodel = self.portal.workspace.rdfmodel
         self.file1 = u'example_model.cellml'
         request = TestRequest(
@@ -55,6 +59,13 @@ def test_suite():
         # Exposure and related object form usage tests.
         ztc.ZopeDocFileSuite(
             'cellml.txt', package='cellml.pmr2',
+            test_class=CellMLDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        # Exposure and related object form usage tests.
+        ztc.ZopeDocFileSuite(
+            'catalog.txt', package='cellml.pmr2',
             test_class=CellMLDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),

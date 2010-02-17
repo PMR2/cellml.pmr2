@@ -1,0 +1,94 @@
+===================
+CellML PMR2 Indexes
+===================
+
+Originally these indexes were included as part of PMR2, and in order to
+maintain compatability with existing catalog searches, the pmr2 prefixes
+are kept for now.
+
+Since mocking everything up will take sizable effort due, this test will
+need to have all the Plone testing bits instantiated.
+
+We use the cmeta annotator to generate our notes again, then try out the
+indexes.
+::
+
+    >>> from pmr2.app.browser import workspace, exposure
+    >>> from pmr2.app.tests.base import TestRequest
+    >>> from pmr2.app.content import *
+    >>> from pmr2.app.interfaces import *
+    >>> filectx = self.exposure_file1
+    >>> request = TestRequest(
+    ...     form={
+    ...         'form.widgets.annotators': [u'cmeta'],
+    ...         'form.buttons.apply': 1,
+    ...     })
+    >>> view = exposure.ExposureFileAnnotatorForm(filectx, request)
+    >>> result = view()
+
+Citation Authors for PMR1 style listing the root exposure.
+::
+
+    >>> from cellml.pmr2.catalog import pmr1_citation_authors_exposure
+    >>> pmr1_citation_authors_exposure(self.exposure1)()
+    ''
+    >>> # currently nothing because exposure1 has no data generated.
+
+Citation Title for PMR1 style listing for the root exposure.
+::
+
+    >>> from cellml.pmr2.catalog import pmr1_citation_title_exposure
+    >>> pmr1_citation_title_exposure(self.exposure1)()
+    ''
+    >>> # currently nothing because exposure1 has no data generated.
+
+Authors Family Name for searching.
+::
+
+    >>> from cellml.pmr2.catalog import pmr2_authors_family_name
+    >>> pmr2_authors_family_name(self.exposure_file1)()
+    [u'family1', u'family2', u'family2']
+
+Titles for searching.
+::
+
+    >>> from cellml.pmr2.catalog import pmr2_citation_title
+    >>> pmr2_citation_title(self.exposure_file1)()
+    u'one_example_paper'
+
+Citation Authors for PMR1 style listing for files.
+::
+
+    >>> from cellml.pmr2.catalog import pmr1_citation_authors_exposurefile
+    >>> pmr1_citation_authors_exposurefile(self.exposure_file1)()
+    u'Family1, Family2, Family2, 2004'
+
+Citation Title for PMR1 style listing for files.
+::
+
+    >>> from cellml.pmr2.catalog import pmr1_citation_title_exposurefile
+    >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
+    u'One Example Paper'
+
+Lastly, the slightly more complicated one that works on all exposure
+objects, but behave differently depending on its specific type.
+::
+
+    >>> from cellml.pmr2.catalog import pmr1_citation_authors_sortable
+    >>> pmr1_citation_authors_sortable(self.exposure1)()
+    ''
+    >>> # currently nothing because exposure 1 has no data generated.
+    >>> pmr1_citation_authors_sortable(self.exposure_file1)()
+    u'family1, family2, family2, 2004'
+
+-------
+Keyword
+-------
+
+The keyword index provider should have been registered, and it should
+provide the results we expect that's in the file.
+::
+
+    >>> from pmr2.app.catalog import pmr2_keyword
+    >>> pmr2_keyword(self.exposure_file1)()
+    []
