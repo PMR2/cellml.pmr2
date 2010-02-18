@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="cellml.pmr2">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="CellML PMR2 Support"
+      directory="profiles/default"
+      description="This adds the indexes introduced by this package to the catalog and topics."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
+
+</configure>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Plone Catalog Tool">
+
+  <!-- moved to cellml.pmr2 -->
+  <index name="pmr2_authors_family_name" meta_type="KeywordIndex">
+    <indexed_attr value="pmr2_authors_family_name"/>
+  </index>
+
+  <index name="pmr2_citation_title" meta_type="KeywordIndex">
+    <indexed_attr value="pmr2_citation_title"/>
+  </index>
+
+  <index name="pmr1_citation_authors" meta_type="FieldIndex">
+    <indexed_attr value="pmr1_citation_authors"/>
+  </index>
+
+  <index name="pmr1_citation_authors_sortable" meta_type="FieldIndex">
+    <indexed_attr value="pmr1_citation_authors_sortable"/>
+  </index>
+
+  <index name="pmr1_citation_title" meta_type="FieldIndex">
+    <indexed_attr value="pmr1_citation_title"/>
+  </index>
+
+  <!-- moved to cellml.pmr2 -->
+  <column value="pmr2_authors_family_name"/>
+  <column value="pmr2_citation_title"/>
+  <column value="pmr1_citation_authors"/>
+  <column value="pmr1_citation_authors_sortable"/>
+  <column value="pmr1_citation_title"/>
+
+</object>

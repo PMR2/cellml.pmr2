@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<atcttool
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <topic_indexes i18n:domain="cellml.pmr2">
+  <index enabled="True" 
+      name="pmr2_authors_family_name" 
+      friendlyName="PMR2 Authors Family Name"
+      description="Family name of the authors of the citation of this model.">
+   <criteria>ATSelectionCriterion</criteria>
+   <criteria>ATSimpleStringCriterion</criteria>
+   <criteria>ATListCriterion</criteria>
+  </index>
+  <index enabled="True" 
+      name="pmr2_citation_title" 
+      friendlyName="PMR2 Citation Title"
+      description="Title of the citation of this model.">
+   <criteria>ATSimpleStringCriterion</criteria>
+  </index>
+  <index enabled="True" 
+      name="pmr1_citation_authors" 
+      friendlyName="PMR1 Citation Authors"
+      description="">
+   <criteria>ATSimpleStringCriterion</criteria>
+  </index>
+  <index enabled="True" 
+      name="pmr1_citation_authors_sortable" 
+      friendlyName="PMR1 Citation Authors (Sortable)"
+      description="">
+  </index>
+  <index enabled="True" 
+      name="pmr1_citation_title" 
+      friendlyName="PMR1 Citation Title"
+      description="">
+   <criteria>ATSimpleStringCriterion</criteria>
+  </index>
+ </topic_indexes>
+ <topic_metadata i18n:domain="cellml.pmr2">
+  <metadata name="pmr2_authors_family_name" enabled="True" description=""
+      friendlyName="PMR2 Author Family Name"/>
+  <metadata name="pmr2_citation_title" enabled="True" description=""
+      friendlyName="PMR2 Citation Title"/>
+  <metadata name="pmr1_citation_authors" enabled="True" description=""
+      friendlyName="PMR1 Citation Authors"/>
+  <metadata name="pmr1_citation_title" enabled="True" description=""
+      friendlyName="PMR1 Citation Title"/>
+ </topic_metadata>
+</atcttool>
