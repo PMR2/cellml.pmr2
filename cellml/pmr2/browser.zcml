@@ -26,4 +26,14 @@
       permission="zope2.View"
       />
 
+  <!--
+    CellML requires application specific view.
+  -->
+  <browser:page
+      for="pmr2.app.content.Workspace"
+      name="pcenv"
+      class=".browser.WorkspaceRawfileXmlBasePCEnvView"
+      permission="zope2.View"
+      />
+
 </configure>

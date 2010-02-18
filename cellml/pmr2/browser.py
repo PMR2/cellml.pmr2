@@ -5,8 +5,11 @@ from plone.z3cform import layout
 
 from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.browser.exposure import RawContentNote, ExposureFileViewBase
+from pmr2.app.browser.workspace import WorkspaceRawfileXmlBaseView
 from pmr2.app.browser.layout import PlainTraverseOverridableWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
+
+from cellml.pmr2.util import fix_pcenv_externalurl
 
 
 class BasicCCodeNote(RawContentNote):
@@ -62,3 +65,27 @@ class OpenCellSessionNoteView(ExposureFileViewBase):
         target_uri = '%s/@@%s/%s/%s' % (workspace.absolute_url(), 
             self.target_view, exposure.commit_id, self.note.filename)
         return self.request.response.redirect(target_uri)
+
+
+class WorkspaceRawfileXmlBasePCEnvView(WorkspaceRawfileXmlBaseView):
+
+    def find_type(self):
+        # XXX we are not doing this for every single type, alternate
+        # solution will be done.
+        return 'application/x-pcenv-cellml+xml'
+
+    def __call__(self):
+        data = WorkspaceRawfileXmlBaseView.__call__(self)
+
+        if self.storage.path.endswith('session.xml'):
+            # See pmr2.app.util.fix_pcenv_externalurl and
+            # https://tracker.physiomeproject.org/show_bug.cgi?id=1079
+            data = fix_pcenv_externalurl(data, self.rooturi)
+
+        contentType = self.find_type()
+        # since content type has been changed, and data may have been
+        # regenerated
+        self.request.response.setHeader('Content-Type', contentType)
+        self.request.response.setHeader('Content-Length', len(data))
+
+        return data

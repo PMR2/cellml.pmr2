@@ -70,6 +70,11 @@ def test_suite():
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
+        doctestunit.DocTestSuite(
+            module='cellml.pmr2.util',
+            setUp=testing.setUp, tearDown=testing.tearDown
+        ),
+
     ])
 
 if __name__ == '__main__':
