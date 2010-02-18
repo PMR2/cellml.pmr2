@@ -75,7 +75,10 @@ def pmr1_citation_title_exposurefile(context):
 # PMR2 Keyword Provider
 
 def CmetaKeywordProvider(context):
-    note = zope.component.queryAdapter(context, name='cmeta')
+    try:
+        note = zope.component.queryAdapter(context, name='cmeta')
+    except TypeError:
+        return []
     if not (note and note.keywords):
         return []
     results = [normal_kw(i[1]) for i in note.keywords]
