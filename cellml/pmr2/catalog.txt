@@ -91,4 +91,4 @@ provide the results we expect that's in the file.
 
     >>> from pmr2.app.catalog import pmr2_keyword
     >>> pmr2_keyword(self.exposure_file1)()
-    []
+    [u'cardiac', u'electrophysiology', u'ventricular_myocyte']
