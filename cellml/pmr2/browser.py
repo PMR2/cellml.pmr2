@@ -9,18 +9,30 @@ from pmr2.app.browser.workspace import WorkspaceRawfileXmlBaseView
 from pmr2.app.browser.layout import PlainTraverseOverridableWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
+from pmr2.annotation.shjs.layout import IShjsLayoutWrapper
+from pmr2.annotation.shjs.browser import SourceTextNote
+
 from cellml.pmr2.util import fix_pcenv_externalurl
 
 
-class BasicCCodeNote(RawContentNote):
-    """\
-    This is a raw content view, where the raw text is rendered as a
-    struture as per the default template.
+class ShjsPlainTraverseOverridableWrapper(PlainTraverseOverridableWrapper):
+    """
+    A `PlainTraverseOverridableWrapper` that implements the Shjs 
+    wrapper.
     """
 
-    template = ViewPageTemplateFile('basic_ccode.pt')
-    description = u'The following is a raw representation of the file.'
-    subtitle = u'Raw content view'
+    zope.interface.implements(IShjsLayoutWrapper)
+
+
+class BasicCCodeNote(SourceTextNote):
+    """\
+    This is based on the raw text note view, but uses the SourceTextNote
+    browser class.
+    """
+
+    # used by template
+    title = ViewPageTemplateFile('basic_ccode.pt')
+    langtype = u'cpp'
 
     def content(self):
         return self.note.text
@@ -38,7 +50,7 @@ class BasicCCodeNote(RawContentNote):
             raise HTTPNotFound()
 
 BasicCCodeNoteView = layout.wrap_form(BasicCCodeNote,
-    __wrapper_class=PlainTraverseOverridableWrapper)
+    __wrapper_class=ShjsPlainTraverseOverridableWrapper)
 
 
 class CmetaNote(ExposureFileViewBase):

@@ -5,5 +5,3 @@
 <p>
   The raw code is <a tal:attributes="href string:${view/view_url}/raw">available</a>.
 </p>
-<pre><code tal:content="view/content">
-</code></pre>
