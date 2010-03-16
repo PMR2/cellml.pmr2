@@ -1,0 +1,12 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2">
+
+  <utility
+      name="cellml_rdf_metadata"
+      component=".citation.CellMLCitationFormatter"
+      provides="pmr2.annotation.citation.interfaces.ICitationFormat"
+      />
+
+</configure>
