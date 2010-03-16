@@ -9,7 +9,6 @@ import pmr2.app.util
 from pmr2.app.factory import named_factory
 from pmr2.app.annotation.interfaces import *
 from pmr2.app.annotation.annotator import ExposureFileAnnotatorBase
-from pmr2.app.annotation.annotator import ExposureFileEditableAnnotatorBase
 from pmr2.app.annotation.annotator import PortalTransformAnnotatorBase
 
 
@@ -43,7 +42,7 @@ class CellML2CAnnotator(PortalTransformAnnotatorBase):
 CellML2CAnnotatorFactory = named_factory(CellML2CAnnotator)
 
 
-class OpenCellSessionAnnotator(ExposureFileEditableAnnotatorBase):
+class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'OpenCell Session Link'
     label = u'OpenCell Session'
