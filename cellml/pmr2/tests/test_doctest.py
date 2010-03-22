@@ -21,6 +21,7 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
         super(CellMLDocTestCase, self).setUp()
         import cellml.pmr2
         zcml.load_config('configure.zcml', cellml.pmr2)
+        zcml.load_config('tests/test.zcml', cellml.pmr2)
         self.portal['exposure'] = ExposureContainer()
         rawrevs = [
             'b94d1701154be42acf63ee6b4bd4a99d09ba043c',
@@ -56,16 +57,23 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
 def test_suite():
     return unittest.TestSuite([
 
-        # Exposure and related object form usage tests.
+        # General tests.
         ztc.ZopeDocFileSuite(
             'cellml.txt', package='cellml.pmr2',
             test_class=CellMLDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
-        # Exposure and related object form usage tests.
+        # Cataloging tests.
         ztc.ZopeDocFileSuite(
             'catalog.txt', package='cellml.pmr2',
+            test_class=CellMLDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        # Code viewer tests
+        ztc.ZopeDocFileSuite(
+            'browser/code.txt', package='cellml.pmr2',
             test_class=CellMLDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),

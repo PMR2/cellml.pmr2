@@ -1,0 +1,26 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+  <utility
+      name="dummy_code"
+      component="cellml.pmr2.tests.adapter.DummyCodegenAnnotatorFactory"
+      provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
+      />
+
+  <adapter
+      for="pmr2.app.content.interfaces.IExposureFile"
+      factory="cellml.pmr2.tests.adapter.DummyCodegenNoteFactory"
+      provides="cellml.pmr2.interfaces.ICellMLCodegenNote"
+      name="dummy_code"
+      />
+
+  <browser:page
+      for="pmr2.app.content.ExposureFile"
+      name="dummy_code"
+      class="cellml.pmr2.browser.view.CellMLCodegenNoteView"
+      permission="zope2.View"
+      />
+
+</configure>
