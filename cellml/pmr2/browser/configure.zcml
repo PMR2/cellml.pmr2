@@ -8,28 +8,28 @@
   <browser:page
       for="pmr2.app.content.ExposureFile"
       name="basic_ccode"
-      class=".browser.BasicCCodeNoteView"
+      class=".view.BasicCCodeNoteView"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.content.ExposureFile"
       name="cmeta"
-      class=".browser.CmetaNoteView"
+      class=".view.CmetaNoteView"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.content.ExposureFile"
       name="cellml_codegen"
-      class=".browser.CellMLCodegenNoteView"
+      class=".view.CellMLCodegenNoteView"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.content.ExposureFile"
       name="opencellsession"
-      class=".browser.OpenCellSessionNoteView"
+      class=".view.OpenCellSessionNoteView"
       permission="zope2.View"
       />
 
@@ -39,7 +39,7 @@
   <browser:page
       for="pmr2.app.content.Workspace"
       name="pcenv"
-      class=".browser.WorkspaceRawfileXmlBasePCEnvView"
+      class=".view.WorkspaceRawfileXmlBasePCEnvView"
       permission="zope2.View"
       />
 

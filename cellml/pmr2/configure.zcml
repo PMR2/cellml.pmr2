@@ -3,9 +3,9 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="pmr2">
 
+  <include package=".browser" />
   <include file="annotator.zcml" />
   <include file="citation.zcml" />
-  <include file="browser.zcml" />
   <include file="catalog.zcml" />
   <include file="profiles.zcml" />
 
