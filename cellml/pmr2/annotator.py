@@ -59,13 +59,13 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
     description = u''
 
     def codegen(self):
-        # Since we may not have access to the files via http (not to 
-        # mention causing a deadlock because of how the GIL works with C
-        # code within Zope), we are going to make a local clone of the
-        # source workspace, make a checkout, and run the code generation
-        # against the correct file.  An alternate way is to start an
-        # alternate server, but this means code generation will need its
-        # own account, and somehow have to log the API into the site...
+        # Since we may not have access to the files via http, and that
+        # the loadFromURL method in the CellML API is a blocking load,
+        # we are going to make a local clone of the source workspace, 
+        # make a checkout, and run the code generation against the 
+        # correct file.  An alternate way is to start an alternate 
+        # server, but this means code generation will need its own 
+        # account, and somehow have to log the API into the site...
 
         sa = zope.component.queryAdapter(self.context, IExposureSourceAdapter)
         exposure, workspace, path = sa.source()
