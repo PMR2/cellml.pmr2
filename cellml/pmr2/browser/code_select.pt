@@ -1,0 +1,8 @@
+<h1>Generated Code</h1>
+<p>The following are code that had been generated.</p>
+<ul tal:define="langs view/available_langs">
+<li tal:repeat="l langs">
+  <a tal:attributes="href string:${view/view_url}/${l}"
+     tal:content="l"/>
+</li>
+</ul>
