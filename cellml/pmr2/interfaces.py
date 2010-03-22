@@ -68,3 +68,16 @@ class IOpenCellSessionNote(zope.interface.Interface):
         description=u'The session file that is made for this file.',
         vocabulary='ManifestListVocab',
     )
+
+
+class ICellMLCodegenNote(zope.interface.Interface):
+    """\
+    Code generation results.
+    """
+
+    code = zope.schema.Dict(
+        title=u'Code',
+        description=u'Generated code.',
+        default={},
+        required=False,
+    )

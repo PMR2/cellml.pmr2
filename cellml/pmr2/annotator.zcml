@@ -33,6 +33,13 @@
       name="opencellsession"
       />
 
+  <adapter
+      for="pmr2.app.content.interfaces.IExposureFile"
+      factory=".CellMLCodegenNoteFactory"
+      provides=".interfaces.ICellMLCodegenNote"
+      name="cellml_codegen"
+      />
+
   <!-- Note Generation -->
 
   <utility
@@ -56,6 +63,12 @@
   <utility
       name="opencellsession"
       component=".annotator.OpenCellSessionAnnotatorFactory"
+      provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
+      />
+
+  <utility
+      name="cellml_codegen"
+      component=".annotator.CellMLCodegenAnnotatorFactory"
       provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
       />
 

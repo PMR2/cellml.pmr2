@@ -1,0 +1,2 @@
+<h1>Code generation result</h1>
+<span tal:content="view/note/code"/>

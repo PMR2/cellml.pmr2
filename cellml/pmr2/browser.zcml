@@ -21,6 +21,13 @@
 
   <browser:page
       for="pmr2.app.content.ExposureFile"
+      name="cellml_codegen"
+      class=".browser.CellMLCodegenNoteView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.content.ExposureFile"
       name="opencellsession"
       class=".browser.OpenCellSessionNoteView"
       permission="zope2.View"

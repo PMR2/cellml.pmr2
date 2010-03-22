@@ -53,9 +53,22 @@ BasicCCodeNoteView = layout.wrap_form(BasicCCodeNote,
     __wrapper_class=ShjsPlainTraverseOverridableWrapper)
 
 
+class CellMLCodegenNote(SourceTextNote):
+    """\
+    CellML Code Generation note.
+    """
+
+    template = ViewPageTemplateFile('cellml_code.pt')
+
+    def __call__(self):
+        return self.template()
+
+CellMLCodegenNoteView = layout.wrap_form(CellMLCodegenNote, 
+    __wrapper_class=ShjsPlainTraverseOverridableWrapper)
+
 class CmetaNote(ExposureFileViewBase):
     """\
-    Wraps an object around the mathml view.
+    Cmeta note.
     """
 
     template = ViewPageTemplateFile('cmeta_note.pt')

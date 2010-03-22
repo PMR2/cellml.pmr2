@@ -95,3 +95,9 @@ class OpenCellSessionNote(ExposureFileEditableNoteBase):
 
     zope.interface.implements(IOpenCellSessionNote)
     filename = fieldproperty.FieldProperty(IOpenCellSessionNote['filename'])
+
+
+class CellMLCodegenNote(ExposureFileNoteBase):
+
+    zope.interface.implements(ICellMLCodegenNote)
+    code = fieldproperty.FieldProperty(ICellMLCodegenNote['code'])

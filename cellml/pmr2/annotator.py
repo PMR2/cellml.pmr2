@@ -42,6 +42,23 @@ class CellML2CAnnotator(PortalTransformAnnotatorBase):
 CellML2CAnnotatorFactory = named_factory(CellML2CAnnotator)
 
 
+class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
+    zope.interface.implements(IExposureFileAnnotator)
+    title = u'CellML Code Generation'
+    label = u'Generated Code'
+    description = u''
+
+    def generate(self):
+        return (
+            ('code', {
+                'c': 'test',
+                'py': 'test',
+            }),
+        )
+
+CellMLCodegenAnnotatorFactory = named_factory(CellMLCodegenAnnotator)
+
+
 class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'OpenCell Session Link'
