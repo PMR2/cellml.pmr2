@@ -18,6 +18,8 @@ from pmr2.app.annotation.annotator import PortalTransformAnnotatorBase
 
 from cellml.api.simple import celeds
 
+from interfaces import *
+
 LANG_SOURCE = join(dirname(__file__), 'lang')
 langpath = lambda x: join(LANG_SOURCE, x)
 
@@ -28,6 +30,7 @@ class CellML2MathMLAnnotator(PortalTransformAnnotatorBase):
     title = u'Basic MathML'
     label = u'Mathematics'
     description = u''
+    for_interface = IRawTextNote
 
     def generate(self):
         return (
@@ -43,6 +46,7 @@ class CellML2CAnnotator(PortalTransformAnnotatorBase):
     title = u'CellML C Code Generation'
     label = u'Procedural C Code'
     description = u''
+    for_interface = IRawTextNote
 
     def generate(self):
         return (
@@ -57,6 +61,7 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
     title = u'CellML Code Generation'
     label = u'Generated Code'
     description = u''
+    for_interface = ICellMLCodegenNote
 
     def codegen(self):
         # Since we may not have access to the files via http, and that
@@ -98,9 +103,11 @@ CellMLCodegenAnnotatorFactory = named_factory(CellMLCodegenAnnotator)
 
 
 class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
-    zope.interface.implements(IExposureFileAnnotator)
+    zope.interface.implements(IExposureFileAnnotator, 
+                              IExposureFileEditAnnotator)
     title = u'OpenCell Session Link'
     label = u'OpenCell Session'
+    for_interface = IOpenCellSessionNote
 
     def generate(self):
         return ()
@@ -112,6 +119,7 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'Basic CellML Metadata'
     label = u'Model Metadata'
+    for_interface = ICmetaNote
 
     def generate(self):
         input = self.input
