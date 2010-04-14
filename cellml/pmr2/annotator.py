@@ -79,8 +79,13 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
         # use multiprocessing module.
 
         def __codegen():
+            sa = zope.component.queryAdapter(
+                self.context, IExposureSourceAdapter)
+            exposure, workspace, path = sa.source()
+            modelfile = '%s/@@%s/%s/%s' % (workspace.absolute_url(),
+                'rawfile', exposure.commit_id, path)
+            # XXX should verify the permission of the workspace also.
             results = []
-            modelfile = self.context.absolute_url()
             fn = listdir(LANG_SOURCE)
             for f in fn:
                 langfile = langpath(f)
