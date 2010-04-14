@@ -78,6 +78,9 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
         # When Zope/Plone can run on Python 2.6, this can be ported to
         # use multiprocessing module.
 
+        blocksize = 512
+        chunks = []
+
         def __codegen():
             sa = zope.component.queryAdapter(
                 self.context, IExposureSourceAdapter)
@@ -94,7 +97,12 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
                 results.append((lang, result,))
             return results
 
-        blocksize = 512
+        def readpipe(fd):
+            while True:
+                lump = os.read(fd, blocksize)
+                if not lump:
+                    break
+                chunks.append(lump)
 
         try:
             p = os.pipe()
@@ -110,7 +118,12 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
             try:
                 results = __codegen()
                 raw = pickle.dumps(results)
-                os.write(p[1], raw)
+                cooked = StringIO(raw)
+                while True:
+                    lump = cooked.read(blocksize)
+                    if not lump:
+                        break
+                    bytes = os.write(p[1], lump)
             finally:
                 os.close(p[0])
                 os.close(p[1])
@@ -123,15 +136,12 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
                 # we might want a sane upper limit on maximum running 
                 # time for the child.
                 pid, status = os.waitpid(child_pid, os.WNOHANG)
-                time.sleep(0.1)
-
+                # need to empty the pipe from time to time.
+                readpipe(p[0])
+                time.sleep(0.01)
             try:
-                chunks = []
-                while True:
-                    lump = os.read(p[0], blocksize)
-                    if not lump:
-                        break
-                    chunks.append(lump)
+                # read whatever bits that have not been consumed above.
+                readpipe(p[0])
                 blob = ''.join(chunks)
                 results = blob and pickle.loads(blob) or ()
             finally:
