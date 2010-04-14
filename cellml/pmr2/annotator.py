@@ -1,8 +1,11 @@
 from shutil import rmtree
 import tempfile
+import os
+import time
 from os import listdir
 from os.path import join, dirname, splitext
 from cStringIO import StringIO
+import cPickle as pickle
 
 import zope.interface
 import zope.component
@@ -64,34 +67,71 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
     for_interface = ICellMLCodegenNote
 
     def codegen(self):
-        # Since we may not have access to the files via http, and that
-        # the loadFromURL method in the CellML API is a blocking load,
-        # we are going to make a local clone of the source workspace, 
-        # make a checkout, and run the code generation against the 
-        # correct file.  An alternate way is to start an alternate 
-        # server, but this means code generation will need its own 
-        # account, and somehow have to log the API into the site...
+        # Since the CellML API's load model method does not support 
+        # asynchronious operation, we must fork it so it doesn't block
+        # the server from doing its job.
+        # 
+        # Also, we fork here rather than per language, as I am assuming
+        # the overhead of spawning a process per language outweighs the
+        # cost of pickling/unpickling a list of tuples of strings.
+        # 
+        # When Zope/Plone can run on Python 2.6, this can be ported to
+        # use multiprocessing module.
 
-        sa = zope.component.queryAdapter(self.context, IExposureSourceAdapter)
-        exposure, workspace, path = sa.source()
-        rev = exposure.commit_id
-        storage = zope.component.queryAdapter(workspace, name='PMR2Storage')
-        results = []
-
-        try:
-            tmpdir = tempfile.mkdtemp()
-            wkdir = join(tmpdir, workspace.id)
-            storage.clone(wkdir, rev)
-
+        def __codegen():
+            results = []
+            modelfile = self.context.absolute_url()
             fn = listdir(LANG_SOURCE)
             for f in fn:
-                modelfile = join(wkdir, path)
                 langfile = langpath(f)
                 lang = splitext(f)[0]
                 result = celeds(modelfile, langfile)
                 results.append((lang, result,))
-        finally:
-            rmtree(tmpdir)
+            return results
+
+        blocksize = 512
+
+        try:
+            p = os.pipe()
+        except:
+            # might want to use a proper exception type, likewise below.
+            raise Exception('failed to open pipe')
+
+        child_pid = os.fork()
+        if child_pid == -1:
+            raise Exception('failed to spawn child for code generation')
+
+        if child_pid == 0:
+            try:
+                results = __codegen()
+                raw = pickle.dumps(results)
+                os.write(p[1], raw)
+            finally:
+                os.close(p[0])
+                os.close(p[1])
+                os._exit(0)
+        else:
+            # read whatever child wrote, so we don't need to write
+            os.close(p[1])
+            pid = 0
+            while not pid:
+                # we might want a sane upper limit on maximum running 
+                # time for the child.
+                pid, status = os.waitpid(child_pid, os.WNOHANG)
+                time.sleep(0.1)
+
+            try:
+                chunks = []
+                while True:
+                    lump = os.read(p[0], blocksize)
+                    if not lump:
+                        break
+                    chunks.append(lump)
+                blob = ''.join(chunks)
+                results = blob and pickle.loads(blob) or ()
+            finally:
+                os.close(p[0])
+
         return results
 
     def generate(self):
