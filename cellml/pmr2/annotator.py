@@ -104,6 +104,13 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
                     break
                 chunks.append(lump)
 
+        def writepipe(fd, stream):
+            while True:
+                lump = stream.read(blocksize)
+                if not lump:
+                    break
+                bytes = os.write(fd, lump)
+
         try:
             p = os.pipe()
         except:
@@ -119,11 +126,7 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
                 results = __codegen()
                 raw = pickle.dumps(results)
                 cooked = StringIO(raw)
-                while True:
-                    lump = cooked.read(blocksize)
-                    if not lump:
-                        break
-                    bytes = os.write(p[1], lump)
+                writepipe(p[1], cooked)
             finally:
                 os.close(p[0])
                 os.close(p[1])
@@ -136,12 +139,10 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
                 # we might want a sane upper limit on maximum running 
                 # time for the child.
                 pid, status = os.waitpid(child_pid, os.WNOHANG)
-                # need to empty the pipe from time to time.
+                # need to empty the pipe.
                 readpipe(p[0])
                 time.sleep(0.01)
             try:
-                # read whatever bits that have not been consumed above.
-                readpipe(p[0])
                 blob = ''.join(chunks)
                 results = blob and pickle.loads(blob) or ()
             finally:
