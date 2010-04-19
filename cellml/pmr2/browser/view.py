@@ -142,14 +142,12 @@ class OpenCellSessionNoteView(ExposureFileViewBase):
     target_view = 'pcenv'
 
     def __call__(self):
-        if self.note.filename is None:
-            # no session specified.
-            raise HTTPNotFound()
         helper = zope.component.queryAdapter(
             self.context, IExposureSourceAdapter)
         exposure, workspace, path = helper.source()
+        filename = self.note.filename or path
         target_uri = '%s/@@%s/%s/%s' % (workspace.absolute_url(), 
-            self.target_view, exposure.commit_id, self.note.filename)
+            self.target_view, exposure.commit_id, filename)
         return self.request.response.redirect(target_uri)
 
 

@@ -110,8 +110,30 @@ what the request would see here and render the note edit view.
     >>> session_path in result
     True
 
-Then apply on the edit form for the note, and the note will have its
-field updated.
+We first apply a default none value, which should update.
+::
+
+    >>> request = TestRequest(
+    ...     form={
+    ...         'form.widgets.filename': [],
+    ...         'form.buttons.apply': 1,
+    ...     })
+    >>> view = exposure.ExposureFileNoteEditForm(filectx, request)
+    >>> view.traverse_subpath = ['opencellsession']
+    >>> result = view()
+
+Now if we call the OpenCell session note view for the file, it will
+redirect to the CellML file.
+::
+
+    >>> request = TestRequest()
+    >>> view = zope.component.queryMultiAdapter((filectx, request), 
+    ...                                         name='opencellsession')
+    >>> result = view()
+    >>> print request.response.getHeader('Location')
+    http://...rdfmodel/@@pcenv/.../example_model.cellml
+
+Now we apply the session path to the note.
 ::
 
     >>> request = TestRequest(
@@ -123,8 +145,7 @@ field updated.
     >>> view.traverse_subpath = ['opencellsession']
     >>> result = view()
 
-Now if we call the OpenCell session note view for the file, it will
-redirect to the session file.
+It will now redirect to the session file.
 ::
 
     >>> request = TestRequest()

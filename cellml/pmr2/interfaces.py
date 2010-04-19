@@ -65,8 +65,10 @@ class IOpenCellSessionNote(zope.interface.Interface):
 
     filename = zope.schema.Choice(
         title=u'Session File',
-        description=u'The session file that is made for this file.',
+        description=u'The session file that is made for this file.  If not '
+                     'selected, this file will be used for the "Launch" link.',
         vocabulary='ManifestListVocab',
+        required=False,
     )
 
 

@@ -162,7 +162,7 @@ class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator, 
                               IExposureFileEditAnnotator)
     title = u'OpenCell Session Link'
-    label = u'OpenCell Session'
+    label = u'Simulate using OpenCell'
     for_interface = IOpenCellSessionNote
 
     def generate(self):
