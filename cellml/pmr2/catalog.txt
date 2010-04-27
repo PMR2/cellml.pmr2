@@ -70,6 +70,23 @@ Citation Title for PMR1 style listing for files.
     >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
     u'One Example Paper'
 
+However, citation title is really a misnomer, as it is not used if the
+model title is defined.  See how the results are different depending on
+what fields are set.  Model title takes precedence over citation title.
+::
+
+    >>> from zope.component import queryAdapter
+    >>> cmeta = queryAdapter(self.exposure_file1, name='cmeta')
+    >>> cmeta.model_title = u'One Example Paper - Model'
+    >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
+    u'One Example Paper - Model'
+    >>> cmeta.citation_title = u''
+    >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
+    u'One Example Paper - Model'
+    >>> cmeta.model_title = u''
+    >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
+    'example_model.cellml'
+
 Lastly, the slightly more complicated one that works on all exposure
 objects, but behave differently depending on its specific type.
 ::
