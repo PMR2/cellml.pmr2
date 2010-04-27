@@ -217,11 +217,14 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
         result['citation_authors'] = authors
         result['keywords'] = metadata.get_keywords()
 
+        model_title = metadata.get_dc_title(node='')
+        if model_title:
+            result['model_title'] = model_title[0]
+
         dcvc = metadata.get_dc_vcard_info(node='')
         if dcvc:
             # using only first one
             info = dcvc[0]
-            result['model_title'] = info['title']
             result['model_author'] = '%s %s' % (info['given'], info['family'])
             result['model_author_org'] = \
                 '%s, %s' % (info['orgunit'], info['orgname']) 
