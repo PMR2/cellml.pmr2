@@ -67,7 +67,7 @@ class IOpenCellSessionNote(zope.interface.Interface):
         title=u'Session File',
         description=u'The session file that is made for this file.  If not '
                      'selected, this file will be used for the "Launch" link.',
-        vocabulary='ManifestListVocab',
+        vocabulary='pmr2.vocab.manifest',
         required=False,
     )
 
