@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<model
+    name="complex_model"
+    cmeta:id="complex_model"
+    xmlns="http://www.cellml.org/cellml/1.1#"
+    xmlns:cellml="http://www.cellml.org/cellml/1.1#"
+    xmlns:cmeta="http://www.cellml.org/metadata/1.0#"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:cmeta="http://www.cellml.org/metadata/1.0#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:dcterms="http://purl.org/dc/terms/"
+      xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <rdf:Description rdf:about="">
+      <dc:creator rdf:parseType="Resource">
+        <vCard:N rdf:parseType="Resource">
+          <vCard:Family>Family</vCard:Family>
+          <vCard:Given>Given</vCard:Given>
+        </vCard:N>
+        <vCard:EMAIL rdf:parseType="Resource">
+          <rdf:value>family.given@example.org</rdf:value>
+          <rdf:type rdf:resource="http://imc.org/vCard/3.0#internet" />
+        </vCard:EMAIL>
+        <vCard:ORG rdf:parseType="Resource">
+          <vCard:Orgname>Example Organization</vCard:Orgname>
+          <vCard:Orgunit>Example Subsidary</vCard:Orgunit>
+        </vCard:ORG>
+      </dc:creator>
+      <dcterms:created rdf:parseType="Resource">
+        <dcterms:W3CDTF>2004-12-31</dcterms:W3CDTF>
+      </dcterms:created>
+      <dc:publisher>
+        Example Subsidary, Example Organization
+      </dc:publisher>
+    </rdf:Description>
+    <rdf:Description rdf:about="#complex_model">
+      <dc:title>
+        One Example Paper
+      </dc:title>
+      <cmeta:comment rdf:parseType="Resource">
+        <rdf:value>
+          This is the CellML description of complex model as described by
+          One Example Paper.
+        </rdf:value>
+        <dc:creator rdf:parseType="Resource">
+          <vCard:FN>Family Given</vCard:FN>
+        </dc:creator>
+      </cmeta:comment>
+      <cmeta:species>Homo sapiens</cmeta:species>
+      <cmeta:bio_entity>Ventricular Myocyte</cmeta:bio_entity>
+      <bqs:reference rdf:parseType="Resource">
+        <dc:subject rdf:parseType="Resource">
+          <bqs:subject_type>keyword</bqs:subject_type>
+          <rdf:value>
+            <rdf:Bag>
+              <rdf:li>Ventricular Myocyte</rdf:li>
+              <rdf:li>cardiac</rdf:li>
+              <rdf:li>electrophysiology</rdf:li>
+            </rdf:Bag>
+          </rdf:value>
+        </dc:subject>
+      </bqs:reference>
+      <bqs:reference rdf:parseType="Resource">
+        <bqs:Pubmed_id>1111111111</bqs:Pubmed_id>
+        <bqs:JournalArticle rdf:parseType="Resource">
+          <dc:creator>
+            <rdf:Seq>
+              <rdf:li rdf:parseType="Resource">
+                  <vCard:N rdf:parseType="Resource">
+                    <vCard:Family>Family1</vCard:Family>
+                    <vCard:Given>Given1</vCard:Given>
+                    <vCard:Other>X</vCard:Other>
+                    <vCard:Other>Y</vCard:Other>
+                    <vCard:Other>Z</vCard:Other>
+                  </vCard:N>
+              </rdf:li>
+              <rdf:li rdf:parseType="Resource">
+                  <vCard:N rdf:parseType="Resource">
+                    <vCard:Family>Family2</vCard:Family>
+                    <vCard:Given>G</vCard:Given>
+                  </vCard:N>
+              </rdf:li>
+              <rdf:li rdf:parseType="Resource">
+                  <vCard:N rdf:parseType="Resource">
+                    <vCard:Family>Family2</vCard:Family>
+                    <vCard:Given>H</vCard:Given>
+                    <vCard:Other>W</vCard:Other>
+                  </vCard:N>
+              </rdf:li>
+            </rdf:Seq>
+          </dc:creator>
+          <dc:title>
+            One Example Paper
+          </dc:title>
+          <dcterms:issued rdf:parseType="Resource">
+            <dcterms:W3CDTF>2004-04</dcterms:W3CDTF>
+          </dcterms:issued>
+          <bqs:Journal rdf:parseType="Resource">
+            <dc:title>Journal of Example Subject</dc:title>
+          </bqs:Journal>
+          <bqs:volume>123</bqs:volume>
+          <bqs:first_page>V4567</bqs:first_page>
+          <bqs:last_page>V4600</bqs:last_page>
+        </bqs:JournalArticle>
+      </bqs:reference>
+    </rdf:Description>
+  </rdf:RDF>
+
+  <import xlink:href="ext/common/units.xml">
+    <units name="ms" units_ref="ms"/>
+    <units name="mV" units_ref="mV"/>
+    <units name="mM" units_ref="mM"/>
+    <units name="uA_per_mmsq" units_ref="uA_per_mmsq"/>
+    <units name="mM_per_ms" units_ref="mM_per_ms"/>
+    <units name="per_mm" units_ref="per_mm"/>
+    <units name="uF_per_mmsq" units_ref="uF_per_mmsq"/>
+    <units name="mmcu" units_ref="mmcu"/>
+    <units name="mS_per_mmsq" units_ref="mS_per_mmsq"/>
+    <units name="K" units_ref="K"/>
+    <units name="mm_per_ms" units_ref="mm_per_ms"/>
+    <units name="per_ms" units_ref="per_ms"/>
+  </import>
+
+  <component name="interface" cmeta:id="interface">
+    <rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+      <rdf:Description rdf:about="#interface">
+        <cmeta:comment rdf:parseType="Resource">
+          <rdf:value>
+            Here we define the interface to this model, including all boundary
+            and initial conditions that we expect to be set for a specific
+            simulation. The interface is the root of the encapsulation hierarchy
+            for this model.
+          </rdf:value>
+        </cmeta:comment>
+      </rdf:Description>
+    </rdf:RDF>
+    <variable name="time" public_interface="in" private_interface="out" units="ms"/>
+
+    <variable name="V" public_interface="out" private_interface="in" units="mV"/>
+    
+  </component>
+  
+  <component name="membrane_potential" cmeta:id="membrane_potential">
+    <rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+      <rdf:Description rdf:about="#membrane_potential">
+        <cmeta:comment rdf:parseType="Resource">
+          <rdf:value>
+            The component which defines the membrane potential and specifies
+            its kinetics.
+          </rdf:value>
+        </cmeta:comment>
+      </rdf:Description>
+    </rdf:RDF>
+    <variable name="V" initial_value="V_initial" public_interface="out" units="mV"/>
+    <variable name="V_initial" public_interface="in" units="mV"/>
+    
+  </component>
+
+  <connection>
+    <map_components component_1="membrane_potential" component_2="interface"/>
+    <map_variables variable_1="V_initial" variable_2="V_initial"/>
+    <map_variables variable_1="time" variable_2="time"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="Cm" variable_2="Cm"/>
+    <map_variables variable_1="Istim" variable_2="Istim"/>
+  </connection>
+  <connection>
+    <map_components component_1="membrane_potential" component_2="INa"/>
+    <map_variables variable_1="INa" variable_2="INa"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+
+</model>

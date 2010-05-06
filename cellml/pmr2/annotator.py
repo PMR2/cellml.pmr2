@@ -10,8 +10,6 @@ import cPickle as pickle
 import zope.interface
 import zope.component
 
-from pmr2.processor.cmeta import Cmeta
-
 import pmr2.app.util
 from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.factory import named_factory
@@ -21,7 +19,8 @@ from pmr2.app.annotation.annotator import PortalTransformAnnotatorBase
 
 from cellml.api.simple import celeds
 
-from interfaces import *
+from cellml.pmr2.cmeta import Cmeta
+from cellml.pmr2.interfaces import *
 
 LANG_SOURCE = join(dirname(__file__), 'lang')
 langpath = lambda x: join(LANG_SOURCE, x)

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<model
+    name="complex_model"
+    cmeta:id="complex_model"
+    xmlns="http://www.cellml.org/cellml/1.1#"
+    xmlns:cellml="http://www.cellml.org/cellml/1.1#"
+    xmlns:cmeta="http://www.cellml.org/metadata/1.0#"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:cmeta="http://www.cellml.org/metadata/1.0#"
+      xmlns:bqs="http://www.cellml.org/bqs/1.0#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:dcterms="http://purl.org/dc/terms/"
+      xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <rdf:Description rdf:about="">
+      <dc:title>Test Title</dc:title>
+      <dcterms:created rdf:parseType="Resource">
+        <dcterms:W3CDTF>2004-12-31</dcterms:W3CDTF>
+      </dcterms:created>
+      <dc:publisher>
+        Example Subsidary, Example Organization
+      </dc:publisher>
+    </rdf:Description>
+  </rdf:RDF>
+</model>

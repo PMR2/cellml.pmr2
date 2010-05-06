@@ -21,6 +21,7 @@ cellml/pmr2/catalog.zcml
 cellml/pmr2/cellml.txt
 cellml/pmr2/citation.py
 cellml/pmr2/citation.zcml
+cellml/pmr2/cmeta.py
 cellml/pmr2/configure.zcml
 cellml/pmr2/interfaces.py
 cellml/pmr2/note.py
@@ -43,4 +44,18 @@ cellml/pmr2/profiles/default/portal_atct.xml
 cellml/pmr2/tests/__init__.py
 cellml/pmr2/tests/adapter.py
 cellml/pmr2/tests/test.zcml
+cellml/pmr2/tests/test_cmeta.py
 cellml/pmr2/tests/test_doctest.py
+cellml/pmr2/tests/input/baylor_hollingworth_chandler_2002_version12.cellml
+cellml/pmr2/tests/input/beeler_reuter_model_1977.cellml
+cellml/pmr2/tests/input/example_model.cellml
+cellml/pmr2/tests/input/example_model_bad_rdf.cellml
+cellml/pmr2/tests/input/example_model_bad_xml.cellml
+cellml/pmr2/tests/input/example_model_creator_missing_field.cellml
+cellml/pmr2/tests/input/example_model_missing_ns.cellml
+cellml/pmr2/tests/input/example_model_no_author.cellml
+cellml/pmr2/tests/input/example_model_no_cmetaid.cellml
+cellml/pmr2/tests/input/example_model_no_creator.cellml
+cellml/pmr2/tests/input/example_model_no_date.cellml
+cellml/pmr2/tests/input/example_model_top_title_only.cellml
+cellml/pmr2/tests/input/noble_varghese_kohl_noble_1998_variant03.cellml

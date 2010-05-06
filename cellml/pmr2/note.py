@@ -2,14 +2,14 @@ import zope.interface
 import zope.component
 from zope.schema import fieldproperty
 
-from pmr2.processor.cmeta import Cmeta
 from pmr2.app.interfaces import *
 from pmr2.app.annotation.note import RawTextNote
 from pmr2.app.annotation.note import ExposureFileNoteBase
 from pmr2.app.annotation.note import ExposureFileEditableNoteBase
 
-from interfaces import *
-from util import uri2http, normal_kw
+from cellml.pmr2.interfaces import *
+from cellml.pmr2.util import uri2http, normal_kw
+from cellml.pmr2.cmeta import Cmeta
 
 # CellML Specific notes storage classes.
 

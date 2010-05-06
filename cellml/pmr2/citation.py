@@ -2,7 +2,7 @@ from cStringIO import StringIO
 import zope.component
 
 from pmr2.app.interfaces import IExposureSourceAdapter
-from pmr2.processor.cmeta import Cmeta
+from cellml.pmr2.cmeta import Cmeta
 from pmr2.annotation.citation.utility import CitationFormatterBase
 
 
