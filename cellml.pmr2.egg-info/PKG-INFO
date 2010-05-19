@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: cellml.pmr2
-Version: trunkdev
+Version: 0.1rc1
 Summary: CellML view plugins for PMR2.
 Home-page: http://www.cellml.org/
 Author: Tommy Yu
