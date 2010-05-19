@@ -26,6 +26,7 @@ setup(name='cellml.pmr2',
           'setuptools',
           # -*- Extra requirements: -*-
           'pmr2.rdf',
+          'cellml.api.simple',
       ],
       entry_points="""
       # -*- Entry points: -*-
