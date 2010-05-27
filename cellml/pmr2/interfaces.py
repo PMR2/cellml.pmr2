@@ -10,51 +10,61 @@ class ICmetaNote(zope.interface.Interface):
     metadata = zope.schema.Text(
         title=u'Metadata',
         description=u'The metadata content',
+        required=False,
     )
 
     model_title = zope.schema.TextLine(
         title=u'Model Title',
         description=u'Title of the model',
+        required=False,
     )
 
     model_author = zope.schema.TextLine(
         title=u'Model Author',
         description=u'Author of the model',
+        required=False,
     )
 
     model_author_org = zope.schema.TextLine(
         title=u'Model Author Organization',
         description=u'Organization which the author is part of',
+        required=False,
     )
 
     citation_authors = zope.schema.List(
         title=u'Citation Authors',
         description=u'List of authors of this citation',
+        required=False,
     )
 
     citation_title = zope.schema.TextLine(
         title=u'Citation Title',
         description=u'The title of this citation (e.g. the title of a journal article)',
+        required=False,
     )
 
     citation_bibliographicCitation = zope.schema.TextLine(
         title=u'Bibliographic Citation',
         description=u'The source of the article',
+        required=False,
     )
 
     citation_id = zope.schema.TextLine(
         title=u'Citation Id',
         description=u'The unique identifier for this citation (such as Pubmed).',
+        required=False,
     )
 
     citation_issued = zope.schema.TextLine(
         title=u'Citation Datetime',
         description=u'Taken from dcterms:issued.  Since the datetime format can be unpredictable, plain text is used.',
+        required=False,
     )
 
     keywords = zope.schema.List(
         title=u'Keywords',
         description=u'The keywords of this model.',
+        required=False,
     )
 
 
