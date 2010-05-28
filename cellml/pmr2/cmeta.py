@@ -277,13 +277,19 @@ class Cmeta(RdfXmlObject):
         SELECT ?title ?family ?given ?name ?unit
         WHERE {
             ?node dc:creator ?creator .
-            OPTIONAL { ?node dc:title ?title } .
-            ?creator vCard:N ?vcname .
-            ?creator vCard:ORG ?vcorg .
-            OPTIONAL { ?vcname vCard:Family ?family } .
-            OPTIONAL { ?vcname vCard:Given ?given } .
-            OPTIONAL { ?vcorg vCard:Orgname ?name } .
-            OPTIONAL { ?vcorg vCard:Orgunit ?unit } .
+            OPTIONAL { 
+                ?node dc:title ?title 
+            } .
+            OPTIONAL {
+                ?creator vCard:N ?vcname .
+                OPTIONAL { ?vcname vCard:Family ?family } .
+                OPTIONAL { ?vcname vCard:Given ?given } .
+            } .
+            OPTIONAL { 
+                ?creator vCard:ORG ?vcorg .
+                OPTIONAL { ?vcorg vCard:Orgname ?name } .
+                OPTIONAL { ?vcorg vCard:Orgunit ?unit } .
+            } .
         }
         """
 
