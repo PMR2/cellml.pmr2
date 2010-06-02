@@ -44,14 +44,17 @@ cellml/pmr2/profiles/default/portal_atct.xml
 cellml/pmr2/tests/__init__.py
 cellml/pmr2/tests/adapter.py
 cellml/pmr2/tests/test.zcml
+cellml/pmr2/tests/test_annotator.py
 cellml/pmr2/tests/test_cmeta.py
 cellml/pmr2/tests/test_doctest.py
 cellml/pmr2/tests/input/baylor_hollingworth_chandler_2002_version12.cellml
 cellml/pmr2/tests/input/beeler_reuter_model_1977.cellml
+cellml/pmr2/tests/input/detailed_citation.cellml
 cellml/pmr2/tests/input/example_model.cellml
 cellml/pmr2/tests/input/example_model_bad_rdf.cellml
 cellml/pmr2/tests/input/example_model_bad_xml.cellml
 cellml/pmr2/tests/input/example_model_creator_missing_field.cellml
+cellml/pmr2/tests/input/example_model_keyword_no_citation.cellml
 cellml/pmr2/tests/input/example_model_missing_ns.cellml
 cellml/pmr2/tests/input/example_model_no_author.cellml
 cellml/pmr2/tests/input/example_model_no_cmetaid.cellml

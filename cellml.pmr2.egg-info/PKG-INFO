@@ -10,11 +10,22 @@ Description:
         Changelog
         =========
         
-        trunk - Unreleased
+        0.1 - Unreleased
         ----------------
         
-        * Initial release
-        
+        * Extracted all CellML related functionality found in pmr2.app into this
+        package.
+        * Merged functions provided in pmr2.processor.cmeta into this package.
+        * Keywords and other metadata no longer depends on the presence of
+        citations for the Cmeta annotations.
+        * Updated code generation, now generates CellML 1.1 code using the
+        cellml.api.simple package.
+        * Also no longer deadlocks server process due to the usage of fork
+        (workaround of the select syscall locking issue by the API).
+        * Rendering of generated code uses shjs for highlighting.
+        * Various OpenCell specific views added.  Merged the launch via OpenCell
+        link into the session link (i.e. when no session file is specified,
+        the CellML file will be launched via that link instead).
         
 Platform: UNKNOWN
 Classifier: Programming Language :: Python
