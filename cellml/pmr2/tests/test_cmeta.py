@@ -200,15 +200,26 @@ class CmetaTestCase(unittest.TestCase):
         self.assertEqual(title, u'Test Title')
         self.assert_(isinstance(title, unicode))
 
-    def test_0100_bad_xml(self):
+    def test_0100_detailed_citation_vcard(self):
+        f = open(join(input_dir, 'detailed_citation.cellml'))
+        cmeta = Cmeta(f)
+        creator = cmeta.get_dc_vcard_info(node='')
+        self.assertEqual(len(creator), 1)
+        self.assertEqual(creator[0]['title'], 'The real title to the model.')
+        self.assertEqual(creator[0]['family'], 'Author')
+        self.assertEqual(creator[0]['given'], 'Main')
+        self.assertEqual(creator[0]['orgname'], '')
+        self.assertEqual(creator[0]['orgunit'], '')
+
+    def test_9100_bad_xml(self):
         f = open(join(input_dir, 'example_model_bad_xml.cellml'))
         self.assertRaises(XMLSyntaxError, Cmeta, f)
 
-    def test_0101_bad_rdf(self):
+    def test_9101_bad_rdf(self):
         f = open(join(input_dir, 'example_model_bad_rdf.cellml'))
         self.assertRaises(RDFParserError, Cmeta, f)
 
-    def test_0102_missing_ns(self):
+    def test_9102_missing_ns(self):
         f = open(join(input_dir, 'example_model_missing_ns.cellml'))
         self.assertRaises(XMLSyntaxError, Cmeta, f)
 
