@@ -177,56 +177,69 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
     for_interface = ICmetaNote
 
     def generate(self):
-        input = self.input
-        result = {}
-        metadata = Cmeta(StringIO(input))
-        ids = metadata.get_cmetaid()
-        if not ids:
-            # got no metadata.
-            return ()
 
-        citation = metadata.get_citation(ids[0])
-        if not citation:
-            # no citation, everyone go home
-            return ()
+        def generate_citation():
+            ids = metadata.get_cmetaid()
+            if not ids:
+                # got no cmetaid, assuming no CellML metadata present.
+                return
 
-        result['citation_id'] = citation[0]['citation_id']
-        # more than just journal
-        result['citation_bibliographicCitation'] = citation[0]['journal']
-        result['citation_title'] = citation[0]['title']
+            citation = metadata.get_citation(ids[0])
+            if not citation:
+                # no citation, do nothing.
+                return
 
-        # XXX ad-hoc sanity checking
-        issued = citation[0]['issued']
-        if pmr2.app.util.simple_valid_date(issued):
-            result['citation_issued'] = issued
-        else:
-            result['citation_issued'] = u''
+            result['citation_id'] = citation[0]['citation_id']
+            # more than just journal
+            result['citation_bibliographicCitation'] = citation[0]['journal']
+            result['citation_title'] = citation[0]['title']
 
-        authors = []
-        for c in citation[0]['creator']:
-            family = c['family']
-            given = c['given']
-            if c['other']:
-                other = ' '.join(c['other'])
+            # XXX ad-hoc sanity checking
+            issued = citation[0]['issued']
+            if pmr2.app.util.simple_valid_date(issued):
+                result['citation_issued'] = issued
             else:
-                other = ''
-            fn = (family, given, other)
-            authors.append(fn)
-            
-        result['citation_authors'] = authors
-        result['keywords'] = metadata.get_keywords()
+                result['citation_issued'] = u''
 
-        model_title = metadata.get_dc_title(node='')
-        if model_title:
-            result['model_title'] = model_title[0]
+            authors = []
+            for c in citation[0]['creator']:
+                family = c['family']
+                given = c['given']
+                if c['other']:
+                    other = ' '.join(c['other'])
+                else:
+                    other = ''
+                fn = (family, given, other)
+                authors.append(fn)
+                
+            result['citation_authors'] = authors
 
-        dcvc = metadata.get_dc_vcard_info(node='')
-        if dcvc:
+        def generate_keywords():
+            result['keywords'] = metadata.get_keywords()
+
+        def generate_model_title():
+            model_title = metadata.get_dc_title(node='')
+            if model_title:
+                result['model_title'] = model_title[0]
+
+        def generate_model_authorship():
+            dcvc = metadata.get_dc_vcard_info(node='')
+            if not dcvc:
+                return
             # using only first one
             info = dcvc[0]
             result['model_author'] = '%s %s' % (info['given'], info['family'])
             result['model_author_org'] = \
                 '%s, %s' % (info['orgunit'], info['orgname']) 
+
+        result = {}
+        metadata = Cmeta(StringIO(self.input))
+
+        generate_citation()
+        generate_keywords()
+        generate_model_title()
+        generate_model_authorship()
+
         # annotators are expected to return a list of tuples.
         return result.items()
 
