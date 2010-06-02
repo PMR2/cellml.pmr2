@@ -71,6 +71,18 @@ class CmetaAnnotatorTestCase(unittest.TestCase):
             'model_title': u'Model Title',
         })
 
+    def test_0001_keyword_missing_citation(self):
+        self.helper('example_model_keyword_no_citation.cellml', {
+            'keywords': [
+                ('#complex_model', u'Ventricular Myocyte'),
+                ('#complex_model', u'cardiac'),
+                ('#complex_model', u'electrophysiology'),
+            ],
+            'model_author': u'Given Family',
+            'model_title': u'Model Title',
+            'model_author_org': u'Example Subsidary, Example Organization',
+        })
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(CmetaAnnotatorTestCase))
