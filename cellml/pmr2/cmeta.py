@@ -257,7 +257,7 @@ class Cmeta(RdfXmlObject):
             result.append(d)
         return result
 
-    dc_vcard_info = ['title', 'family', 'given', 'orgname', 'orgunit',]
+    dc_vcard_info = ['family', 'given', 'orgname', 'orgunit',]
 
     def get_dc_vcard_info(self, node=None):
         """\
@@ -273,13 +273,46 @@ class Cmeta(RdfXmlObject):
         if isinstance(node, basestring):
             node = rdflib.URIRef(node)
 
-        q = """\
-        SELECT ?title ?family ?given ?name ?unit
+        # Why can't SPARQL handle both of these in one simple query
+        # gracefully?  Or is it because I just missing some points?
+
+        result = []
+        bindings = {
+            rdflib.Variable("?node"): node,
+        }
+
+        q_multi = """\
+        SELECT ?family ?given ?name ?unit
         WHERE {
             ?node dc:creator ?creator .
-            OPTIONAL { 
-                ?node dc:title ?title 
+            ?creator ?li ?creators .
+            ?creator rdf:type ?containertype .
+            FILTER regex(str(?li), 
+                '^http://www.w3.org/1999/02/22-rdf-syntax-ns#_') .
+            OPTIONAL {
+                ?creators vCard:N ?vcname .
+                OPTIONAL { ?vcname vCard:Family ?family } .
+                OPTIONAL { ?vcname vCard:Given ?given } .
             } .
+            OPTIONAL { 
+                ?creators vCard:ORG ?vcorg .
+                OPTIONAL { ?vcorg vCard:Orgname ?name } .
+                OPTIONAL { ?vcorg vCard:Orgunit ?unit } .
+            } .
+        }
+        """
+
+        vcards_multi = self.query(q_multi, bindings).selected
+        result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
+                  for i in vcards_multi if i != ["", "", "", ""]]
+        # SPARQL does not support namespaces in query values
+        if result:
+            return result
+
+        q = """\
+        SELECT ?family ?given ?name ?unit
+        WHERE {
+            ?node dc:creator ?creator .
             OPTIONAL {
                 ?creator vCard:N ?vcname .
                 OPTIONAL { ?vcname vCard:Family ?family } .
@@ -293,10 +326,6 @@ class Cmeta(RdfXmlObject):
         }
         """
 
-        result = []
-        bindings = {
-            rdflib.Variable("?node"): node,
-        }
         vcards = self.query(q, bindings).selected
         result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
                   for i in vcards]

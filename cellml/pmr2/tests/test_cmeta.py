@@ -126,7 +126,6 @@ class CmetaTestCase(unittest.TestCase):
         # returns the cmeta:id in the order they showed up
         creator = cmeta.get_dc_vcard_info(node='')
         self.assertEqual(len(creator), 1)
-        self.assertEqual(creator[0]['title'], 'Model Title')
         self.assertEqual(creator[0]['family'], 'Family')
         self.assertEqual(creator[0]['given'], 'Given')
         self.assertEqual(creator[0]['orgname'], 'Example Organization')
@@ -136,7 +135,6 @@ class CmetaTestCase(unittest.TestCase):
         f = open(join(input_dir, 'example_model_creator_missing_field.cellml'))
         cmeta = Cmeta(f)
         creator = cmeta.get_dc_vcard_info(node='')
-        self.assertEqual(creator[0]['title'], '')
         self.assertEqual(creator[0]['family'], 'Family')
         self.assertEqual(creator[0]['orgunit'], 'Example Subsidary')
 
@@ -147,10 +145,27 @@ class CmetaTestCase(unittest.TestCase):
         creator = cmeta.get_dc_vcard_info(node='')
         self.assertEqual(creator, [])
 
-    def test_0053_dc_vcard_info_dc_title_only(self):
-        f = open(join(input_dir, 'example_model_top_title_only.cellml'))
+    def test_0053_dc_vcard_info_multi_creator(self):
+        f = open(join(input_dir, 'example_model_multi_creator.cellml'))
         cmeta = Cmeta(f)
-        # title wouldn't have been returned
+        creator = cmeta.get_dc_vcard_info(node='')
+        self.assertEqual(len(creator), 2)
+        # since query order is unsorted, we have to test as so
+        family = [i['family'] for i in creator]
+        family.sort()
+        self.assertEqual(family, ['FirstFamily', 'SecondFamily'])
+
+    def test_0051_dc_vcard_info_missing_field(self):
+        f = open(join(input_dir, 'example_model_creator_missing_field.cellml'))
+        cmeta = Cmeta(f)
+        creator = cmeta.get_dc_vcard_info(node='')
+        self.assertEqual(creator[0]['family'], 'Family')
+        self.assertEqual(creator[0]['orgunit'], 'Example Subsidary')
+
+    def test_0052_dc_vcard_info_no_creator(self):
+        f = open(join(input_dir, 'example_model_no_creator.cellml'))
+        cmeta = Cmeta(f)
+        # should not cause exception
         creator = cmeta.get_dc_vcard_info(node='')
         self.assertEqual(creator, [])
 
@@ -205,7 +220,6 @@ class CmetaTestCase(unittest.TestCase):
         cmeta = Cmeta(f)
         creator = cmeta.get_dc_vcard_info(node='')
         self.assertEqual(len(creator), 1)
-        self.assertEqual(creator[0]['title'], 'The real title to the model.')
         self.assertEqual(creator[0]['family'], 'Author')
         self.assertEqual(creator[0]['given'], 'Main')
         self.assertEqual(creator[0]['orgname'], '')
