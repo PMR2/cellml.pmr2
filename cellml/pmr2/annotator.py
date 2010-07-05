@@ -202,6 +202,10 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
                 result['citation_issued'] = u''
 
             authors = []
+            if not citation[0]['creator']:
+                # no authors, we do not need the last field.
+                return
+
             for c in citation[0]['creator']:
                 family = c['family']
                 given = c['given']
