@@ -10,7 +10,13 @@ Description:
         Changelog
         =========
         
-        0.1 - Unreleased
+        0.1.1 - 2010-07-05
+        ------------------
+        
+        * Fixed handling of null values in fields which were never present
+        before.
+        
+        0.1 - 2010-06-21
         ----------------
         
         * Extracted all CellML related functionality found in pmr2.app into this

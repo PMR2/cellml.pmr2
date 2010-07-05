@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.1 - 2010-07-05
+------------------
+
+* Fixed handling of null values in fields which were never present
+  before.
+
 0.1 - 2010-06-21
 ----------------
 
