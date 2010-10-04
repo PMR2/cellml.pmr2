@@ -4,10 +4,12 @@ from paste.httpexceptions import HTTPNotFound
 from plone.z3cform import layout
 
 from pmr2.app.interfaces import IExposureSourceAdapter
-from pmr2.app.browser.exposure import RawContentNote, ExposureFileViewBase
-from pmr2.app.browser.workspace import WorkspaceRawfileXmlBaseView
 from pmr2.app.browser.layout import PlainTraverseOverridableWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
+
+from pmr2.app.workspace.browser import WorkspaceRawfileXmlBaseView
+from pmr2.app.exposure.browser import RawContentNote
+from pmr2.app.exposure.browser import ExposureFileViewBase
 
 from pmr2.annotation.shjs.layout import IShjsLayoutWrapper
 from pmr2.annotation.shjs.browser import SourceTextNote

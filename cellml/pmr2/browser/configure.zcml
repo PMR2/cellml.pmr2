@@ -6,28 +6,28 @@
   <!-- Browser pages -->
 
   <browser:page
-      for="pmr2.app.content.ExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_ccode"
       class=".view.BasicCCodeNoteView"
       permission="zope2.View"
       />
 
   <browser:page
-      for="pmr2.app.content.ExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cmeta"
       class=".view.CmetaNoteView"
       permission="zope2.View"
       />
 
   <browser:page
-      for="pmr2.app.content.ExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cellml_codegen"
       class=".view.CellMLCodegenNoteView"
       permission="zope2.View"
       />
 
   <browser:page
-      for="pmr2.app.content.ExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="opencellsession"
       class=".view.OpenCellSessionNoteView"
       permission="zope2.View"
@@ -37,7 +37,7 @@
     CellML requires application specific view.
   -->
   <browser:page
-      for="pmr2.app.content.Workspace"
+      for="pmr2.app.workspace.interfaces.IWorkspace"
       name="pcenv"
       class=".view.WorkspaceRawfileXmlBasePCEnvView"
       permission="zope2.View"

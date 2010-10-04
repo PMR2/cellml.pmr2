@@ -11,8 +11,9 @@ from Products.Five import zcml
 
 import pmr2.app
 from pmr2.app.tests import base
-from pmr2.app.content import ExposureContainer
-from pmr2.app.browser import exposure
+from pmr2.app.exposure.content import ExposureContainer
+from pmr2.app.exposure.browser import ExposureAddForm
+from pmr2.app.exposure.browser import ExposureFileGenForm
 from pmr2.app.tests.base import TestRequest
 
 class CellMLDocTestCase(base.ExposureDocTestCase):
@@ -36,8 +37,7 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
                 'form.widgets.commit_id': rev,
                 'form.buttons.add': 1,
             })
-        testform = exposure.ExposureAddForm(
-            self.portal.exposure, request)
+        testform = ExposureAddForm(self.portal.exposure, request)
         testform.update()
         exp_id = testform._data['id']
         context = self.portal.exposure[exp_id]
@@ -49,7 +49,7 @@ class CellMLDocTestCase(base.ExposureDocTestCase):
                 'form.widgets.filename': [self.file1],
                 'form.buttons.add': 1,
             })
-        testform = exposure.ExposureFileGenForm(context, request)
+        testform = ExposureFileGenForm(context, request)
         testform.update()
         self.exposure_file1 = context[self.file1]
 

@@ -13,10 +13,9 @@ Here we first set up the environment.
     >>> from zope import interface
     >>> import zope.component
     >>> from plone.z3cform.tests import setup_defaults
-    >>> from pmr2.app.browser import workspace, exposure
+    >>> from pmr2.app.exposure.browser import ExposureFileAnnotatorForm
+    >>> from pmr2.app.exposure.browser import ExposureFileNoteEditForm
     >>> from pmr2.app.tests.base import TestRequest
-    >>> from pmr2.app.content import *
-    >>> from pmr2.app.interfaces import *
     >>> pp = lambda x: pprint(x, indent=4, width=1)
 
 First we make the note using the form, then we view the output using
@@ -29,7 +28,7 @@ the view registered.
     ...         'form.widgets.annotators': [u'cmeta'],
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> view = exposure.ExposureFileAnnotatorForm(filectx, request)
+    >>> view = ExposureFileAnnotatorForm(filectx, request)
     >>> result = view()
     >>> result == ''
     True
@@ -87,7 +86,7 @@ session file note/annotator.
     ...         'form.widgets.annotators': [u'opencellsession'],
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> view = exposure.ExposureFileAnnotatorForm(filectx, request)
+    >>> view = ExposureFileAnnotatorForm(filectx, request)
     >>> result = view()
     >>> result == ''
     True
@@ -102,7 +101,7 @@ what the request would see here and render the note edit view.
 
     >>> session_path = u'component/docs/index.html'
     >>> request = TestRequest()
-    >>> view = exposure.ExposureFileNoteEditForm(filectx, request)
+    >>> view = ExposureFileNoteEditForm(filectx, request)
     >>> view.traverse_subpath = ['opencellsession']
     >>> result = view()
     >>> 'filename' in result
@@ -118,7 +117,7 @@ We first apply a default none value, which should update.
     ...         'form.widgets.filename': [],
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> view = exposure.ExposureFileNoteEditForm(filectx, request)
+    >>> view = ExposureFileNoteEditForm(filectx, request)
     >>> view.traverse_subpath = ['opencellsession']
     >>> result = view()
 
@@ -141,7 +140,7 @@ Now we apply the session path to the note.
     ...         'form.widgets.filename': [session_path],
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> view = exposure.ExposureFileNoteEditForm(filectx, request)
+    >>> view = ExposureFileNoteEditForm(filectx, request)
     >>> view.traverse_subpath = ['opencellsession']
     >>> result = view()
 

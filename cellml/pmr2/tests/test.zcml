@@ -10,14 +10,14 @@
       />
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory="cellml.pmr2.tests.adapter.DummyCodegenNoteFactory"
       provides="cellml.pmr2.interfaces.ICellMLCodegenNote"
       name="dummy_code"
       />
 
   <browser:page
-      for="pmr2.app.content.ExposureFile"
+      for="pmr2.app.exposure.content.ExposureFile"
       name="dummy_code"
       class="cellml.pmr2.browser.view.CellMLCodegenNoteView"
       permission="zope2.View"

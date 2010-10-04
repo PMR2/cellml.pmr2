@@ -13,17 +13,15 @@ We use the cmeta annotator to generate our notes again, then try out the
 indexes.
 ::
 
-    >>> from pmr2.app.browser import workspace, exposure
+    >>> from pmr2.app.exposure.browser import ExposureFileAnnotatorForm
     >>> from pmr2.app.tests.base import TestRequest
-    >>> from pmr2.app.content import *
-    >>> from pmr2.app.interfaces import *
     >>> filectx = self.exposure_file1
     >>> request = TestRequest(
     ...     form={
     ...         'form.widgets.annotators': [u'cmeta'],
     ...         'form.buttons.apply': 1,
     ...     })
-    >>> view = exposure.ExposureFileAnnotatorForm(filectx, request)
+    >>> view = ExposureFileAnnotatorForm(filectx, request)
     >>> result = view()
 
 Citation Authors for PMR1 style listing the root exposure.
@@ -106,6 +104,6 @@ The keyword index provider should have been registered, and it should
 provide the results we expect that's in the file.
 ::
 
-    >>> from pmr2.app.catalog import pmr2_keyword
+    >>> from pmr2.app.exposure.catalog import pmr2_keyword
     >>> pmr2_keyword(self.exposure_file1)()
     [u'cardiac', u'electrophysiology', u'ventricular_myocyte']

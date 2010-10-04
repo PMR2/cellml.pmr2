@@ -6,35 +6,35 @@
   <!-- Note storage -->
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".BasicMathMLNoteFactory"
       provides="pmr2.app.annotation.interfaces.IRawTextNote"
       name="basic_mathml"
       />
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".BasicCCodeNoteFactory"
       provides="pmr2.app.annotation.interfaces.IRawTextNote"
       name="basic_ccode"
       />
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".CmetaNoteFactory"
       provides=".interfaces.ICmetaNote"
       name="cmeta"
       />
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".OpenCellSessionNoteFactory"
       provides=".interfaces.IOpenCellSessionNote"
       name="opencellsession"
       />
 
   <adapter
-      for="pmr2.app.content.interfaces.IExposureFile"
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".CellMLCodegenNoteFactory"
       provides=".interfaces.ICellMLCodegenNote"
       name="cellml_codegen"
