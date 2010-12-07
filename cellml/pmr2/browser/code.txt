@@ -77,11 +77,15 @@ Having extra elements will result in not found
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw', 'raw'])
     >>> view.form_instance.update()
-    >>> result = view.form_instance()
     Traceback (most recent call last):
     ...
     HTTPNotFound: 404 Not Found
     ...
+
+As well as missing the language code (or just another case of unknown
+language)
+::
+
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['raw'])

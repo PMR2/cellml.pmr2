@@ -67,6 +67,7 @@ class CellMLCodegenNote(SourceTextNote):
 
     select_template = ViewPageTemplateFile('code_select.pt')
     title = ViewPageTemplateFile('cellml_code.pt')
+    rawcode = False
 
     def raw(self):
         self.request.response.setHeader('Content-Type', 'text/plain')
@@ -101,27 +102,33 @@ class CellMLCodegenNote(SourceTextNote):
         if not self.traverse_subpath:
             return 
 
-        self.traverse_subpath.reverse()
-        language = self.traverse_subpath.pop()
-
-        if language not in self.available_langs():
-            # we don't have this language.
+        if len(self.traverse_subpath) > 2:
             raise HTTPNotFound()
 
-        self._language = language
-        self.traverse_subpath.reverse()
+        def select_language(language):
+            if language not in self.available_langs():
+                # we don't have this language.
+                raise HTTPNotFound()
+            self._language = language
+
+        def check_raw(raw):
+            if raw == 'raw':
+                self.rawcode = True
+            else:
+                # unknown keyword.
+                raise HTTPNotFound()
+
+        process = [select_language, check_raw]
+
+        for f, v in zip(process, self.traverse_subpath):
+            f(v)
 
     def render(self):
         if self.language is None:
             return self.select_template()
 
-        if self.traverse_subpath:
-            subpath = '/'.join(self.traverse_subpath)
-            if subpath == 'raw':
-                return self.raw()
-            else:
-                # unknown keyword.
-                raise HTTPNotFound()
+        if self.rawcode:
+            return self.raw()
 
         return super(CellMLCodegenNote, self).render()
 
