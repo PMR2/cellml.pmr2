@@ -111,7 +111,7 @@ class CellMLCodegenNote(SourceTextNote):
         self._language = language
         self.traverse_subpath.reverse()
 
-    def __call__(self):
+    def render(self):
         if self.language is None:
             return self.select_template()
 
@@ -123,7 +123,7 @@ class CellMLCodegenNote(SourceTextNote):
                 # unknown keyword.
                 raise HTTPNotFound()
 
-        return super(CellMLCodegenNote, self).__call__()
+        return super(CellMLCodegenNote, self).render()
 
 CellMLCodegenNoteView = layout.wrap_form(CellMLCodegenNote, 
     __wrapper_class=ShjsPlainTraverseOverridableWrapper)
