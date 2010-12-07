@@ -43,4 +43,16 @@
       permission="zope2.View"
       />
 
+  <!--
+    PMR1 Compatibility View
+  -->
+
+  <browser:page
+      for="Products.CMFCore.interfaces.IFolderish"
+      name="pmr1_folder_listing"
+      template="pmr1_folder_listing.pt"
+      permission="zope2.View"
+      layer="pmr2.app.interfaces.IPMR2AppLayer"
+      />
+
 </configure>
