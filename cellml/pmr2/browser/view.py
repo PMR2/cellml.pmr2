@@ -7,7 +7,7 @@ from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.browser.layout import PlainTraverseOverridableWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
-from pmr2.app.workspace.browser import WorkspaceRawfileXmlBaseView
+from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
 from pmr2.app.exposure.browser import RawContentNote
 from pmr2.app.exposure.browser import ExposureFileViewBase
 
