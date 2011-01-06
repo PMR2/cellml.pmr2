@@ -4,7 +4,7 @@ from paste.httpexceptions import HTTPNotFound
 from plone.z3cform import layout
 
 from pmr2.app.interfaces import IExposureSourceAdapter
-from pmr2.app.browser.layout import PlainTraverseOverridableWrapper
+from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
@@ -17,10 +17,9 @@ from pmr2.annotation.shjs.browser import SourceTextNote
 from cellml.pmr2.util import fix_pcenv_externalurl
 
 
-class ShjsPlainTraverseOverridableWrapper(PlainTraverseOverridableWrapper):
+class ShjsTraverseLayoutWrapper(PlainTraverseLayoutWrapper):
     """
-    A `PlainTraverseOverridableWrapper` that implements the Shjs 
-    wrapper.
+    A `PlainTraverseLayoutWrapper` that implements the Shjs wrapper.
     """
 
     zope.interface.implements(IShjsLayoutWrapper)
@@ -28,7 +27,7 @@ class ShjsPlainTraverseOverridableWrapper(PlainTraverseOverridableWrapper):
     def __call__(self):
         if hasattr(self.form_instance, 'update'):
             self.form_instance.update()
-        return super(ShjsPlainTraverseOverridableWrapper, self).__call__()
+        return super(ShjsTraverseLayoutWrapper, self).__call__()
 
 
 class BasicCCodeNote(SourceTextNote):
@@ -57,7 +56,7 @@ class BasicCCodeNote(SourceTextNote):
             raise HTTPNotFound()
 
 BasicCCodeNoteView = layout.wrap_form(BasicCCodeNote,
-    __wrapper_class=ShjsPlainTraverseOverridableWrapper)
+    __wrapper_class=ShjsTraverseLayoutWrapper)
 
 
 class CellMLCodegenNote(SourceTextNote):
@@ -133,7 +132,7 @@ class CellMLCodegenNote(SourceTextNote):
         return super(CellMLCodegenNote, self).render()
 
 CellMLCodegenNoteView = layout.wrap_form(CellMLCodegenNote, 
-    __wrapper_class=ShjsPlainTraverseOverridableWrapper)
+    __wrapper_class=ShjsTraverseLayoutWrapper)
 
 
 class CmetaNote(ExposureFileViewBase):
