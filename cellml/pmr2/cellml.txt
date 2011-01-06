@@ -13,8 +13,8 @@ Here we first set up the environment.
     >>> from zope import interface
     >>> import zope.component
     >>> from plone.z3cform.tests import setup_defaults
-    >>> from pmr2.app.exposure.browser import ExposureFileAnnotatorForm
-    >>> from pmr2.app.exposure.browser import ExposureFileNoteEditForm
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileNoteEditForm
     >>> from pmr2.app.tests.base import TestRequest
     >>> pp = lambda x: pprint(x, indent=4, width=1)
 

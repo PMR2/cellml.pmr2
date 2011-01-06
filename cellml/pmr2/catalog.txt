@@ -13,7 +13,7 @@ We use the cmeta annotator to generate our notes again, then try out the
 indexes.
 ::
 
-    >>> from pmr2.app.exposure.browser import ExposureFileAnnotatorForm
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
     >>> from pmr2.app.tests.base import TestRequest
     >>> filectx = self.exposure_file1
     >>> request = TestRequest(

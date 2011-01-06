@@ -12,8 +12,8 @@ from Products.Five import zcml
 import pmr2.app
 from pmr2.app.tests.base import TestRequest
 from pmr2.app.exposure.content import ExposureContainer
-from pmr2.app.exposure.browser import ExposureAddForm
-from pmr2.app.exposure.browser import ExposureFileGenForm
+from pmr2.app.exposure.browser.browser import ExposureAddForm
+from pmr2.app.exposure.browser.browser import ExposureFileGenForm
 from pmr2.app.exposure.tests.base import ExposureDocTestCase
 
 

@@ -8,8 +8,8 @@ from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
-from pmr2.app.exposure.browser import RawContentNote
-from pmr2.app.exposure.browser import ExposureFileViewBase
+from pmr2.app.exposure.browser.browser import RawContentNote
+from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
 from pmr2.annotation.shjs.layout import IShjsLayoutWrapper
 from pmr2.annotation.shjs.browser import SourceTextNote

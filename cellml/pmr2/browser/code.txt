@@ -12,7 +12,7 @@ invoke it for testing.
 ::
 
     >>> import zope.component
-    >>> from pmr2.app.exposure.browser import ExposureFileAnnotatorForm
+    >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
     >>> from pmr2.app.tests.base import TestRequest
     >>> filectx = self.exposure_file1
     >>> request = TestRequest(
