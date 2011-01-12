@@ -16,8 +16,10 @@ from pmr2.app.exposure.browser.browser import ExposureAddForm
 from pmr2.app.exposure.browser.browser import ExposureFileGenForm
 from pmr2.app.exposure.tests.base import ExposureDocTestCase
 
+from pmr2.mercurial.tests.base import MercurialDocTestCase
 
-class CellMLDocTestCase(ExposureDocTestCase):
+
+class CellMLDocTestCase(MercurialDocTestCase):
 
     def setUp(self):
         super(CellMLDocTestCase, self).setUp()
