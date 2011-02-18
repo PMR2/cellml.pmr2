@@ -205,7 +205,7 @@ class WorkspaceRawfileXmlBasePCEnvView(WorkspaceRawfileXmlBaseView):
     def __call__(self):
         data = WorkspaceRawfileXmlBaseView.__call__(self)
 
-        if self.storage.path.endswith('session.xml'):
+        if self.viewpath.endswith('session.xml'):
             # See pmr2.app.util.fix_pcenv_externalurl and
             # https://tracker.physiomeproject.org/show_bug.cgi?id=1079
             data = fix_pcenv_externalurl(data, self.rooturi)
