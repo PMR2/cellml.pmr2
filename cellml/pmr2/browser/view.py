@@ -11,6 +11,8 @@ from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
 from pmr2.app.exposure.browser.browser import RawContentNote
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
+from pmr2.annotation.mathjax.layout import MathJaxLayoutWrapper
+from pmr2.annotation.mathjax.layout import DeferredMathJaxLayoutWrapper
 from pmr2.annotation.shjs.layout import IShjsLayoutWrapper
 from pmr2.annotation.shjs.browser import SourceTextNote
 
@@ -28,6 +30,20 @@ class ShjsTraverseLayoutWrapper(PlainTraverseLayoutWrapper):
         if hasattr(self.form_instance, 'update'):
             self.form_instance.update()
         return super(ShjsTraverseLayoutWrapper, self).__call__()
+
+
+class BasicMathMLNote(RawContentNote):
+    """\
+    This is based on the raw text note view, but uses the SourceTextNote
+    browser class.
+    """
+
+    def template(self):
+        # XXX yes this is a hack.
+        return self.note.text.replace('<mml:', '<').replace('</mml:', '</')
+
+BasicMathMLNoteView = layout.wrap_form(BasicMathMLNote,
+    __wrapper_class=MathJaxLayoutWrapper)
 
 
 class BasicCCodeNote(SourceTextNote):
@@ -143,6 +159,26 @@ class CmetaNote(ExposureFileViewBase):
     template = ViewPageTemplateFile('cmeta_note.pt')
 
 CmetaNoteView = layout.wrap_form(CmetaNote, __wrapper_class=PlainLayoutWrapper)
+
+
+class CellMLMathNote(ExposureFileViewBase):
+    """\
+    CellML Math Note.
+    """
+
+    template = ViewPageTemplateFile('cellml_math.pt')
+
+    def maths(self):
+        for comp, math in self.note.maths:
+            yield {
+                'id': comp,
+                'math': ''.join(math),
+            }
+
+CellMLMathNoteView = layout.wrap_form(CellMLMathNote, 
+    #__wrapper_class=PlainLayoutWrapper)
+    #__wrapper_class=MathJaxLayoutWrapper)
+    __wrapper_class=DeferredMathJaxLayoutWrapper)
 
 
 class OpenCellSessionNoteView(ExposureFileViewBase):

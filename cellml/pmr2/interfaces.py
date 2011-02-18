@@ -93,3 +93,16 @@ class ICellMLCodegenNote(zope.interface.Interface):
         default={},
         required=False,
     )
+
+
+class ICellMLMathNote(zope.interface.Interface):
+    """\
+    Math notes
+    """
+
+    maths = zope.schema.List(
+        title=u'Maths',
+        description=u'Mathematic equations',
+        default=[],
+        required=False,
+    )

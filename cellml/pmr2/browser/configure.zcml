@@ -7,6 +7,20 @@
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="basic_mathml"
+      class=".view.BasicMathMLNoteView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cellml_math"
+      class=".view.CellMLMathNoteView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_ccode"
       class=".view.BasicCCodeNoteView"
       permission="zope2.View"

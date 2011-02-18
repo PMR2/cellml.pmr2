@@ -1,0 +1,34 @@
+<h1>Model Mathematics</h1>
+<div>
+  <script type="text/javascript">
+  //<![CDATA[
+    function process() {
+      var components = jq('#mathjax-render > *');
+      for (var i = 0; i < components.length; i++) {
+        var component = jq(components[i]); //.clone();
+        var equations = component.find('math > mrow');
+        for (var j = 0; j < equations.length; j++) {
+          var math = jq('<' + 'div class="eq"><' + '/div>').append(
+                        jq('<' + 'math>' + '<' + '/math>').append(
+                           equations[j]));
+          component.append(math);
+        }
+      }
+    }
+
+    jq(document).ready(function() {
+      process();
+      loadMathJax();
+    })
+
+  //]]>
+  </script>
+
+  <div id="mathjax-render">
+    <div tal:repeat="i view/maths">
+      <h3>Component: <span tal:replace="i/id"></span></h3>
+      <div tal:content="structure i/math"></div>
+    </div>
+  </div>
+
+</div>

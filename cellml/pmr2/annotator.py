@@ -1,4 +1,5 @@
 from shutil import rmtree
+from lxml import etree
 import tempfile
 import os
 import time
@@ -17,16 +18,21 @@ from pmr2.app.annotation.interfaces import *
 from pmr2.app.annotation.annotator import ExposureFileAnnotatorBase
 from pmr2.app.annotation.annotator import PortalTransformAnnotatorBase
 
+from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 from cellml.api.simple import celeds
 
 from cellml.pmr2.cmeta import Cmeta
 from cellml.pmr2.interfaces import *
 
 LANG_SOURCE = join(dirname(__file__), 'lang')
+XSLT_SOURCE = join(dirname(__file__), 'xslt')
 langpath = lambda x: join(LANG_SOURCE, x)
+xsltpath = lambda x: join(XSLT_SOURCE, x)
+
+mathmlc2p_xslt = etree.parse(xsltpath('mathmlc2p.xsl'))
 
 
-class CellML2MathMLAnnotator(PortalTransformAnnotatorBase):
+class PTCellML2MathMLAnnotator(PortalTransformAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     transform = 'pmr2_processor_legacy_cellml2html_mathml'
     title = u'Basic MathML'
@@ -39,7 +45,105 @@ class CellML2MathMLAnnotator(PortalTransformAnnotatorBase):
             ('text', self.convert(self.input).decode('utf8')),
         )
 
-CellML2MathMLAnnotatorFactory = named_factory(CellML2MathMLAnnotator)
+PTCellML2MathMLAnnotatorFactory = named_factory(PTCellML2MathMLAnnotator)
+
+
+class CellMLMathAnnotator(ExposureFileAnnotatorBase):
+    zope.interface.implements(IExposureFileAnnotator)
+    title = u'CellML Math Extraction'
+    label = u'Mathematics'
+    description = u''
+    for_interface = ICellMLMathNote
+
+    def maths(self):
+        # Since the CellML API's load model method does not support 
+        # asynchronious operation, we must fork it so it doesn't block
+        # the server from doing its job.
+        # 
+        # When Zope/Plone can run on Python 2.6, this can be ported to
+        # use multiprocessing module.
+
+        blocksize = 512
+        chunks = []
+
+        def __maths():
+            cu = zope.component.getUtility(ICellMLAPIUtility)
+            sa = zope.component.queryAdapter(
+                self.context, IExposureSourceAdapter)
+            exposure, workspace, path = sa.source()
+            modelfile = '%s/@@%s/%s/%s' % (workspace.absolute_url(),
+                'rawfile', exposure.commit_id, path)
+            model = cu.loadModel(modelfile)
+            model.fullyInstantiateImports()
+            results = cu.extractMaths(model)
+            return results
+
+        def readpipe(fd):
+            while True:
+                lump = os.read(fd, blocksize)
+                if not lump:
+                    break
+                chunks.append(lump)
+
+        def writepipe(fd, stream):
+            while True:
+                lump = stream.read(blocksize)
+                if not lump:
+                    break
+                bytes = os.write(fd, lump)
+
+        try:
+            p = os.pipe()
+        except:
+            # might want to use a proper exception type, likewise below.
+            raise Exception('failed to open pipe')
+
+        child_pid = os.fork()
+        if child_pid == -1:
+            raise Exception('failed to spawn child for math extraction')
+
+        if child_pid == 0:
+            try:
+                results = __maths()
+                raw = pickle.dumps(results)
+                cooked = StringIO(raw)
+                writepipe(p[1], cooked)
+            finally:
+                os.close(p[0])
+                os.close(p[1])
+                os._exit(0)
+        else:
+            # read whatever child wrote, so we don't need to write
+            os.close(p[1])
+            pid = 0
+            while not pid:
+                # we might want a sane upper limit on maximum running 
+                # time for the child.
+                pid, status = os.waitpid(child_pid, os.WNOHANG)
+                # need to empty the pipe.
+                readpipe(p[0])
+                time.sleep(0.01)
+            try:
+                blob = ''.join(chunks)
+                results = blob and pickle.loads(blob) or []
+            finally:
+                os.close(p[0])
+
+        return results
+
+    def generate(self):
+        def mathc2p(s):
+            r = StringIO()
+            t = etree.parse(StringIO(s))
+            t.xslt(mathmlc2p_xslt).write(r)
+            return r.getvalue()
+        maths = self.maths()
+        maths = [(k, [mathc2p(m) for m in v]) for k, v in maths]
+        return (
+            ('maths', maths),
+        )
+
+CellMLMathAnnotatorFactory = named_factory(CellMLMathAnnotator)
 
 
 class CellML2CAnnotator(PortalTransformAnnotatorBase):

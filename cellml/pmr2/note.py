@@ -101,3 +101,10 @@ class CellMLCodegenNote(ExposureFileNoteBase):
 
     zope.interface.implements(ICellMLCodegenNote)
     code = fieldproperty.FieldProperty(ICellMLCodegenNote['code'])
+
+
+class CellMLMathNote(ExposureFileNoteBase):
+
+    zope.interface.implements(ICellMLMathNote)
+
+    maths = fieldproperty.FieldProperty(ICellMLMathNote['maths'])
