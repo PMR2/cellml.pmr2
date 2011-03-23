@@ -1,5 +1,6 @@
 from shutil import rmtree
 from lxml import etree
+import re
 import tempfile
 import os
 import time
@@ -11,7 +12,6 @@ import cPickle as pickle
 import zope.interface
 import zope.component
 
-import pmr2.app.util
 from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.factory import named_factory
 from pmr2.app.annotation.interfaces import *
@@ -30,6 +30,7 @@ langpath = lambda x: join(LANG_SOURCE, x)
 xsltpath = lambda x: join(XSLT_SOURCE, x)
 
 mathmlc2p_xslt = etree.parse(xsltpath('mathmlc2p.xsl'))
+re_date = re.compile('^[0-9]{4}(-[0-9]{2}){0,2}')
 
 
 class PTCellML2MathMLAnnotator(PortalTransformAnnotatorBase):
@@ -300,7 +301,7 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
 
             # XXX ad-hoc sanity checking
             issued = citation[0]['issued']
-            if pmr2.app.util.simple_valid_date(issued):
+            if isinstance(issued, basestring) and re_date.search(issued):
                 result['citation_issued'] = issued
             else:
                 result['citation_issued'] = u''
