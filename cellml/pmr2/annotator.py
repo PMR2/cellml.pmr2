@@ -75,7 +75,6 @@ class CellMLMathAnnotator(ExposureFileAnnotatorBase):
             modelfile = '%s/@@%s/%s/%s' % (workspace.absolute_url(),
                 'rawfile', exposure.commit_id, path)
             model = cu.loadModel(modelfile)
-            model.fullyInstantiateImports()
             results = cu.extractMaths(model)
             return results
 
