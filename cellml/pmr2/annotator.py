@@ -68,6 +68,10 @@ class CellMLMathAnnotator(ExposureFileAnnotatorBase):
         chunks = []
 
         def __maths():
+            # XXX Originally I assumed the Python bindings to the CellML API
+            # could be ready, however this is not the case.  Please refer to
+            # the installed version of cellml.api.pmr2 for what it really is
+            # doing.
             cu = zope.component.getUtility(ICellMLAPIUtility)
             sa = zope.component.queryAdapter(
                 self.context, IExposureSourceAdapter)
