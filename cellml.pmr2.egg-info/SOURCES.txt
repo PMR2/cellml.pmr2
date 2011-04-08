@@ -30,10 +30,12 @@ cellml/pmr2/util.py
 cellml/pmr2/browser/__init__.py
 cellml/pmr2/browser/basic_ccode.pt
 cellml/pmr2/browser/cellml_code.pt
+cellml/pmr2/browser/cellml_math.pt
 cellml/pmr2/browser/cmeta_note.pt
 cellml/pmr2/browser/code.txt
 cellml/pmr2/browser/code_select.pt
 cellml/pmr2/browser/configure.zcml
+cellml/pmr2/browser/pmr1_folder_listing.pt
 cellml/pmr2/browser/view.py
 cellml/pmr2/lang/C.xml
 cellml/pmr2/lang/F77.xml
@@ -63,3 +65,4 @@ cellml/pmr2/tests/input/example_model_no_creator.cellml
 cellml/pmr2/tests/input/example_model_no_date.cellml
 cellml/pmr2/tests/input/example_model_top_title_only.cellml
 cellml/pmr2/tests/input/noble_varghese_kohl_noble_1998_variant03.cellml
+cellml/pmr2/xslt/mathmlc2p.xsl
