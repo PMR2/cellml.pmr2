@@ -7,7 +7,9 @@ from Testing import ZopeTestCase as ztc
 from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite
 from Products.PloneTestCase.layer import onsetup
-from Products.Five import zcml
+from Products.PloneTestCase.layer import onteardown
+from Products.Five import fiveconfigure
+from Zope2.App import zcml
 
 import pmr2.app
 from pmr2.app.tests.base import TestRequest
@@ -18,14 +20,31 @@ from pmr2.app.exposure.tests.base import ExposureDocTestCase
 
 from pmr2.mercurial.tests.base import MercurialDocTestCase
 
+@onsetup
+def setup():
+    import pmr2.app
+    import cellml.pmr2
+    fiveconfigure.debug_mode = True
+    # XXX dependant on pmr2.app still
+    zcml.load_config('configure.zcml', cellml.pmr2)
+    zcml.load_config('test.zcml', cellml.pmr2.tests)
+    fiveconfigure.debug_mode = False
+    ztc.installPackage('cellml.pmr2')
+
+@onteardown
+def teardown():
+    pass
+
+setup()
+teardown()
+ptc.setupPloneSite(products=('cellml.pmr2',))
+
 
 class CellMLDocTestCase(MercurialDocTestCase):
 
     def setUp(self):
         super(CellMLDocTestCase, self).setUp()
         import cellml.pmr2
-        zcml.load_config('configure.zcml', cellml.pmr2)
-        zcml.load_config('tests/test.zcml', cellml.pmr2)
         self.portal['exposure'] = ExposureContainer()
         rawrevs = [
             'b94d1701154be42acf63ee6b4bd4a99d09ba043c',
