@@ -49,6 +49,7 @@ the wrapper doesn't work within here, we have to manually invoke the
 methods within the form_instance to update and generate the output.
 ::
 
+    >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C'])
@@ -62,6 +63,7 @@ methods within the form_instance to update and generate the output.
 Appending the raw to the subpath should return just the code
 ::
 
+    >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw'])
@@ -73,6 +75,7 @@ Appending the raw to the subpath should return just the code
 Having extra elements will result in not found
 ::
 
+    >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw', 'raw'])
@@ -86,6 +89,7 @@ As well as missing the language code (or just another case of unknown
 language)
 ::
 
+    >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['raw'])
@@ -98,6 +102,7 @@ language)
 A different but valid subpath will return the code.
 ::
 
+    >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['Python'])
