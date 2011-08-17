@@ -3,11 +3,11 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from paste.httpexceptions import HTTPNotFound
 from plone.z3cform import layout
 
-from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
+from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.browser.browser import RawContentNote
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 

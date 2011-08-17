@@ -12,11 +12,11 @@ import cPickle as pickle
 import zope.interface
 import zope.component
 
-from pmr2.app.interfaces import IExposureSourceAdapter
 from pmr2.app.factory import named_factory
 from pmr2.app.annotation.interfaces import *
 from pmr2.app.annotation.annotator import ExposureFileAnnotatorBase
 from pmr2.app.annotation.annotator import PortalTransformAnnotatorBase
+from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 
 from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 from cellml.api.simple import celeds

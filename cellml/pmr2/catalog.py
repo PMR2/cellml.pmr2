@@ -6,8 +6,8 @@ from plone.indexer import indexer
 from pmr2.app.exposure.interfaces import IExposure
 from pmr2.app.exposure.interfaces import IExposureObject
 from pmr2.app.exposure.interfaces import IExposureFile
+from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 
-from pmr2.app.interfaces import IExposureSourceAdapter
 from cellml.pmr2.util import normal_kw
 
 # Apply to all exposure objects
