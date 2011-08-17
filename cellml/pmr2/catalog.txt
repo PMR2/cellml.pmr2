@@ -14,7 +14,7 @@ indexes.
 ::
 
     >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
-    >>> from pmr2.app.tests.base import TestRequest
+    >>> from pmr2.testing.base import TestRequest
     >>> filectx = self.exposure_file1
     >>> request = TestRequest(
     ...     form={

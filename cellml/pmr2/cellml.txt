@@ -15,7 +15,7 @@ Here we first set up the environment.
     >>> from plone.z3cform.tests import setup_defaults
     >>> from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
     >>> from pmr2.app.exposure.browser.browser import ExposureFileNoteEditForm
-    >>> from pmr2.app.tests.base import TestRequest
+    >>> from pmr2.testing.base import TestRequest
     >>> pp = lambda x: pprint(x, indent=4, width=1)
 
 First we make the note using the form, then we view the output using
