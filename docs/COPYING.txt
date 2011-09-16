@@ -1,0 +1,32 @@
+cellml.pmr2 is copyright Auckland Bioengineering Institute.
+
+cellml.pmr2 is released under the following licenses:
+
+ 1) The Mozilla Public License, Version 1.1 (MPL 1.1) and,
+ 2) The GNU General Public License, Version 2 (GPLv2), or at your 
+    option, any later version.
+ 3) The GNU Lesser General Public License, Version 2.1 (LGPLv2.1), or
+    at your option, any later version.
+
+You may only use cellml.pmr2 in compliance with one or more of these
+licenses.  Please read the text of each of the above licenses carefully 
+as they all apply to this software.
+
+Note that some parts of cellm.pmr2 links with third-party libraries that
+are not licensed under one or more of the licenses as listed above.
+Such libraries may affect how certain parts of this software is 
+licensed, which includes:
+
+ 1) Zope (and libraries)
+  * Zope is licensed under the Zope Public License, Version 2.1, which
+    has no restrictions on what license of the code that links against
+    it.
+
+ 2) lxml
+  * lxml is licensed under the BSD License, which has no restrictions on
+    what license of the code that links against it.
+
+ 3) rdflib
+  * rdflib is licensed under the BSD License, which has no restrictions 
+    on what license of the code that links against it.
+

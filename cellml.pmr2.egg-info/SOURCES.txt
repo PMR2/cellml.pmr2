@@ -62,4 +62,9 @@ cellml/pmr2/tests/input/example_model_no_date.cellml
 cellml/pmr2/tests/input/example_model_top_title_only.cellml
 cellml/pmr2/tests/input/noble_varghese_kohl_noble_1998_variant03.cellml
 cellml/pmr2/xslt/mathmlc2p.xsl
+docs/COPYING.txt
 docs/HISTORY.rst
+docs/LICENSE.GPL
+docs/LICENSE.LGPL
+docs/LICENSE.MPL
+docs/LICENSE.txt
