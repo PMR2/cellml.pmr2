@@ -1,4 +1,5 @@
 recursive-include cellml *
 recursive-include docs *
+global-include *rst
 global-exclude *pyc
 global-exclude .*swp

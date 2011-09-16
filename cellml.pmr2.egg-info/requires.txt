@@ -1,3 +1,3 @@
 setuptools
 pmr2.rdf
-cellml.api.simple
+cellml.api.pmr2
