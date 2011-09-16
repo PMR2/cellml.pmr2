@@ -81,7 +81,7 @@ def test_suite():
 
         # General tests.
         ztc.ZopeDocFileSuite(
-            'cellml.txt', package='cellml.pmr2',
+            'README.rst', package='cellml.pmr2',
             test_class=CellMLDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),

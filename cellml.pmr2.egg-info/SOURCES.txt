@@ -12,13 +12,13 @@ cellml.pmr2.egg-info/not-zip-safe
 cellml.pmr2.egg-info/paster_plugins.txt
 cellml.pmr2.egg-info/requires.txt
 cellml.pmr2.egg-info/top_level.txt
+cellml/pmr2/README.rst
 cellml/pmr2/__init__.py
 cellml/pmr2/annotator.py
 cellml/pmr2/annotator.zcml
 cellml/pmr2/catalog.py
 cellml/pmr2/catalog.txt
 cellml/pmr2/catalog.zcml
-cellml/pmr2/cellml.txt
 cellml/pmr2/citation.py
 cellml/pmr2/citation.zcml
 cellml/pmr2/cmeta.py
