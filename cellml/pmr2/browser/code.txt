@@ -68,7 +68,7 @@ Appending the raw to the subpath should return just the code
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw'])
     >>> view.form_instance.update()
-    >>> result = view.form_instance()
+    >>> result = view()
     >>> result == 'printf("this is a test\\n");' 
     True
  
