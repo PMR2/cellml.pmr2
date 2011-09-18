@@ -29,6 +29,8 @@ class ShjsTraverseLayoutWrapper(PlainTraverseLayoutWrapper):
     def __call__(self):
         if hasattr(self.form_instance, 'update'):
             self.form_instance.update()
+        if self.form_instance.rawcode:
+            return self.form_instance.render()
         return super(ShjsTraverseLayoutWrapper, self).__call__()
 
 
