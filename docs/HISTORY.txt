@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.3.1 - Released (2011-09-19)
+-----------------------------
+
+* Raw code wrapper need to be updated to not render.
+
 0.3 - Released (2011-08-17)
 ---------------------------
 
@@ -11,7 +16,7 @@ Changelog
 
 * Math rendering for CellML 1.1, make use of the CellML API.
 * Use MathJAX for cross browser math rendering.
-* Update4d import location to pmr2.app-0.4
+* Updated import location to pmr2.app-0.4
 * Included other CellML specific parts that got removed fom pmr2.app.
 
 0.1.1 - Released (2010-07-05)
