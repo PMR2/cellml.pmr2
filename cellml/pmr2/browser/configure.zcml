@@ -66,7 +66,6 @@
       name="pmr1_folder_listing"
       template="pmr1_folder_listing.pt"
       permission="zope2.View"
-      layer="pmr2.app.interfaces.IPMR2AppLayer"
       />
 
 </configure>
