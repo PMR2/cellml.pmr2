@@ -37,7 +37,7 @@ class CmetaAnnotatorTestCase(unittest.TestCase):
 
     def helper(self, fn, answers):
         f = read_file(fn)
-        cmeta = SimpleCmetaAnnotator(f)
+        cmeta = SimpleCmetaAnnotator(f, None)
         results = cmeta.generate()
         # mangle results such that answers are predictable.
         results = dict(results)
