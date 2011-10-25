@@ -40,6 +40,7 @@ def pmr1_citation_title_exposure(context):
 
 # Apply to exposure files.
 
+# XXX name should be cmeta_authors_family_name
 @indexer(IExposureFile)
 def pmr2_authors_family_name(context):
     note = zope.component.queryAdapter(context, name='cmeta')
@@ -47,6 +48,7 @@ def pmr2_authors_family_name(context):
         return []
     return [normal_kw(i[0]) for i in note.citation_authors]
 
+# XXX name should be cmeta_citation_title
 @indexer(IExposureFile)
 def pmr2_citation_title(context):
     note = zope.component.queryAdapter(context, name='cmeta')
