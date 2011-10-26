@@ -30,22 +30,6 @@ mathmlc2p_xslt = etree.parse(xsltpath('mathmlc2p.xsl'))
 re_date = re.compile('^[0-9]{4}(-[0-9]{2}){0,2}')
 
 
-class PTCellML2MathMLAnnotator(PortalTransformAnnotatorBase):
-    zope.interface.implements(IExposureFileAnnotator)
-    transform = 'pmr2_processor_legacy_cellml2html_mathml'
-    title = u'Basic MathML'
-    label = u'Mathematics'
-    description = u''
-    for_interface = IRawTextNote
-
-    def generate(self):
-        return (
-            ('text', self.convert(self.input).decode('utf8')),
-        )
-
-PTCellML2MathMLAnnotatorFactory = named_factory(PTCellML2MathMLAnnotator)
-
-
 class CellMLMathAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'CellML Math Extraction'
@@ -77,22 +61,6 @@ class CellMLMathAnnotator(ExposureFileAnnotatorBase):
         )
 
 CellMLMathAnnotatorFactory = named_factory(CellMLMathAnnotator)
-
-
-class CellML2CAnnotator(PortalTransformAnnotatorBase):
-    zope.interface.implements(IExposureFileAnnotator)
-    transform = 'pmr2_processor_cellmlapi_cellml2c'
-    title = u'CellML C Code Generation'
-    label = u'Procedural C Code'
-    description = u''
-    for_interface = IRawTextNote
-
-    def generate(self):
-        return (
-            ('text', self.convert(self.input).decode('utf8')),
-        )
-
-CellML2CAnnotatorFactory = named_factory(CellML2CAnnotator)
 
 
 class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):

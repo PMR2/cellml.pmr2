@@ -50,12 +50,6 @@
   <!-- Note Generation -->
 
   <utility
-      name="basic_mathml"
-      component=".annotator.PTCellML2MathMLAnnotatorFactory"
-      provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
-      />
-
-  <utility
       name="cellml_math"
       component=".annotator.CellMLMathAnnotatorFactory"
       provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
