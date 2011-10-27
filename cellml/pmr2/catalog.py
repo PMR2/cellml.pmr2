@@ -79,6 +79,13 @@ def pmr1_citation_title_exposurefile(context):
             return note.citation_title
     return context.Title()
 
+@indexer(IExposureFile)
+def cmeta_citation_title_keyword(context):
+    note = zope.component.queryAdapter(context, name='cmeta')
+    if not (note and note.citation_title):
+        return []
+    return [normal_kw(i) for i in note.citation_title.split()]
+
 
 # PMR2 Keyword Provider
 
