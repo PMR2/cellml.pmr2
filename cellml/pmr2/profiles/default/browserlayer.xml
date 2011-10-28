@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+    <layer name="cellml.pmr2"
+           interface="cellml.pmr2.interfaces.ICellMLPMR2Layer" />
+</layers>

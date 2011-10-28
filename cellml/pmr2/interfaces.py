@@ -2,6 +2,10 @@ import zope.interface
 import zope.schema
 
 
+class ICellMLPMR2Layer(zope.interface.Interface):
+    """CellML PMR2 Support layer"""
+
+
 class ICmetaNote(zope.interface.Interface):
     """\
     CellML Metadata note.

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object>
+  <order manager="plone.portalheader" skinname="*">
+    <viewlet name="cellml.pmr2.search" insert-before="plone.searchbox" />
+  </order>
+  <hidden manager="plone.portalheader">
+    <viewlet name="cellml.pmr2.search" />
+  </hidden>
+</object>

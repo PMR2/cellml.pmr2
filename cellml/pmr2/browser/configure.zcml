@@ -68,4 +68,16 @@
       permission="zope2.View"
       />
 
+  <!--
+    Viewlets
+  -->
+
+  <browser:viewlet
+      name="cellml.pmr2.search"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+      class=".viewlets.CellMLSearchViewlet"
+      layer="..interfaces.ICellMLPMR2Layer"
+      permission="zope2.View"
+      />
+
 </configure>

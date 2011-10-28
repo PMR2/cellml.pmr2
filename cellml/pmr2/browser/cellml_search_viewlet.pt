@@ -1,0 +1,29 @@
+<div id="model-searchbox"
+     i18n:domain="cellml.pmr2">
+    <form name="searchmodelform"
+          action="search_model"
+          class="searchModel"
+          tal:attributes="action string:${view/site_url}/search_model">
+
+        <label for="SearchCellML" class="hiddenStructure"
+                    i18n:translate="search_model">Search Models</label>
+
+        <input name="SearchCellML"
+               id="SearchCellML"
+               type="text"
+               size="18"
+               value=""
+               title="Search"
+               accesskey="4"
+               i18n:attributes="title title_search;"
+               tal:attributes="value request/SearchableText|nothing;"
+               class="inputLabel" />
+
+        <input class="searchButton"
+               type="submit"
+               value="Search"
+               i18n:attributes="value label_search;" />
+
+    </form>
+
+</div>
