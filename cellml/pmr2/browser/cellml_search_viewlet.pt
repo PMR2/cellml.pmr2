@@ -16,7 +16,8 @@
                title="Search"
                accesskey="4"
                i18n:attributes="title title_search;"
-               tal:attributes="value request/SearchableText|nothing;"
+               tal:attributes="value request/SearchableText|nothing;
+                               id view/search_input_id;"
                class="inputLabel" />
 
         <input class="searchButton"

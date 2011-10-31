@@ -21,9 +21,9 @@ class CellMLSearchViewlet(ViewletBase):
         props = getToolByName(self.context, 'portal_properties')
         livesearch = props.site_properties.getProperty('enable_livesearch', False)
         if livesearch:
-            self.search_input_id = "searchGadget"
+            self.search_input_id = "liveSearchCellML"
         else:
-            self.search_input_id = ""
+            self.search_input_id = "SearchCellML"
 
         folder = context_state.folder()
         self.folder_path = '/'.join(folder.getPhysicalPath())
