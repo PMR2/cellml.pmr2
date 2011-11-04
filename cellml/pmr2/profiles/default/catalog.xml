@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
 
-  <!-- moved to cellml.pmr2 -->
   <index name="pmr2_authors_family_name" meta_type="KeywordIndex">
     <indexed_attr value="pmr2_authors_family_name"/>
   </index>
@@ -20,6 +19,10 @@
 
   <index name="pmr1_citation_title" meta_type="FieldIndex">
     <indexed_attr value="pmr1_citation_title"/>
+  </index>
+
+  <index name="cmeta_citation_title_keyword" meta_type="FieldIndex">
+    <indexed_attr value="cmeta_citation_title_keyword"/>
   </index>
 
   <!-- moved to cellml.pmr2 -->

@@ -31,6 +31,10 @@
       factory=".catalog.pmr1_citation_title_exposurefile" 
       name="pmr1_citation_title" />
 
+  <adapter 
+      factory=".catalog.cmeta_citation_title_keyword" 
+      name="cmeta_citation_title_keyword" />
+
   <!-- PMR2 Keyword Provider -->
   <utility
       provides="pmr2.app.interfaces.IPMR2KeywordProvider"
