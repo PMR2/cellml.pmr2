@@ -27,6 +27,8 @@ setup(name='cellml.pmr2',
           # -*- Extra requirements: -*-
           'pmr2.rdf',
           'cellml.api.pmr2',
+          'plone.app.search',
+          'Products.AdvancedQuery',
       ],
       entry_points="""
       # -*- Entry points: -*-

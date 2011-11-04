@@ -6,6 +6,16 @@
   <!-- Browser pages -->
 
   <browser:page
+      for="*"
+      name="cellml_search"
+      class=".search.CellMLSearch"
+      permission="zope2.View"
+      template="search.pt"
+      />
+
+  <!-- Exposure pages -->
+
+  <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_mathml"
       class=".view.BasicMathMLNoteView"
