@@ -35,10 +35,11 @@ class CellMLSearch(Search):
             b_start = int(b_start)
 
         base_query = self.base_filter_query(query)
-        adv_query = self.filter_advanced_query(base_query)
-        adv_sort = self.sort_advanced_query(base_query)
+        if base_query:
+            adv_query = self.filter_advanced_query(base_query)
+            adv_sort = self.sort_advanced_query(base_query)
 
-        if query is None:
+        if base_query is None:
             results = []
         else:
             catalog = getToolByName(self.context, 'portal_catalog')

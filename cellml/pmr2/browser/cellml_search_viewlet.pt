@@ -3,13 +3,13 @@
     <form name="searchmodelform"
           action="search_model"
           class="searchModel"
-          tal:attributes="action string:${view/site_url}/search_model">
+          tal:attributes="action string:${view/site_url}/cellml_search">
 
         <label for="SearchCellML" class="hiddenStructure"
                     i18n:translate="search_model">Search Models</label>
 
-        <input name="SearchCellML"
-               id="SearchCellML"
+        <input name="SearchableText"
+               id="SearchableText"
                type="text"
                size="18"
                value=""
