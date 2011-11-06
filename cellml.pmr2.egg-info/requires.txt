@@ -1,3 +1,0 @@
-setuptools
-pmr2.rdf
-cellml.api.pmr2
