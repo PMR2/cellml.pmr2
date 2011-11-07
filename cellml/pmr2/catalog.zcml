@@ -35,6 +35,10 @@
       factory=".catalog.cmeta_citation_title_keyword" 
       name="cmeta_citation_title_keyword" />
 
+  <adapter 
+      factory=".catalog.cmeta_citation_publication_year" 
+      name="cmeta_citation_publication_year" />
+
   <!-- PMR2 Keyword Provider -->
   <utility
       provides="pmr2.app.interfaces.IPMR2KeywordProvider"

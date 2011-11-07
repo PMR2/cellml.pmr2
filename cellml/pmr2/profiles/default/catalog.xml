@@ -21,15 +21,20 @@
     <indexed_attr value="pmr1_citation_title"/>
   </index>
 
-  <index name="cmeta_citation_title_keyword" meta_type="FieldIndex">
+  <index name="cmeta_citation_title_keyword" meta_type="KeywordIndex">
     <indexed_attr value="cmeta_citation_title_keyword"/>
   </index>
 
-  <!-- moved to cellml.pmr2 -->
+  <index name="cmeta_citation_publication_year" meta_type="KeywordIndex">
+    <indexed_attr value="cmeta_citation_publication_year"/>
+  </index>
+
   <column value="pmr2_authors_family_name"/>
   <column value="pmr2_citation_title"/>
   <column value="pmr1_citation_authors"/>
   <column value="pmr1_citation_authors_sortable"/>
   <column value="pmr1_citation_title"/>
+  <column value="cmeta_citation_title_keyword"/>
+  <column value="cmeta_citation_publication_year"/>
 
 </object>

@@ -86,6 +86,13 @@ def cmeta_citation_title_keyword(context):
         return []
     return [normal_kw(i) for i in note.citation_title.split()]
 
+@indexer(IExposureFile)
+def cmeta_citation_publication_year(context):
+    note = zope.component.queryAdapter(context, name='cmeta')
+    if not (note and note.citation_issued):
+        return []
+    return [note.citation_issued[:4]]
+
 
 # PMR2 Keyword Provider
 
