@@ -78,6 +78,7 @@ class CellMLSearch(Search):
             # XXX ^ this will become
             # 'cmeta_authors_family_name', 
             'cmeta_citation_title_keyword',
+            'cmeta_citation_publication_year',
         )
 
         if rawtext:
@@ -142,8 +143,10 @@ class CellMLSearch(Search):
             sort_option = [RankByQueries_Sum(
                 (In('pmr2_authors_family_name', 
                     query['pmr2_authors_family_name']), 20), 
+                (In('cmeta_citation_publication_year', 
+                    query['cmeta_citation_publication_year']), 15), 
                 (In('cmeta_citation_title_keyword',
-                    query['cmeta_citation_title_keyword']), 20), 
+                    query['cmeta_citation_title_keyword']), 10), 
             )]
 
         return sort_option
