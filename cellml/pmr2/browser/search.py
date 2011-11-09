@@ -13,6 +13,9 @@ try:
 except ImportError:
     ADVANCED_QUERY = False
 
+or_ = lambda a, b: a | b
+and_ = lambda a, b: a & b
+
 
 class CellMLSearch(Search):
 
@@ -186,9 +189,6 @@ class CellMLSearch(Search):
                 and_query.append(stmt)
             else:
                 or_query.append(stmt)
-
-        or_ = lambda a, b: a | b
-        and_ = lambda a, b: a & b
 
         and_query.append(reduce(or_, or_query))
 
