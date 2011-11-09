@@ -13,6 +13,14 @@
       template="search.pt"
       />
 
+  <browser:page
+      name="updated_cellml_search"
+      class=".search.Search"
+      permission="zope2.View"
+      for="Products.CMFCore.interfaces.IFolderish"
+      template="updated_search.pt"
+      />
+
   <!-- Exposure pages -->
 
   <browser:page
