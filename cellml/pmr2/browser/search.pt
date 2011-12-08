@@ -103,6 +103,7 @@
 
                       <dt class="actionMenuHeader">
                           <a href="#"
+                             tal:condition="nothing"
                              tal:attributes="href view/advanced_search_trigger"
                              id="search-filter-toggle"
                              i18n:translate="narrow_search_options">
