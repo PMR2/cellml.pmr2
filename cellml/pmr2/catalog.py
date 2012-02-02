@@ -93,6 +93,14 @@ def cmeta_citation_publication_year(context):
         return []
     return [note.citation_issued[:4]]
 
+@indexer(IExposureFile)
+def cmeta_citation_id(context):
+    note = zope.component.queryAdapter(context, name='cmeta')
+    if not (note and note.citation_id):
+        return []
+    # until each metaid can store multiple entries.
+    return [note.citation_id]
+
 
 # PMR2 Keyword Provider
 

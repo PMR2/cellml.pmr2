@@ -32,6 +32,10 @@
       name="pmr1_citation_title" />
 
   <adapter 
+      factory=".catalog.cmeta_citation_id" 
+      name="cmeta_citation_id" />
+
+  <adapter 
       factory=".catalog.cmeta_citation_title_keyword" 
       name="cmeta_citation_title_keyword" />
 

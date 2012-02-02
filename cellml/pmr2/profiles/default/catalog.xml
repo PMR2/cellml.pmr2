@@ -21,6 +21,10 @@
     <indexed_attr value="pmr1_citation_title"/>
   </index>
 
+  <index name="cmeta_citation_id" meta_type="KeywordIndex">
+    <indexed_attr value="cmeta_citation_id"/>
+  </index>
+
   <index name="cmeta_citation_title_keyword" meta_type="KeywordIndex">
     <indexed_attr value="cmeta_citation_title_keyword"/>
   </index>
@@ -34,6 +38,7 @@
   <column value="pmr1_citation_authors"/>
   <column value="pmr1_citation_authors_sortable"/>
   <column value="pmr1_citation_title"/>
+  <column value="cmeta_citation_id"/>
   <column value="cmeta_citation_title_keyword"/>
   <column value="cmeta_citation_publication_year"/>
 
