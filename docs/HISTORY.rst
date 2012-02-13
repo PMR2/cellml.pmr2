@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.0 - Released (2012-02-10)
+-----------------------------
+
+* Provide a CellML specific searchbox viewlet.
+* Clean up some of the indexes to enable better searching.
+* Compatibility fix for the new annotator requirements.
+
 0.3.1 - Released (2011-09-19)
 -----------------------------
 
