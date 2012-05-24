@@ -1,6 +1,6 @@
 import zope.component
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
-from paste.httpexceptions import HTTPNotFound
+from zope.publisher.interfaces import NotFound
 from plone.z3cform import layout
 
 from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
@@ -71,7 +71,7 @@ class BasicCCodeNote(SourceTextNote):
         elif self.traverse_subpath[0] == 'raw':
             return self.raw()
         else:
-            raise HTTPNotFound()
+            raise NotFound(self.context, self.traverse_subpath[0])
 
 BasicCCodeNoteView = layout.wrap_form(BasicCCodeNote,
     __wrapper_class=ShjsTraverseLayoutWrapper)
@@ -120,12 +120,12 @@ class CellMLCodegenNote(SourceTextNote):
             return 
 
         if len(self.traverse_subpath) > 2:
-            raise HTTPNotFound()
+            raise NotFound(self.context, self.traverse_subpath[-1])
 
         def select_language(language):
             if language not in self.available_langs():
                 # we don't have this language.
-                raise HTTPNotFound()
+                raise NotFound(self.context, language)
             self._language = language
 
         def check_raw(raw):
@@ -133,7 +133,7 @@ class CellMLCodegenNote(SourceTextNote):
                 self.rawcode = True
             else:
                 # unknown keyword.
-                raise HTTPNotFound()
+                raise NotFound(self.context, raw)
 
         process = [select_language, check_raw]
 
