@@ -45,7 +45,6 @@ class CellMLDocTestCase(MercurialDocTestCase):
     def setUp(self):
         super(CellMLDocTestCase, self).setUp()
         import cellml.pmr2
-        self.portal['exposure'] = ExposureContainer()
         rawrevs = [
             'b94d1701154be42acf63ee6b4bd4a99d09ba043c',
             '2647d4389da6345c26d168bbb831f6512322d4f9',
