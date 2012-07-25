@@ -1,6 +1,8 @@
 import zope.interface
 import zope.schema
 
+from pmr2.app.workspace.schema import StorageFileChoice
+
 
 class ICellMLPMR2Layer(zope.interface.Interface):
     """CellML PMR2 Support layer"""
@@ -77,7 +79,7 @@ class IOpenCellSessionNote(zope.interface.Interface):
     OpenCell Session Note
     """
 
-    filename = zope.schema.Choice(
+    filename = StorageFileChoice(
         title=u'Session File',
         description=u'The session file that is made for this file.  If not '
                      'selected, this file will be used for the "Launch" link.',
