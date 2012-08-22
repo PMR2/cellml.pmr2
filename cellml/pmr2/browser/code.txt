@@ -31,7 +31,6 @@ That should have assigned the dummy values to the note.
     >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
-    >>> view = view.form_instance
     >>> print view()
     <h1>Generated Code</h1> 
     <p>The following are code that had been generated.</p> 
@@ -44,17 +43,15 @@ That should have assigned the dummy values to the note.
     </li> 
     </ul>
 
-Traversing the subpath should return a valid page with our code.  Since
-the wrapper doesn't work within here, we have to manually invoke the 
-methods within the form_instance to update and generate the output.
+Traversing the subpath should return a valid page with our code.
 ::
 
     >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C'])
-    >>> view.form_instance.update()
-    >>> result = view.form_instance()
+    >>> view.update()
+    >>> result = view.template()  # XXX demostrate, actual might fail
     >>> 'printf("this is a test\\n");' in result
     True
     >>> 'sh_c' in result
@@ -67,7 +64,7 @@ Appending the raw to the subpath should return just the code
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw'])
-    >>> view.form_instance.update()
+    >>> view.update()
     >>> result = view()
     >>> result == 'printf("this is a test\\n");' 
     True
@@ -79,7 +76,7 @@ Having extra elements will result in not found
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C', 'raw', 'raw'])
-    >>> view.form_instance.update()
+    >>> view.update()
     Traceback (most recent call last):
     ...
     NotFound: ...
@@ -93,7 +90,7 @@ language)
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['raw'])
-    >>> view.form_instance.update()
+    >>> view.update()
     Traceback (most recent call last):
     ...
     NotFound: ...
@@ -106,8 +103,8 @@ A different but valid subpath will return the code.
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['Python'])
-    >>> view.form_instance.update()
-    >>> result = view.form_instance()
+    >>> view.update()
+    >>> result = view.template()  # XXX demostrate, actual might fail
     >>> 'print "this is a test"' in result
     True
     >>> 'sh_python' in result

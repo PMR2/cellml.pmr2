@@ -39,9 +39,9 @@ That should have generated all the data needed for the cmeta view.
     >>> request = TestRequest()
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='cmeta')
-    >>> view = view.form_instance
     >>> print view()
-    <h1>Model Metadata</h1>
+    <h3>example_model.cellml</h3>
+    <div><h1>Model Metadata</h1>
     <h3>CellML Model Authorship</h3>
     <dl>
     <dt>Title:</dt>
@@ -68,6 +68,7 @@ That should have generated all the data needed for the cmeta view.
     <dt>Model Keywords:</dt>
     <dd>cardiac, electrophysiology, ventricular_myocyte</dd>
     </dl>
+    </div>
 
 Session files are kind of different, since currently there isn't a way
 to determine one as they are not linked (not strictly true, it can be

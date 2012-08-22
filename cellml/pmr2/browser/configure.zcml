@@ -26,42 +26,42 @@
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_mathml"
-      class=".view.BasicMathMLNoteView"
+      class=".view.BasicMathMLNote"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cellml_math"
-      class=".view.CellMLMathNoteView"
+      class=".view.CellMLMathNote"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_ccode"
-      class=".view.BasicCCodeNoteView"
+      class=".view.BasicCCodeNote"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cmeta"
-      class=".view.CmetaNoteView"
+      class=".view.CmetaNote"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cellml_codegen"
-      class=".view.CellMLCodegenNoteView"
+      class=".view.CellMLCodegenNote"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="opencellsession"
-      class=".view.OpenCellSessionNoteView"
+      class=".view.OpenCellSessionNote"
       permission="zope2.View"
       />
 
@@ -71,7 +71,7 @@
   <browser:page
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="pcenv"
-      class=".view.WorkspaceRawfileXmlBasePCEnvView"
+      class=".view.WorkspaceRawfileXmlBasePCEnv"
       permission="zope2.View"
       />
 

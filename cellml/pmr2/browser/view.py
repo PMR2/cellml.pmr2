@@ -6,7 +6,7 @@ from plone.z3cform import layout
 from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
 from pmr2.app.browser.layout import PlainLayoutWrapper
 
-from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBaseView
+from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBase
 from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.browser.browser import RawContentNote
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
@@ -44,9 +44,6 @@ class BasicMathMLNote(RawContentNote):
         # XXX yes this is a hack.
         return self.note.text.replace('<mml:', '<').replace('</mml:', '</')
 
-BasicMathMLNoteView = layout.wrap_form(BasicMathMLNote,
-    __wrapper_class=MathJaxLayoutWrapper)
-
 
 class BasicCCodeNote(SourceTextNote):
     """\
@@ -72,9 +69,6 @@ class BasicCCodeNote(SourceTextNote):
             return self.raw()
         else:
             raise NotFound(self.context, self.traverse_subpath[0])
-
-BasicCCodeNoteView = layout.wrap_form(BasicCCodeNote,
-    __wrapper_class=ShjsTraverseLayoutWrapper)
 
 
 class CellMLCodegenNote(SourceTextNote):
@@ -149,9 +143,6 @@ class CellMLCodegenNote(SourceTextNote):
 
         return super(CellMLCodegenNote, self).render()
 
-CellMLCodegenNoteView = layout.wrap_form(CellMLCodegenNote, 
-    __wrapper_class=ShjsTraverseLayoutWrapper)
-
 
 class CmetaNote(ExposureFileViewBase):
     """\
@@ -159,8 +150,6 @@ class CmetaNote(ExposureFileViewBase):
     """
 
     template = ViewPageTemplateFile('cmeta_note.pt')
-
-CmetaNoteView = layout.wrap_form(CmetaNote, __wrapper_class=PlainLayoutWrapper)
 
 
 class CellMLMathNote(ExposureFileViewBase):
@@ -177,13 +166,8 @@ class CellMLMathNote(ExposureFileViewBase):
                 'math': ''.join(math),
             }
 
-CellMLMathNoteView = layout.wrap_form(CellMLMathNote, 
-    #__wrapper_class=PlainLayoutWrapper)
-    #__wrapper_class=MathJaxLayoutWrapper)
-    __wrapper_class=DeferredMathJaxLayoutWrapper)
 
-
-class OpenCellSessionNoteView(ExposureFileViewBase):
+class OpenCellSessionNote(ExposureFileViewBase):
     # XXX change this when we have better/generalized
     target_view = 'pcenv'
 
@@ -197,7 +181,7 @@ class OpenCellSessionNoteView(ExposureFileViewBase):
         return self.request.response.redirect(target_uri)
 
 
-class WorkspaceRawfileXmlBasePCEnvView(WorkspaceRawfileXmlBaseView):
+class WorkspaceRawfileXmlBasePCEnv(WorkspaceRawfileXmlBase):
 
     def find_type(self):
         # XXX we are not doing this for every single type, alternate

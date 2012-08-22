@@ -19,7 +19,7 @@
   <browser:page
       for="pmr2.app.exposure.content.ExposureFile"
       name="dummy_code"
-      class="cellml.pmr2.browser.view.CellMLCodegenNoteView"
+      class="cellml.pmr2.browser.view.CellMLCodegenNote"
       permission="zope2.View"
       />
 
