@@ -8,7 +8,6 @@ from pmr2.app.browser.layout import PlainLayoutWrapper
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBase
 from pmr2.app.exposure.interfaces import IExposureSourceAdapter
-from pmr2.app.exposure.browser.browser import RawContentNote
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
 from pmr2.annotation.mathjax.layout import MathJaxLayoutWrapper
@@ -32,17 +31,6 @@ class ShjsTraverseLayoutWrapper(PlainTraverseLayoutWrapper):
         if self.form_instance.rawcode:
             return self.form_instance.render()
         return super(ShjsTraverseLayoutWrapper, self).__call__()
-
-
-class BasicMathMLNote(RawContentNote):
-    """\
-    This is based on the raw text note view, but uses the SourceTextNote
-    browser class.
-    """
-
-    def template(self):
-        # XXX yes this is a hack.
-        return self.note.text.replace('<mml:', '<').replace('</mml:', '</')
 
 
 class BasicCCodeNote(SourceTextNote):
