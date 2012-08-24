@@ -51,7 +51,7 @@ Traversing the subpath should return a valid page with our code.
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['C'])
     >>> view.update()
-    >>> result = view.template()  # XXX demostrate, actual might fail
+    >>> result = view()  # XXX demostrate, actual might fail
     >>> 'printf("this is a test\\n");' in result
     True
     >>> 'sh_c' in result
@@ -104,7 +104,7 @@ A different but valid subpath will return the code.
     ...     (filectx, request), name='dummy_code')
     >>> view.traverse_subpath.extend(['Python'])
     >>> view.update()
-    >>> result = view.template()  # XXX demostrate, actual might fail
+    >>> result = view()  # XXX demostrate, actual might fail
     >>> 'print "this is a test"' in result
     True
     >>> 'sh_python' in result
