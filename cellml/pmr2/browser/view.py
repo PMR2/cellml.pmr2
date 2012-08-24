@@ -52,7 +52,7 @@ class BasicCCodeNote(SourceTextNote):
     """
 
     # used by template
-    title = ViewPageTemplateFile('basic_ccode.pt')
+    label = ViewPageTemplateFile('basic_ccode.pt')
     langtype = u'cpp'
 
     def content(self):
@@ -77,7 +77,7 @@ class CellMLCodegenNote(SourceTextNote):
     """
 
     select_template = ViewPageTemplateFile('code_select.pt')
-    title = ViewPageTemplateFile('cellml_code.pt')
+    label = ViewPageTemplateFile('cellml_code.pt')
     rawcode = False
 
     def raw(self):
@@ -150,6 +150,7 @@ class CmetaNote(ExposureFileViewBase):
     """
 
     template = ViewPageTemplateFile('cmeta_note.pt')
+    label = 'Model Metadata'
 
 
 class CellMLMathNote(ExposureFileViewBase):
