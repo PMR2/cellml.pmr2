@@ -32,7 +32,7 @@ That should have assigned the dummy values to the note.
     >>> view = zope.component.queryMultiAdapter(
     ...     (filectx, request), name='dummy_code')
     >>> print view()
-    <h1>Generated Code</h1> 
+    <h1 class="documentFirstHeading">Generated Code</h1> 
     <p>The following are code that had been generated.</p> 
     <ul> 
     <li> 
