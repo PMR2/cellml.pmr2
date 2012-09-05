@@ -1,36 +1,15 @@
 import zope.component
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.interfaces import NotFound
-from plone.z3cform import layout
-
-from pmr2.app.browser.layout import PlainTraverseLayoutWrapper
-from pmr2.app.browser.layout import PlainLayoutWrapper
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBase
 from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
-from pmr2.annotation.mathjax.layout import MathJaxLayoutWrapper
-from pmr2.annotation.mathjax.layout import DeferredMathJaxLayoutWrapper
-from pmr2.annotation.shjs.layout import IShjsLayoutWrapper
+from pmr2.annotation.mathjax.browser import DeferredMathJaxNote
 from pmr2.annotation.shjs.browser import SourceTextNote
 
 from cellml.pmr2.util import fix_pcenv_externalurl
-
-
-class ShjsTraverseLayoutWrapper(PlainTraverseLayoutWrapper):
-    """
-    A `PlainTraverseLayoutWrapper` that implements the Shjs wrapper.
-    """
-
-    zope.interface.implements(IShjsLayoutWrapper)
-
-    def __call__(self):
-        if hasattr(self.form_instance, 'update'):
-            self.form_instance.update()
-        if self.form_instance.rawcode:
-            return self.form_instance.render()
-        return super(ShjsTraverseLayoutWrapper, self).__call__()
 
 
 class BasicCCodeNote(SourceTextNote):
@@ -92,11 +71,6 @@ class CellMLCodegenNote(SourceTextNote):
             return self._language
 
     def update(self):
-        """\
-        This must be called by the wrapper.  It does not do so by 
-        default, so we wrap this around the customized layout wrapper
-        defined above.
-        """
 
         if not self.traverse_subpath:
             return 
@@ -141,7 +115,7 @@ class CmetaNote(ExposureFileViewBase):
     label = 'Model Metadata'
 
 
-class CellMLMathNote(ExposureFileViewBase):
+class CellMLMathNote(DeferredMathJaxNote):
     """\
     CellML Math Note.
     """
