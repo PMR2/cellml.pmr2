@@ -152,7 +152,7 @@ class WorkspaceRawfileXmlBasePCEnv(WorkspaceRawfileXmlBase):
         return 'application/x-pcenv-cellml+xml'
 
     def __call__(self):
-        data = WorkspaceRawfileXmlBaseView.__call__(self)
+        data = WorkspaceRawfileXmlBase.__call__(self)
 
         if self.viewpath.endswith('session.xml'):
             # See pmr2.app.util.fix_pcenv_externalurl and
