@@ -12,4 +12,11 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       />
 
+  <genericsetup:upgradeStep
+      title="CellML curation annotation migration"
+      description="This migrates curation to individual file annotation notes."
+      handler="cellml.pmr2.setuphandlers.cellml_pmr2_v0_6"
+      profile="cellml.pmr2:default"
+      />
+
 </configure>
