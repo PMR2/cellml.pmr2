@@ -1,11 +1,10 @@
 import unittest
+import doctest
 
-from zope.testing import doctestunit, doctest
 from zope.component import testing
 from Testing import ZopeTestCase as ztc
 
 from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import PloneSite
 from Products.PloneTestCase.layer import onsetup
 from Products.PloneTestCase.layer import onteardown
 from Products.Five import fiveconfigure
@@ -99,7 +98,7 @@ def test_suite():
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
-        doctestunit.DocTestSuite(
+        doctest.DocTestSuite(
             module='cellml.pmr2.util',
             setUp=testing.setUp, tearDown=testing.tearDown
         ),
