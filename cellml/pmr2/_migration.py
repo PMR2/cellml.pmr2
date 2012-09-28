@@ -106,9 +106,9 @@ def migrate_curation_to_exposurefile(exposure_file):
 
     bcuration = zope.component.getAdapter(exposure_file, name='basic_curation')
     bcuration.flags = convert_curation(exposure.curation.items())
-    views = exposure_file.views
 
-    target = find_metadata(views)
-    views.insert(target, u'basic_curation')
-
-    exposure_file.views = views
+    views = exposure_file.views or []
+    if 'basic_curation' not in views:
+        target = find_metadata(views)
+        views.insert(target, u'basic_curation')
+        exposure_file.views = views
