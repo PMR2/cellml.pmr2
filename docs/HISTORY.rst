@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 - Released (2012-09-03)
+0.5 - Released (2012-10-03)
 ---------------------------
 
 * Removal of form layout wrappers and general form cleanups.
