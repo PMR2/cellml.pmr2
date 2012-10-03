@@ -1,8 +1,16 @@
 Changelog
 =========
 
-0.4.0 - Released (2012-02-10)
------------------------------
+0.5 - Released (2012-09-03)
+---------------------------
+
+* Removal of form layout wrappers and general form cleanups.
+* Update imports and library used to not depend on deprecated cruft.
+* Provide PMR1 curation flags as support for that has been moved out of
+  pmr2.app.
+
+0.4 - Released (2012-02-10)
+---------------------------
 
 * Provide a CellML specific searchbox viewlet.
 * Clean up some of the indexes to enable better searching.
