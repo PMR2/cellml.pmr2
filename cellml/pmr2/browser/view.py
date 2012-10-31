@@ -97,11 +97,11 @@ class CellMLCodegenNote(SourceTextNote):
             f(v)
 
     def render(self):
-        if self.language is None:
-            return self.select_template()
-
         if self.rawcode:
             return self.raw()
+
+        if self.language is None:
+            self.template = self.select_template
 
         return super(CellMLCodegenNote, self).render()
 

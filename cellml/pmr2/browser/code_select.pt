@@ -1,18 +1,8 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="plone"
-      metal:use-macro="context/@@pmr2-macros/pmr2_main">
-
-  <metal:block fill-slot="main">
-    <h1 class="documentFirstHeading">Generated Code</h1>
-    <p>The following are code that had been generated.</p>
-    <ul tal:define="langs view/available_langs">
-    <li tal:repeat="l langs">
-      <a tal:attributes="href string:${view/view_url}/${l}"
-         tal:content="l"></a>
-    </li>
-    </ul>
-  </metal:block>
-</html>
+<h1 class="documentFirstHeading">Generated Code</h1>
+<p>The following are code that had been generated.</p>
+<ul tal:define="langs view/available_langs">
+<li tal:repeat="l langs">
+  <a tal:attributes="href string:${view/view_url}/${l}"
+     tal:content="l"></a>
+</li>
+</ul>
