@@ -387,15 +387,26 @@
          </xsl:otherwise>     
       </xsl:choose>   
    </xsl:template>    
-   <xsl:template match="m:apply[*[1][self::m:csymbol]]">     
+   <xsl:template match="m:apply[*[1][self::m:csymbol]]">
       <mrow>       
-         <xsl:apply-templates select="m:csymbol[1]"/>       
-         <mfenced>         
-            <xsl:for-each select="*[position()!=1]">           
-               <xsl:apply-templates select="."/>         
-            </xsl:for-each>       
-         </mfenced>     
-      </mrow>   
+         <xsl:choose>
+           <xsl:when test="*[1][self::m:csymbol/@definitionURL='http://www.cellml.org/uncertainty-1#uncertainParameterWithDistribution']">
+             <xsl:apply-templates select="*[2]"/>
+             <mo>~</mo>
+             <xsl:for-each select="*[position()>2]">
+               <xsl:apply-templates select="."/>
+             </xsl:for-each>
+           </xsl:when>
+           <xsl:otherwise>
+             <xsl:apply-templates select="m:csymbol[1]"/>       
+             <mfenced>         
+               <xsl:for-each select="*[position()!=1]">           
+                 <xsl:apply-templates select="."/>         
+               </xsl:for-each>       
+             </mfenced>
+           </xsl:otherwise>
+         </xsl:choose>
+      </mrow>
    </xsl:template>   
    <xsl:template match="m:csymbol">     
       <xsl:choose>         
@@ -403,7 +414,17 @@
             <mrow>           
                <xsl:copy-of select="*"/>         
             </mrow>       
-         </xsl:when>       
+         </xsl:when>
+         <xsl:when test="@definitionURL='http://www.cellml.org/uncertainty-1#distributionFromDensity'">
+           <mrow>
+             <mo>p.d.f.</mo>
+           </mrow>
+         </xsl:when>
+         <xsl:when test="@definitionURL='http://www.cellml.org/uncertainty-1#distributionFromRealisations'">
+           <mrow>
+             <mo>sampleFrom</mo>
+           </mrow>
+         </xsl:when>
          <xsl:otherwise>         
             <mo>           
                <xsl:value-of select="."/>         
@@ -579,15 +600,17 @@
       <mrow>       
          <mo>         
             <xsl:value-of select="$lambda"/>       
-         </mo>       
+         </mo>
+         <mfenced open="" close=":">
+           <xsl:for-each select="m:bvar">           
+             <xsl:apply-templates select="."/>           
+           </xsl:for-each>         
+         </mfenced>
+
          <mrow>         
-            <mo>(</mo>         
-            <xsl:for-each select="m:bvar">           
-               <xsl:apply-templates select="."/>           
-               <mo>,</mo>         
-            </xsl:for-each>         
-            <xsl:apply-templates select="*[position()=last()]"/>         
-            <mo>)</mo>       
+            <mfenced>
+              <xsl:apply-templates select="*[position()=last()]"/>         
+            </mfenced>
          </mrow>     
       </mrow>   
    </xsl:template>    
