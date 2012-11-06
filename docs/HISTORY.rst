@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.5.1 - Released (2012-11-06)
+-----------------------------
+
+* Handle some subset of csymbols such that they will be rendered in the
+  Mathematics view.
+* CellML search viewlet should be enabled at the intended case by
+  default.
+
 0.5 - Released (2012-10-03)
 ---------------------------
 
