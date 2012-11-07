@@ -1,11 +1,16 @@
 Changelog
 =========
 
+0.6 - Unreleased
+----------------
+
+* Update dependency of form library to pmr2.z3cform.
+
 0.5.1 - Released (2012-11-06)
 -----------------------------
 
 * Handle some subset of csymbols such that they will be rendered in the
-  Mathematics view.
+  Mathematics view. [A1kmm]
 * CellML search viewlet should be enabled at the intended case by
   default.
 
