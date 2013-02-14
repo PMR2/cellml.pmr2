@@ -34,7 +34,6 @@ That should have assigned the dummy values to the note.
     >>> print view()
     <...
     <h1 class="documentFirstHeading">Generated Code</h1> 
-    <p>The following are code that had been generated.</p> 
     <ul> 
     <li> 
       <a href="http://.../@@dummy_code/C">C</a> 
