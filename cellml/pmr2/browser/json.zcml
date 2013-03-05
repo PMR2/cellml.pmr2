@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2">
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cmeta"
+      class=".json.JsonCmetaNote"
+      layer="pmr2.json.interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+</configure>
