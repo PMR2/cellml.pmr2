@@ -55,9 +55,7 @@ class CellMLCodegenNote(SourceTextNote):
         return self.note.code[self.language]
 
     def available_langs(self):
-        keys = self.note.code.keys()
-        keys.sort()
-        return keys
+        return sorted(self.note.code.keys())
 
     @property
     def langtype(self):

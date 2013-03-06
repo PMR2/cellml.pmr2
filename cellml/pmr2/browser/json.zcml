@@ -11,4 +11,12 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cellml_codegen"
+      class=".json.JsonCellMLCodegenNote"
+      permission="zope2.View"
+      layer="pmr2.json.interfaces.ISimpleJsonLayer"
+      />
+
 </configure>
