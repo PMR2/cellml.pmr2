@@ -1,5 +1,5 @@
 import zope.component
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.interfaces import NotFound
 
 from pmr2.app.workspace.browser.browser import WorkspaceRawfileXmlBase

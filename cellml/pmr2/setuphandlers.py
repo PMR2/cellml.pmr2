@@ -14,7 +14,7 @@ def cellml_pmr2_v0_6(context):
     """
 
     import traceback
-    from zope.app.component.hooks import getSite
+    from zope.component.hooks import getSite
     logger = getLogger('cellml.pmr2')
 
     try:
