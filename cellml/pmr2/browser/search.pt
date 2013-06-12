@@ -40,7 +40,7 @@
         <input type="hidden" name="advanced_search" value="False" />
         <input type="hidden" name="sort_on" value="" />
 
-        <fieldset id="search-field" i18n:domain="plone" class="noborder">
+        <fieldset id="cellml-search-field" i18n:domain="plone" class="noborder">
             <input class="searchPage"
                    name="SearchableText"
                    type="text"
@@ -49,7 +49,7 @@
                    i18n:attributes="title title_search_title;"
                    tal:attributes="value st;"
                    />
-            <input class="searchPage searchButton allowMultiSubmit"
+            <input class="searchPage cellml-searchButton allowMultiSubmit"
                    type="submit"
                    value="Search"
                    i18n:attributes="value label_search;"/>
@@ -67,7 +67,7 @@
                     i18n:translate=""
                     tal:condition="st">
                     Search results for
-                    <strong id="search-term" tal:content="st" i18n:name="term">
+                    <strong id="cellml-search-term" tal:content="st" i18n:name="term">
                         Search Term
                     </strong>
                 </h1>
@@ -88,16 +88,16 @@
                 </p>
             </div>
             <div class="visualClear"><!-- --></div>
-            <div id="search-results-wrapper"
+            <div id="cellml-search-results-wrapper"
                  class="cell width-full position-0"
                  tal:define="b_start python:0;
                              b_start request/b_start | b_start;
                              batch python: view.results(b_start=b_start);
                              normalizeString nocall:context/@@plone/normalizeString;">
 
-                <div id="search-results-bar">
+                <div id="cellml-search-results-bar">
                     <span i18n:translate="batch_x_items_matching_your_criteria" i18n:domain="plone">
-                        <strong i18n:name="number" id="search-results-number"
+                        <strong i18n:name="number" id="cellml-search-results-number"
                                 tal:content="batch/sequence_length|string:0">234</strong>
                         items matching your search terms.
                     </span>
@@ -109,13 +109,13 @@
                           <a href="#"
                              tal:condition="nothing"
                              tal:attributes="href view/advanced_search_trigger"
-                             id="search-filter-toggle"
+                             id="cellml-search-filter-toggle"
                              i18n:translate="narrow_search_options">
                               Filter the results.
                           </a>
                       </dt>
                       <dd class="actionMenuContent">
-                          <div id="search-filter" i18n:domain="plone">
+                          <div id="cellml-search-filter" i18n:domain="plone">
 
                               <fieldset class="noborder">
 
@@ -223,7 +223,7 @@
                                   </div>
 
                                   <div class="formControls">
-                                      <input class="searchPage searchButton allowMultiSubmit"
+                                      <input class="searchPage cellml-searchButton allowMultiSubmit"
                                              type="submit"
                                              value="Search"
                                              i18n:attributes="value label_search;"/>
@@ -260,7 +260,7 @@
                 <div class="visualClear"><!-- --></div>
 
                 <metal:searchresults define-macro="search_results">
-                    <div id="search-results"
+                    <div id="cellml-search-results"
                          tal:define="navigation_root_url context/@@plone_portal_state/navigation_root_url;">
 
                         <metal:noresults tal:condition="not: batch">
