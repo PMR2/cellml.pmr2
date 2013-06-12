@@ -14,6 +14,8 @@
           tal:condition="request/SearchableText|nothing"
           tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}"/>
 
+    <meta name="navigation_root_url" tal:attributes="content view/navroot_url" />
+
   </metal:block>
 
   <metal:block fill-slot="top_slot"
@@ -32,7 +34,8 @@
           tal:define="portal context/@@plone_portal_state/portal;
                       first_call not:request/advanced_search|nothing;
                       st python:request.get('SearchableText', '');
-                      DateTime python:modules['DateTime'].DateTime;">
+                      DateTime python:modules['DateTime'].DateTime;
+                      navigation_root_url view/navroot_url;"> 
 
         <input type="hidden" name="advanced_search" value="False" />
         <input type="hidden" name="sort_on" value="" />
@@ -54,7 +57,7 @@
 
         <div class="row">
 
-            <div class="cell width-16 position-0">
+            <div class="cell width-full position-0">
                 <h1 class="documentFirstHeading"
                     i18n:translate=""
                     tal:condition="not:st">
@@ -70,7 +73,8 @@
                 </h1>
 
                 <p id="rss-subscription" i18n:domain="plone"
-                   tal:condition="context/portal_syndication/isSiteSyndicationAllowed">
+                   tal:define="syndication context/@@tools/syndication|nothing"
+                   tal:condition="syndication/isSiteSyndicationAllowed|nothing">
                       <img src="" alt="RSS"
                            tal:attributes="src string:${portal_url}/rss.gif"/>
                     <a href=""
@@ -85,7 +89,7 @@
             </div>
             <div class="visualClear"><!-- --></div>
             <div id="search-results-wrapper"
-                 class="cell width-16 position-0"
+                 class="cell width-full position-0"
                  tal:define="b_start python:0;
                              b_start request/b_start | b_start;
                              batch python: view.results(b_start=b_start);
@@ -256,7 +260,8 @@
                 <div class="visualClear"><!-- --></div>
 
                 <metal:searchresults define-macro="search_results">
-                    <div id="search-results">
+                    <div id="search-results"
+                         tal:define="navigation_root_url context/@@plone_portal_state/navigation_root_url;">
 
                         <metal:noresults tal:condition="not: batch">
                           <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
@@ -266,6 +271,7 @@
                                        tal:define="isAnon context/@@plone_portal_state/anonymous;
                                                    toLocalizedTime nocall: context/@@plone/toLocalizedTime;
                                                    site_properties context/portal_properties/site_properties;
+                                                   use_view_action site_properties/typesUseViewActionInListings|python:();
                                                    allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
                                                    show_about python:not isAnon or allowAnonymousViewAbout;">
                           <dl class="searchResults">
@@ -273,7 +279,9 @@
                                     <dt tal:attributes="class item/ContentTypeClass">
                                       <img tal:replace="structure item/getIcon" />
                                       <a href="#"
-                                         tal:attributes="href string:${item/getURL}/view;
+                                         tal:define="item_url item/getURL;
+                                                     item_type item/PortalType"
+                                         tal:attributes="href python:item_type in use_view_action and (item_url + '/view') or item_url;
                                                          class string:state-${item/review_state}"
                                          tal:content="item/Title" />
                                     </dt>
@@ -286,7 +294,7 @@
                                             <tal:block tal:condition="item/Creator"
                                                 tal:define="author python:context.portal_membership.getMemberInfo(item.Creator())">
                                               <a href="#"
-                                                 tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/author/${item/Creator}"
+                                                 tal:attributes="href string:$navigation_root_url/author/${item/Creator}"
                                                  tal:content="python:author and author['fullname'] or item.Creator()"
                                                  tal:omit-tag="not:item/Creator"
                                                  i18n:name="author">
@@ -329,7 +337,7 @@
                                                class="link-category"
                                                rel="tag"
                                                tal:content="category"
-                                               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@cellml_search?Subject%3Alist=${category}">
+                                               tal:attributes="href string:$navigation_root_url/@@cellml_search?Subject%3Alist=${category}">
                                               Category
                                             </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
                                           </span>
@@ -358,8 +366,8 @@
                                                       crumb
                                                   </a>
                                                   <span class="breadcrumbSeparator" tal:condition="not: is_last">
-                                                      <tal:ltr condition="not: is_rtl">&rsaquo;</tal:ltr>
-                                                      <tal:rtl condition="is_rtl">&lsaquo;</tal:rtl>
+                                                      <tal:ltr condition="not: is_rtl">/</tal:ltr>
+                                                      <tal:rtl condition="is_rtl">/</tal:rtl>
                                                   </span>
                                                </tal:item>
                                           </span>
