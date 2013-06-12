@@ -14,16 +14,12 @@
                size="18"
                value=""
                title="Search"
+               placeholder="Search Models"
                accesskey="4"
                i18n:attributes="title title_search;"
                tal:attributes="value request/SearchableText|nothing;
                                id view/search_input_id;"
                class="inputLabel" />
-
-        <input class="searchButton"
-               type="submit"
-               value="Search"
-               i18n:attributes="value label_search;" />
 
     </form>
 
