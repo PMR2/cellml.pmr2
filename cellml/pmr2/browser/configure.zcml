@@ -20,7 +20,7 @@
 
   <browser:page
       name="updated_cellml_search"
-      class=".search.Search"
+      class=".search.CellMLSearch"
       permission="zope2.View"
       for="Products.CMFCore.interfaces.IFolderish"
       template="updated_search.pt"

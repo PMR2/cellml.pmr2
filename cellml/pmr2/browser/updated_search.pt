@@ -13,10 +13,10 @@
             tal:content="batch/sequence_length|string:0">234</strong>
 
     <span id="updated-sorting-options">
-        <metal:results use-macro="context/@@search/sorting" />
+        <metal:results use-macro="context/@@cellml_search/sorting" />
     </span>
 
-    <metal:results use-macro="context/@@search/search_results" />
+    <metal:results use-macro="context/@@cellml_search/search_results" />
 
 </body>
 </html>
