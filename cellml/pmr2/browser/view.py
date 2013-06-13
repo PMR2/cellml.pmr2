@@ -44,7 +44,7 @@ class CellMLCodegenNote(SourceTextNote):
     """
 
     select_template = ViewPageTemplateFile('code_select.pt')
-    label = ViewPageTemplateFile('cellml_code.pt')
+    title = ViewPageTemplateFile('cellml_code.pt')
     rawcode = False
 
     def raw(self):
