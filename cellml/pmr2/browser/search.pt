@@ -30,7 +30,7 @@
 
     <form name="searchform"
           action="@@cellml_search"
-          class="searchPage enableAutoFocus form-search"
+          class="cellml-searchPage enableAutoFocus form-search"
           tal:define="portal context/@@plone_portal_state/portal;
                       first_call not:request/advanced_search|nothing;
                       st python:request.get('SearchableText', '');
