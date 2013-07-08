@@ -1,10 +1,13 @@
 Changelog
 =========
 
-0.6 - Unreleased
-----------------
+0.6 - Released (2013-07-08)
+---------------------------
 
 * Update dependency of form library to pmr2.z3cform.
+* Make use of bootstrap css classes.
+* Ensure the Plone dynamic stuff are disabled to not interfere with the
+  CellML specific search forms.
 
 0.5.1 - Released (2012-11-06)
 -----------------------------
