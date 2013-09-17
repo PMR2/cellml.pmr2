@@ -3,20 +3,20 @@
   <script type="text/javascript">
   //<![CDATA[
     function process() {
-      var components = jq('#mathjax-render > *');
+      var components = $('#mathjax-render > *');
       for (var i = 0; i < components.length; i++) {
-        var component = jq(components[i]); //.clone();
+        var component = $(components[i]); //.clone();
         var equations = component.find('math > mrow');
         for (var j = 0; j < equations.length; j++) {
-          var math = jq('<' + 'div class="eq"><' + '/div>').append(
-                        jq('<' + 'math>' + '<' + '/math>').append(
+          var math = $('<' + 'div class="eq"><' + '/div>').append(
+                        $('<' + 'math>' + '<' + '/math>').append(
                            equations[j]));
           component.append(math);
         }
       }
     }
 
-    jq(document).ready(function() {
+    $(document).ready(function() {
       process();
       loadMathJax();
     })
