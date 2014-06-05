@@ -6,24 +6,21 @@ from Products.CMFCore.utils import getToolByName
 import pmr2.app
 
 from plone.testing.z2 import ZSERVER
-from plone.testing.z2 import ZSERVER_FIXTURE
-from plone.app.testing.layers import PLONE_ZSERVER
 from plone.app.testing import IntegrationTesting
-from plone.app.testing import FunctionalTesting
-
+from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
-from pmr2.app.exposure.tests.layer import ExposureLayer
+from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
 
 from pmr2.testing.base import TestRequest
 
 
-class CellMLExposureLayer(ExposureLayer):
+class CellMLExposureLayer(PloneSandboxLayer):
+
+    defaultBases = (EXPOSURE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        super(CellMLExposureLayer, self).setUpZope(app, configurationContext)
-
         import cellml.pmr2
         import cellml.api.pmr2
         self.loadZCML(package=cellml.api.pmr2)
@@ -31,7 +28,6 @@ class CellMLExposureLayer(ExposureLayer):
         self.loadZCML('test.zcml', package=cellml.pmr2.tests)
 
     def setUpPloneSite(self, portal):
-        super(CellMLExposureLayer, self).setUpPloneSite(portal)
         self.applyProfile(portal, 'cellml.pmr2:default')
 
         from pmr2.app.workspace.interfaces import IStorageUtility
@@ -83,8 +79,7 @@ class CellMLExposureLayer(ExposureLayer):
 
 CELLML_EXPOSURE_FIXTURE = CellMLExposureLayer()
 
-# reduce the bases to the minimum set and fix the import at the top
 CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
-    bases=(CELLML_EXPOSURE_FIXTURE, PLONE_ZSERVER),
+    bases=(ZSERVER, CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_integration",
 )
