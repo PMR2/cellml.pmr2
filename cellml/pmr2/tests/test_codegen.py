@@ -3,7 +3,6 @@ import unittest
 
 import zope.component
 from plone.testing import z2
-from Products.PloneTestCase import PloneTestCase as ptc
 
 from pmr2.app.exposure.browser.browser import ExposureFileAnnotatorForm
 
