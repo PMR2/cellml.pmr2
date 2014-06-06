@@ -80,6 +80,6 @@ class CellMLExposureLayer(PloneSandboxLayer):
 CELLML_EXPOSURE_FIXTURE = CellMLExposureLayer()
 
 CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
-    bases=(ZSERVER, CELLML_EXPOSURE_FIXTURE,),
+    bases=(CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_integration",
 )
