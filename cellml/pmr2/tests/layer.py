@@ -11,6 +11,7 @@ from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
+from pmr2.app.workspace.content import Workspace
 from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
 
 from pmr2.testing.base import TestRequest
@@ -27,33 +28,41 @@ class CellMLExposureLayer(PloneSandboxLayer):
         self.loadZCML(package=cellml.pmr2)
         self.loadZCML('test.zcml', package=cellml.pmr2.tests)
 
+    def mkAddWorkspace(self, container, id_):
+        w = Workspace(id_)
+        w.storage = 'dummy_storage'
+        container[id_] = w
+
     def setUpPloneSite(self, portal):
         self.applyProfile(portal, 'cellml.pmr2:default')
 
         from pmr2.app.workspace.interfaces import IStorageUtility
-        from pmr2.app.workspace.content import Workspace
         from pmr2.app.exposure.browser.browser import ExposureAddForm
         from pmr2.app.exposure.browser.browser import ExposureFileGenForm
 
         import pmr2.testing
 
-        # load the rdfmodel test data
-        target = join(dirname(pmr2.testing.__file__), 'data', 'rdfmodel')
+        # instantiate test data on disk as dummy_storage backed
+        # workspaces.
         su = zope.component.getUtility(IStorageUtility, name='dummy_storage')
-        su._loadDir('rdfmodel', target)
 
-        # add workspace object
-        w = Workspace('rdfmodel')
-        w.storage = 'dummy_storage'
-        portal.workspace['rdfmodel'] = w
+        su._loadDir('rdfmodel',
+            join(dirname(pmr2.testing.__file__), 'data', 'rdfmodel'))
 
-        # publish this workspace
+        su._loadDir('main_bucket', join(dirname(__file__), 'repo', 'main'))
+
+        # add workspace objects
+        self.mkAddWorkspace(portal.workspace, 'rdfmodel')
+        self.mkAddWorkspace(portal.workspace, 'main_bucket')
+
+        # publish workspace objects
         helpers.setRoles(portal, TEST_USER_ID, ['Manager'])
         pw = getToolByName(portal, "portal_workflow")
         pw.doActionFor(portal.workspace['rdfmodel'], 'publish')
+        pw.doActionFor(portal.workspace['main_bucket'], 'publish')
         helpers.setRoles(portal, TEST_USER_ID, ['Member', 'Authenticated',])
 
-        # poke in the exposure
+        # poke in an exposure
         request = TestRequest(
             form={
                 'form.widgets.workspace': u'rdfmodel',
@@ -82,4 +91,9 @@ CELLML_EXPOSURE_FIXTURE = CellMLExposureLayer()
 CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
     bases=(CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_integration",
+)
+
+CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER = IntegrationTesting(
+    bases=(ZSERVER, CELLML_EXPOSURE_FIXTURE,),
+    name="cellml.pmr2:exposure_all_live_integration",
 )

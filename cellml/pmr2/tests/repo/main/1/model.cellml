@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<model xmlns="http://www.cellml.org/cellml/1.0#"
+    name="model"
+    cmeta:id="model_id"
+    xmlns:cellml="http://www.cellml.org/cellml/1.0#"
+    xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+
+  <units name="litres_per_second">
+    <unit units="second" exponent="-1"/>
+  </units>
+
+  <units name="per_second">
+    <unit units="second" exponent="-1"/>
+  </units>
+
+  <component name="bucket">
+    <variable name="incoming_flow_rate" public_interface="in" units="litres_per_second"/>
+    <variable name="time" public_interface="in" units="second"/>
+    <variable name="flow_factor" public_interface="in" units="per_second"/>
+    <variable name="volume" public_interface="out" units="litre"/>
+    <variable name="outwardFlowRate" public_interface="out" units="litres_per_second"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply id="outflow_rate">
+        <eq/>
+        <ci>outward_flow_rate</ci>
+        <apply>
+          <times/>
+          <ci>flow_factor</ci>
+          <ci>volume</ci>
+        </apply>
+      </apply>
+
+      <apply id="main_eq">
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>volume</ci>
+        </apply>
+        <ci>volumeChangeRate</ci>
+      </apply>
+
+      <apply id="volume_chage_rate">
+        <eq/>
+        <ci>volumeChangeRate</ci>
+        <apply>
+          <minus/>
+          <ci>incomingFlowRate</ci>
+          <ci>outwardFlowRate</ci>
+        </apply>
+      </apply>
+    </math>
+
+    <variable name="volumeChangeRate" public_interface="out" units="litresPerSecond"/>
+  </component>
+</model>
