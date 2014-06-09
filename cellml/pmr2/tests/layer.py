@@ -8,6 +8,7 @@ import pmr2.app
 from plone.testing.z2 import ZSERVER
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
@@ -17,9 +18,9 @@ from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
 from pmr2.testing.base import TestRequest
 
 
-class CellMLExposureLayer(PloneSandboxLayer):
+class CellMLBaseLayer(PloneSandboxLayer):
 
-    defaultBases = (EXPOSURE_FIXTURE,)
+    defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
         import cellml.pmr2
@@ -28,13 +29,27 @@ class CellMLExposureLayer(PloneSandboxLayer):
         self.loadZCML(package=cellml.pmr2)
         self.loadZCML('test.zcml', package=cellml.pmr2.tests)
 
+    def setUpPloneSite(self, portal):
+        self.applyProfile(portal, 'cellml.pmr2:default')
+
+CELLML_BASE_FIXTURE = CellMLBaseLayer()
+
+CELLML_BASE_INTEGRATION_LAYER = IntegrationTesting(
+    bases=(CELLML_BASE_FIXTURE,),
+    name="cellml.pmr2:basic_integration",
+)
+
+
+class CellMLExposureLayer(PloneSandboxLayer):
+
+    defaultBases = (EXPOSURE_FIXTURE, CELLML_BASE_FIXTURE,)
+
     def mkAddWorkspace(self, container, id_):
         w = Workspace(id_)
         w.storage = 'dummy_storage'
         container[id_] = w
 
     def setUpPloneSite(self, portal):
-        self.applyProfile(portal, 'cellml.pmr2:default')
 
         from pmr2.app.workspace.interfaces import IStorageUtility
         from pmr2.app.exposure.browser.browser import ExposureAddForm

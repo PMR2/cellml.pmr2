@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registry>
+  <records
+      interface="cellml.pmr2.interfaces.IVHostRemap"
+      prefix="cellml.pmr2.vhost"
+    />
+</registry>

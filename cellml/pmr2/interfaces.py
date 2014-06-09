@@ -112,3 +112,25 @@ class ICellMLMathNote(zope.interface.Interface):
         default=[],
         required=False,
     )
+
+
+class IVHostRemap(zope.interface.Interface):
+    """
+    For configuration registry for mapping a http(s?) url back to a
+    pmr local url that our opener can use to access the raw model data
+    directly.
+    """
+
+    prefix_maps = zope.schema.Dict(
+        title=u'Virtual Host Prefix Mappings',
+        description=u'Map a virtual hostname applicable for this instance '
+            'to a valid physical path on this instance.',
+        key_type=zope.schema.TextLine(
+            title=u'Virtual Hostname',
+        ),
+        value_type=zope.schema.TextLine(
+            # This could be a replacement if the vhost is actually done
+            # on an alternative subpath.  Will implement when needed.
+            title=u'Physical root',
+        ),
+    )
