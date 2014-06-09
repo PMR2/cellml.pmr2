@@ -1,6 +1,9 @@
 import unittest
+from urllib2 import URLError
 
+import zope.component
 from plone.app.testing import logout
+from plone.registry.interfaces import IRegistry
 from zExceptions import Unauthorized
 
 from cellml.pmr2.urlopener import PmrUrlOpener
@@ -24,8 +27,8 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
     # - missing object
     # - missing revision
     # - invalid protocol (ftp:..)
-    # fallback modes, i.e. fallback to http://
-    # relative uri access to embedded workspaces
+    # fallback modes, i.e. fallback to http:// with mercurial
+    # relative uri access to embedded workspaces with mercurial 
 
     def test_safe_standard_load_standard(self):
         f = opener.loadURL('pmr:/plone/workspace/test:2:dir1/f2')
@@ -41,7 +44,15 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
         f = opener.loadURL('pmr:/plone/workspace/main_bucket:0:README')
         self.assertEqual(f, 'A test main repo.\n')
 
-    def test_embedded_load(self):
+    def test_embedded_load_unregistered_vhost(self):
+        # Will result in loading from http://nohost/, which will fail
+        # under normal circumstances.
+        self.assertRaises(URLError, opener.loadURL,
+            'pmr:/plone/workspace/external_root:0:external_test/test.txt')
+
+    def test_embedded_load_registered_vhost(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'nohost': u''}
         f = opener.loadURL(
             'pmr:/plone/workspace/external_root:0:external_test/test.txt')
         self.assertEqual(f, 'external test file.\n')
@@ -54,6 +65,11 @@ class UrlOpenerSpawnedTestCase(unittest.TestCase):
     def test_safe_standard_load(self):
         f = opener.loadURL('pmr:/plone/workspace/test:2:dir1/f2')
         self.assertEqual(f, 'second file in dir1\n')
+
+    def test_safe_standard_load_http(self):
+        f = opener.loadURL('http://localhost:55001/plone/workspace/'
+            'main_bucket/@@rawfile/0/README')
+        self.assertEqual(f, 'A test main repo.\n')
 
 
 def test_suite():
