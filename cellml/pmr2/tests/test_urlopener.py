@@ -8,6 +8,7 @@ from zExceptions import Unauthorized
 
 from pmr2.app.workspace.exceptions import PathNotFoundError
 from pmr2.app.workspace.exceptions import RevisionNotFoundError
+from cellml.api.pmr2.interfaces import UnapprovedProtocolError
 
 from cellml.pmr2.urlopener import PmrUrlOpener
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LAYER
@@ -23,10 +24,7 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
 
     # test standard way, ala the default codegen test.
     # test various failure modes
-    # - security
-    # - wrong object type
     # - wrong encoding of uri
-    # - invalid protocol (ftp:..)
     # fallback modes, i.e. fallback to http:// with mercurial
     # relative uri access to embedded workspaces with mercurial 
 
@@ -42,6 +40,14 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
         self.assertRaises(RevisionNotFoundError, opener.loadURL,
             'pmr:/plone/workspace/test:24:dir1/not_file')
 
+    def test_safe_standard_load_wrong_obj(self):
+        self.assertRaises(TypeError, opener.loadURL,
+            'pmr:/plone/workspace:0:dir1/not_file')
+
+    def test_safe_standard_load_malformed_uri(self):
+        self.assertRaises(ValueError, opener.loadURL,
+            'pmr:/plone/workspace')
+
     def test_safe_standard_load_standard(self):
         f = opener.loadURL('pmr:/plone/workspace/test:2:dir1/f2')
         self.assertEqual(f, 'second file in dir1\n')
@@ -50,6 +56,10 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
         logout()
         self.assertRaises(Unauthorized, opener.loadURL,
             'pmr:/plone/workspace/test:2:dir1/f2')
+
+    def test_safe_standard_load_bad_protocol(self):
+        self.assertRaises(UnapprovedProtocolError, opener,
+            'ftp://localhost/workspace/test/2/dir1/f2')
 
     def test_safe_standard_load_anonymous(self):
         logout()
@@ -85,13 +95,10 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
         #self.assertEqual(f, 'external test file.\n')
 
 
-class UrlOpenerSpawnedTestCase(unittest.TestCase):
+class UrlOpenerSpawnedTestCase(UrlOpenerLocalTestCase):
 
+    # Repeat the test above, with the live integration layer.
     layer = CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
-
-    def test_safe_standard_load(self):
-        f = opener.loadURL('pmr:/plone/workspace/test:2:dir1/f2')
-        self.assertEqual(f, 'second file in dir1\n')
 
     def test_safe_standard_load_http(self):
         f = opener.loadURL('http://localhost:55001/plone/workspace/'
