@@ -30,32 +30,32 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
 
     def test_safe_standard_load_missing_obj(self):
         self.assertRaises(AttributeError, opener.loadURL,
-            'pmr:/plone/workspace/missing:4:dir1/f2')
+            'pmr:/plone/workspace/missing:4:/dir1/f2')
 
     def test_safe_standard_load_missing_file(self):
         self.assertRaises(PathNotFoundError, opener.loadURL,
-            'pmr:/plone/workspace/test:2:dir1/not_file')
+            'pmr:/plone/workspace/test:2:/dir1/not_file')
 
     def test_safe_standard_load_missing_rev(self):
         self.assertRaises(RevisionNotFoundError, opener.loadURL,
-            'pmr:/plone/workspace/test:24:dir1/not_file')
+            'pmr:/plone/workspace/test:24:/dir1/not_file')
 
     def test_safe_standard_load_wrong_obj(self):
         self.assertRaises(TypeError, opener.loadURL,
-            'pmr:/plone/workspace:0:dir1/not_file')
+            'pmr:/plone/workspace:0:/dir1/not_file')
 
     def test_safe_standard_load_malformed_uri(self):
         self.assertRaises(ValueError, opener.loadURL,
             'pmr:/plone/workspace')
 
     def test_safe_standard_load_standard(self):
-        f = opener.loadURL('pmr:/plone/workspace/test:2:dir1/f2')
+        f = opener.loadURL('pmr:/plone/workspace/test:2:/dir1/f2')
         self.assertEqual(f, 'second file in dir1\n')
 
     def test_safe_standard_load_unauthorized(self):
         logout()
         self.assertRaises(Unauthorized, opener.loadURL,
-            'pmr:/plone/workspace/test:2:dir1/f2')
+            'pmr:/plone/workspace/test:2:/dir1/f2')
 
     def test_safe_standard_load_bad_protocol(self):
         self.assertRaises(UnapprovedProtocolError, opener,
@@ -63,20 +63,20 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
 
     def test_safe_standard_load_anonymous(self):
         logout()
-        f = opener.loadURL('pmr:/plone/workspace/main_bucket:0:README')
+        f = opener.loadURL('pmr:/plone/workspace/main_model:0:/README')
         self.assertEqual(f, 'A test main repo.\n')
 
     def test_embedded_load_unregistered_vhost(self):
         # Will result in loading from http://nohost/, which will fail
         # under normal circumstances.
         self.assertRaises(URLError, opener.loadURL,
-            'pmr:/plone/workspace/external_root:0:external_test/test.txt')
+            'pmr:/plone/workspace/external_root:0:/external_test/test.txt')
 
     def test_embedded_load_registered_vhost(self):
         registry = zope.component.getUtility(IRegistry)
         registry['cellml.pmr2.vhost.prefix_maps'] = {u'nohost': u''}
         f = opener.loadURL(
-            'pmr:/plone/workspace/external_root:0:external_test/test.txt')
+            'pmr:/plone/workspace/external_root:0:/external_test/test.txt')
         self.assertEqual(f, 'external test file.\n')
 
     def test_embedded_load_registered_http(self):
@@ -102,7 +102,7 @@ class UrlOpenerSpawnedTestCase(UrlOpenerLocalTestCase):
 
     def test_safe_standard_load_http(self):
         f = opener.loadURL('http://localhost:55001/plone/workspace/'
-            'main_bucket/@@rawfile/0/README')
+            'main_model/@@rawfile/0/README')
         self.assertEqual(f, 'A test main repo.\n')
 
 

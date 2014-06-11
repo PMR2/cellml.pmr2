@@ -10,6 +10,10 @@ from pmr2.app.workspace.interfaces import IStorage
 from cellml.api.pmr2.urlopener import DefaultURLOpener
 
 
+def make_pmr_path(objpath, rev, path, *a, **kw):
+    return 'pmr:%(objpath)s:%(rev)s:/%(path)s' % locals()
+
+
 def external_to_url(kws):
     """
     Convert an external dict to a URI, either a standard HTTP URL for
@@ -27,7 +31,7 @@ def external_to_url(kws):
         return '%(location)s/%(view)s/%(rev)s/%(path)s' % kws
 
     kws['objpath'] = mappings[p.netloc] + p.path
-    return 'pmr:%(objpath)s:%(rev)s:%(path)s' % kws
+    return make_pmr_path(**kws)
 
 
 class PmrUrlOpener(DefaultURLOpener):
@@ -50,6 +54,9 @@ class PmrUrlOpener(DefaultURLOpener):
         # them, but the filepath might so we limit splits to two.
         objpath, rev, filepath = p.path.split(':', 2)
 
+        # strip off the leading `/` hint for urljoin.
+        filepath = filepath[1:]
+
         portal = getSite()
         workspace = portal.restrictedTraverse(objpath.split('/'))
         storage = IStorage(workspace)
@@ -60,4 +67,5 @@ class PmrUrlOpener(DefaultURLOpener):
             kws.update(pathinfo['external'])
             target = external_to_url(kws)
             return self.loadURL(target)
+        # Using this instead of contents to ignore directories.
         return storage.file(filepath)

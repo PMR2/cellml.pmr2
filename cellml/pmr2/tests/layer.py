@@ -61,29 +61,29 @@ class CellMLExposureLayer(PloneSandboxLayer):
         # workspaces.
         su = zope.component.getUtility(IStorageUtility, name='dummy_storage')
 
+        # TODO handle cleanup when that dummy provide support.
         su._loadDir('rdfmodel',
             join(dirname(pmr2.testing.__file__), 'data', 'rdfmodel'))
 
-        su._loadDir('main_bucket', join(dirname(__file__), 'repo', 'main'))
+        su._loadDir('main_model', join(dirname(__file__), 'repo', 'main'))
 
         # add workspace objects
         self.mkAddWorkspace(portal.workspace, 'rdfmodel')
-        self.mkAddWorkspace(portal.workspace, 'main_bucket')
+        self.mkAddWorkspace(portal.workspace, 'main_model')
 
         # publish workspace objects
         helpers.setRoles(portal, TEST_USER_ID, ['Manager'])
         pw = getToolByName(portal, "portal_workflow")
         pw.doActionFor(portal.workspace['rdfmodel'], 'publish')
-        pw.doActionFor(portal.workspace['main_bucket'], 'publish')
+        pw.doActionFor(portal.workspace['main_model'], 'publish')
         helpers.setRoles(portal, TEST_USER_ID, ['Member', 'Authenticated',])
 
         # poke in an exposure
-        request = TestRequest(
-            form={
-                'form.widgets.workspace': u'rdfmodel',
-                'form.widgets.commit_id': u'2',
-                'form.buttons.add': 1,
-            })
+        request = TestRequest(form={
+            'form.widgets.workspace': u'rdfmodel',
+            'form.widgets.commit_id': u'2',
+            'form.buttons.add': 1,
+        })
         testform = ExposureAddForm(portal.exposure, request)
         testform.update()
         exp_id = testform._data['id']

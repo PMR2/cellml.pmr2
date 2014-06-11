@@ -21,6 +21,7 @@ from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 
 from cellml.pmr2.urlopener import PmrUrlOpener
+from cellml.pmr2.urlopener import make_pmr_path
 from cellml.pmr2.cmeta import Cmeta
 from cellml.pmr2.interfaces import *
 
@@ -46,6 +47,8 @@ class CellMLMathAnnotator(ExposureFileAnnotatorBase):
         exposure, workspace, path = sa.source()
         modelfile = '%s/@@%s/%s/%s' % (workspace.absolute_url(),
             'rawfile', exposure.commit_id, path)
+        target = make_pmr_path(
+            '/'.join(workspace.getPhysicalPath()), exposure.commit_id, path)
         model = cu.loadModel(target, loader=pmr_loader)
         results = cu.extractMaths(model)
         return results
@@ -77,8 +80,8 @@ class CellMLCodegenAnnotator(ExposureFileAnnotatorBase):
         sa = zope.component.queryAdapter(
             self.context, IExposureSourceAdapter)
         exposure, workspace, path = sa.source()
-        target = ':'.join(('pmr',
-            '/'.join(workspace.getPhysicalPath()), exposure.commit_id, path))
+        target = make_pmr_path(
+            '/'.join(workspace.getPhysicalPath()), exposure.commit_id, path)
         model = cu.loadModel(target, loader=pmr_loader)
 
         return cu.exportCeleds(model)
