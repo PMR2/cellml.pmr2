@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<model xmlns="http://www.cellml.org/cellml/1.1#"
+    name="demo"
+    cmeta:id="demo_id"
+    xmlns:cellml="http://www.cellml.org/cellml/1.1#"
+    xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="model.cellml">
+    <component component_ref="bucket" name="bucket1"/>
+    <component component_ref="tap" name="tap1"/>
+    <units name="litres_per_second" units_ref="litres_per_second"/>
+    <units name="per_second" units_ref="per_second"/>
+  </import>
+
+  <component name="environment">
+    <variable name="time" public_interface="out" units="second"/>
+    <variable initial_value="0.5" name="bucket_flow_factor" public_interface="out" units="per_second"/>
+    <variable initial_value="3" name="tap_initial_flow_rate" public_interface="out" units="litres_per_second"/>
+    <variable initial_value="1" name="tap_start_time" public_interface="out" units="second"/>
+    <variable initial_value="4" name="tap_stop_time" public_interface="out" units="second"/>
+  </component>
+
+  <connection>
+    <map_components component_1="environment" component_2="bucket1"/>
+    <map_variables variable_1="time" variable_2="time"/>
+    <map_variables variable_1="bucket_flow_factor" variable_2="flow_factor"/>
+  </connection>
+
+  <connection>
+    <map_components component_1="environment" component_2="tap1"/>
+    <map_variables variable_1="time" variable_2="time"/>
+    <map_variables variable_1="tap_initial_flow_rate" variable_2="initial_flow_rate"/>
+    <map_variables variable_1="tap_start_time" variable_2="start_time"/>
+    <map_variables variable_1="tap_stop_time" variable_2="stop_time"/>
+  </connection>
+
+  <connection>
+    <map_components component_1="tap1" component_2="bucket1"/>
+    <map_variables variable_1="flow_rate" variable_2="incoming_flow_rate"/>
+  </connection>
+
+</model>
