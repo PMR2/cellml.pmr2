@@ -9,6 +9,7 @@ from zExceptions import Unauthorized
 from pmr2.app.workspace.exceptions import PathNotFoundError
 from pmr2.app.workspace.exceptions import RevisionNotFoundError
 from cellml.api.pmr2.interfaces import UnapprovedProtocolError
+from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 
 from cellml.pmr2.urlopener import PmrUrlOpener
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LAYER
@@ -106,10 +107,36 @@ class UrlOpenerSpawnedTestCase(UrlOpenerLocalTestCase):
         self.assertEqual(f, 'A test main repo.\n')
 
 
+class CellMLLoaderTestCase(unittest.TestCase):
+
+    layer = CELLML_EXPOSURE_INTEGRATION_LAYER
+
+    def test_model_load_standard(self):
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/main_model:0:/model.cellml'
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(
+            model.modelComponents.getComponent('tap').name, 'tap')
+        self.assertEqual(
+            model.modelComponents.getComponent('bucket').name, 'bucket')
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()), ['bucket', 'tap'])
+
+    def test_model_load_relative_import_local(self):
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/main_model:0:/demo.cellml'
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(
+            model.modelComponents.getComponent('bucket1').name, 'bucket1')
+        self.assertEqual(
+            model.modelComponents.getComponent('tap1').name, 'tap1')
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(UrlOpenerLocalTestCase))
     suite.addTest(unittest.makeSuite(UrlOpenerSpawnedTestCase))
+    suite.addTest(unittest.makeSuite(CellMLLoaderTestCase))
     return suite
 
 if __name__ == '__main__':
