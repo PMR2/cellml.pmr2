@@ -66,10 +66,19 @@ class CellMLExposureLayer(PloneSandboxLayer):
             join(dirname(pmr2.testing.__file__), 'data', 'rdfmodel'))
 
         su._loadDir('main_model', join(dirname(__file__), 'repo', 'main'))
+        su._loadDir('demo_model', join(dirname(__file__), 'repo', 'impl'))
+        # XXX the location can change!
+        su._dummy_storage_data['demo_model'][0]['main'] = {
+            '': '_subrepo',
+            'rev': '0',
+            'location': 'http://nohost/plone/workspace/main_model',
+            # 'location': 'http://localhost:55001/plone/workspace/main_model',
+        },
 
         # add workspace objects
         self.mkAddWorkspace(portal.workspace, 'rdfmodel')
         self.mkAddWorkspace(portal.workspace, 'main_model')
+        self.mkAddWorkspace(portal.workspace, 'demo_model')
 
         # publish workspace objects
         helpers.setRoles(portal, TEST_USER_ID, ['Manager'])
