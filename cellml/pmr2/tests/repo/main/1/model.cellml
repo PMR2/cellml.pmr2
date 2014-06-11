@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0"?>
 <model xmlns="http://www.cellml.org/cellml/1.0#"
     name="model"
     cmeta:id="model_id"
@@ -13,16 +13,55 @@
     <unit units="second" exponent="-1"/>
   </units>
 
+  <component name="tap">
+    <variable name="flow_rate" public_interface="out" units="litres_per_second"/>
+    <variable name="time" public_interface="in" units="second"/>
+
+    <variable name="initial_flow_rate" public_interface="in" units="litres_per_second"/>
+    <variable name="start_time" public_interface="in" units="second"/>
+    <variable name="stop_time" public_interface="in" units="second"/>
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply id="tap flow_rate calculation">
+        <eq/>
+        <ci>flow_rate</ci>
+        <piecewise>
+          <piece>
+          <ci>initial_flow_rate</ci>
+          <apply>
+            <and/>
+            <apply>
+              <lt/>
+              <ci>time</ci>
+              <ci>stop_time</ci>
+            </apply>
+            <apply>
+              <gt/>
+              <ci>time</ci>
+              <ci>start_time</ci>
+            </apply>
+          </apply>
+        </piece>
+        <otherwise>
+          <cn units="litres_per_second">0</cn>
+        </otherwise>
+        </piecewise>
+      </apply>
+    </math>
+  </component>
+
   <component name="bucket">
     <variable name="incoming_flow_rate" public_interface="in" units="litres_per_second"/>
     <variable name="time" public_interface="in" units="second"/>
     <variable name="flow_factor" public_interface="in" units="per_second"/>
-    <variable name="volume" public_interface="out" units="litre"/>
-    <variable name="outwardFlowRate" public_interface="out" units="litres_per_second"/>
+    <variable initial_value="0" name="volume" public_interface="out" units="litre"/>
+    <variable name="outgoing_flow_rate" public_interface="out" units="litres_per_second"/>
+    <variable name="volume_change_rate" public_interface="out" units="litres_per_second"/>
+
     <math xmlns="http://www.w3.org/1998/Math/MathML">
       <apply id="outflow_rate">
         <eq/>
-        <ci>outward_flow_rate</ci>
+        <ci>outgoing_flow_rate</ci>
         <apply>
           <times/>
           <ci>flow_factor</ci>
@@ -39,20 +78,18 @@
           </bvar>
           <ci>volume</ci>
         </apply>
-        <ci>volumeChangeRate</ci>
+        <ci>volume_change_rate</ci>
       </apply>
 
       <apply id="volume_chage_rate">
         <eq/>
-        <ci>volumeChangeRate</ci>
+        <ci>volume_change_rate</ci>
         <apply>
           <minus/>
-          <ci>incomingFlowRate</ci>
-          <ci>outwardFlowRate</ci>
+          <ci>incoming_flow_rate</ci>
+          <ci>outgoing_flow_rate</ci>
         </apply>
       </apply>
     </math>
-
-    <variable name="volumeChangeRate" public_interface="out" units="litresPerSecond"/>
   </component>
 </model>
