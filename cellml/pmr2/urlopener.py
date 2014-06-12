@@ -13,7 +13,6 @@ from cellml.api.pmr2.urlopener import DefaultURLOpener
 def make_pmr_path(objpath, rev, path, *a, **kw):
     return 'pmr:%(objpath)s:%(rev)s:/%(path)s' % locals()
 
-
 def external_to_url(kws):
     """
     Convert an external dict to a URI, either a standard HTTP URL for
@@ -24,9 +23,8 @@ def external_to_url(kws):
     # look up whether the netloc is a vhost that needs mangling.
     mappings = getUtility(IRegistry).get('cellml.pmr2.vhost.prefix_maps') or {}
     if not p.netloc in mappings:
-        # XXX in theory another registry entry can resolve this, but
-        # that whole thing should really be integrated into PMR proper
-        # for the resolution of 'rawfile'
+        # XXX in theory another registry entry should resolve the name
+        # of the view, but it should be integrated into PMR proper.
         kws['view'] = 'rawfile'
         return '%(location)s/%(view)s/%(rev)s/%(path)s' % kws
 

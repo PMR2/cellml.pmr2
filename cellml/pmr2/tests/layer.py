@@ -5,10 +5,10 @@ import zope.component
 from Products.CMFCore.utils import getToolByName
 import pmr2.app
 
-from plone.testing.z2 import ZSERVER
+from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
@@ -42,7 +42,7 @@ CELLML_BASE_INTEGRATION_LAYER = IntegrationTesting(
 
 class CellMLExposureLayer(PloneSandboxLayer):
 
-    defaultBases = (EXPOSURE_FIXTURE, CELLML_BASE_FIXTURE,)
+    defaultBases = (EXPOSURE_FIXTURE,)
 
     def mkAddWorkspace(self, container, id_):
         w = Workspace(id_)
@@ -151,11 +151,11 @@ class CellMLExposureLayer(PloneSandboxLayer):
 CELLML_EXPOSURE_FIXTURE = CellMLExposureLayer()
 
 CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
-    bases=(CELLML_EXPOSURE_FIXTURE,),
+    bases=(CELLML_BASE_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_integration",
 )
 
 CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER = IntegrationTesting(
-    bases=(ZSERVER, CELLML_EXPOSURE_FIXTURE,),
+    bases=(ZSERVER_FIXTURE, CELLML_BASE_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_live_integration",
 )

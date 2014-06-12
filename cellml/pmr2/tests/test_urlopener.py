@@ -3,6 +3,7 @@ from urllib2 import URLError
 
 import zope.component
 from plone.app.testing import logout
+from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from zExceptions import Unauthorized
 
@@ -14,6 +15,16 @@ from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 from cellml.pmr2.urlopener import PmrUrlOpener
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LAYER
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
+
+try:
+    from cellml.pmr2.tests._hglayer import CELLML_MERCURIAL_LAYER
+    from cellml.pmr2.tests._hglayer import CELLML_MERCURIAL_LIVE_LAYER
+    _hgtests = True
+except ImportError:
+    # dummy value
+    CELLML_MERCURIAL_LAYER = CELLML_MERCURIAL_LIVE_LAYER = \
+        PLONE_INTEGRATION_TESTING
+    _hgtests = False
 
 # a single instance _should_ suffice
 opener = PmrUrlOpener()
@@ -36,7 +47,6 @@ class UrlOpenerUtilityTestCase(unittest.TestCase):
         r = opener.urljoin('pmr:/some/path:1:/another/path/file',
             '../to/a.cellml')
         self.assertEqual(r, 'pmr:/some/path:1:/another/to/a.cellml')
-
 
 
 class UrlOpenerLocalTestCase(unittest.TestCase):
@@ -199,7 +209,8 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_live:0:/multi.cellml'
         model = cu.loadModel(target, loader=opener)
-        # model loaded, imports loaded via http
+        # model loaded, imports loaded with relative linkage as no
+        # lookups are required.
         self.assertEqual(sorted([i.name for i in model.modelComponents]),
             ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
         maths = cu.extractMaths(model)
@@ -222,7 +233,7 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
         # no need to log out because credentials over http are not passed.
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_livep:0:/multi.cellml'
-        # Native CellML failed, permission.
+        # Native CellML failed, permission, login page is not CellML
         self.assertRaises(ValueError, cu.loadModel, target, loader=opener)
 
     def test_model_load_embedded_defined_vhost_map_internal(self):
@@ -241,12 +252,72 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
             ['bucket', 'environment', 'tap'])
 
 
+@unittest.skipUnless(_hgtests, "pmr2.mercurial is not available, skipping.")
+class CellMLMercurialLiveTestCase(unittest.TestCase):
+    """
+    Compatibility testing using the Mercurial backend.
+    """
+
+    layer = CELLML_MERCURIAL_LIVE_LAYER
+
+    def test_model_load_embedded_undefined_vhost_map(self):
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = ('pmr:/plone/workspace/hg_buckettap:'
+            'ea6829850a186bb2169a201e1babf85a6d35dc25:/demo.cellml')
+        # should be able to resolve/normalize this supplied target as no
+        # lookups are needed.
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_defined_vhost_map(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = ('pmr:/plone/workspace/hg_buckettap:'
+            'ea6829850a186bb2169a201e1babf85a6d35dc25:/demo.cellml')
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_undefined_vhost_map_privateblock(self):
+        # no need to log out because credentials over http are not passed.
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = ('pmr:/plone/workspace/hg_btdemo:'
+            'fe065c0722ce5bfe1a4af0b7b1414cd272267d6:/multi.cellml')
+        # Native CellML failed, permission, login page is not CellML
+        self.assertRaises(ValueError, cu.loadModel, target, loader=opener)
+
+    def test_model_load_embedded_defined_vhost_map_internal(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        # no need to log out because credentials over http are not passed.
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = ('pmr:/plone/workspace/hg_btdemo:'
+            'fe065c0722ce5bfe1a4af0b7b1414cd272267d6:/multi.cellml')
+        # successfully loaded because vhost is defined, and accessible
+        # through internal methods.
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(UrlOpenerLocalTestCase))
     suite.addTest(unittest.makeSuite(UrlOpenerSpawnedTestCase))
     suite.addTest(unittest.makeSuite(CellMLLoaderTestCase))
     suite.addTest(unittest.makeSuite(CellMLLoaderLiveTestCase))
+    suite.addTest(unittest.makeSuite(CellMLMercurialLiveTestCase))
     return suite
 
 if __name__ == '__main__':
