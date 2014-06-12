@@ -73,7 +73,7 @@ class CellMLExposureLayer(PloneSandboxLayer):
             'rev': '0',
             'location': 'http://nohost/plone/workspace/main_model',
             # 'location': 'http://localhost:55001/plone/workspace/main_model',
-        },
+        }
 
         # add workspace objects
         self.mkAddWorkspace(portal.workspace, 'rdfmodel')

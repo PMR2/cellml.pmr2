@@ -19,6 +19,26 @@ from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
 opener = PmrUrlOpener()
 
 
+class UrlOpenerUtilityTestCase(unittest.TestCase):
+
+    def test_urljoin_standard(self):
+        # standard support code path.
+        r = opener.urljoin('http://www.example.com/testmodel.cellml',
+            'newmodel/a.cellml')
+        self.assertEqual(r, 'http://www.example.com/newmodel/a.cellml')
+
+    def test_urljoin_nonstandard(self):
+        r = opener.urljoin('pmr:/some/path:1:/file',
+            'newmodel/a.cellml')
+        self.assertEqual(r, 'pmr:/some/path:1:/newmodel/a.cellml')
+    
+    def test_urljoin_nonstandard_multi(self):
+        r = opener.urljoin('pmr:/some/path:1:/another/path/file',
+            '../to/a.cellml')
+        self.assertEqual(r, 'pmr:/some/path:1:/another/to/a.cellml')
+
+
+
 class UrlOpenerLocalTestCase(unittest.TestCase):
 
     layer = CELLML_EXPOSURE_INTEGRATION_LAYER
@@ -115,10 +135,8 @@ class CellMLLoaderTestCase(unittest.TestCase):
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/main_model:0:/model.cellml'
         model = cu.loadModel(target, loader=opener)
-        self.assertEqual(
-            model.modelComponents.getComponent('tap').name, 'tap')
-        self.assertEqual(
-            model.modelComponents.getComponent('bucket').name, 'bucket')
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket', 'tap'])
         maths = cu.extractMaths(model)
         self.assertEqual(sorted(dict(maths).keys()), ['bucket', 'tap'])
 
@@ -126,10 +144,31 @@ class CellMLLoaderTestCase(unittest.TestCase):
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/main_model:0:/demo.cellml'
         model = cu.loadModel(target, loader=opener)
-        self.assertEqual(
-            model.modelComponents.getComponent('bucket1').name, 'bucket1')
-        self.assertEqual(
-            model.modelComponents.getComponent('tap1').name, 'tap1')
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_undefined_vhost_map(self):
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_model:0:/multi.cellml'
+        model = cu.loadModel(target, loader=opener)
+        # model loaded but imports cannot be instantiated.
+        self.assertEqual([i.wasInstantiated for i in model.imports],
+            [False, False, False])
+
+    def test_model_load_embedded_defined_vhost_map(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'nohost': u''}
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_model:0:/multi.cellml'
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
 
 
 def test_suite():

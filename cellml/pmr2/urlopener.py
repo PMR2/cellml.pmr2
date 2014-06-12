@@ -43,6 +43,18 @@ class PmrUrlOpener(DefaultURLOpener):
         super(PmrUrlOpener, self).__init__()
         self.approved_protocol.append('pmr')
 
+    def urljoin(self, base, url, allow_fragments=True):
+        p = urlparse.urlparse(base)
+        if p.scheme != 'pmr':
+            # standard
+            return urlparse.urljoin(base, url)
+
+        alt = urlparse.urlunparse(
+            ('', p.netloc, p.path, p.params, p.query, p.fragment))
+        newp = urlparse.urlparse(urlparse.urljoin(alt, url))
+        return urlparse.urlunparse((p.scheme,
+            newp.netloc, newp.path, newp.params, newp.query, newp.fragment))
+
     def loadURL(self, location, headers=None):
         p = urlparse.urlparse(location)
         if not p.scheme == 'pmr':
