@@ -66,25 +66,63 @@ class CellMLExposureLayer(PloneSandboxLayer):
             join(dirname(pmr2.testing.__file__), 'data', 'rdfmodel'))
 
         su._loadDir('main_model', join(dirname(__file__), 'repo', 'main'))
+        su._loadDir('main_private', join(dirname(__file__), 'repo', 'main'))
+
         su._loadDir('demo_model', join(dirname(__file__), 'repo', 'impl'))
-        # XXX the location can change!
         su._dummy_storage_data['demo_model'][0]['main'] = {
             '': '_subrepo',
             'rev': '0',
             'location': 'http://nohost/plone/workspace/main_model',
-            # 'location': 'http://localhost:55001/plone/workspace/main_model',
+        }
+
+        su._loadDir('demo_modelt', join(dirname(__file__), 'repo', 'impl'))
+        su._dummy_storage_data['demo_modelt'][0]['main'] = {
+            '': '_subrepo',
+            'rev': '0',
+            'location': 'http://nohost/workspace/main_model',
+        }
+
+        su._loadDir('demo_modelp', join(dirname(__file__), 'repo', 'impl'))
+        su._dummy_storage_data['demo_modelp'][0]['main'] = {
+            '': '_subrepo',
+            'rev': '0',
+            'location': 'http://nohost/plone/workspace/main_private',
+        }
+
+        su._loadDir('demo_live', join(dirname(__file__), 'repo', 'impl'))
+        su._dummy_storage_data['demo_live'][0]['main'] = {
+            '': '_subrepo',
+            'rev': '0',
+            'location': 'http://localhost:55001/plone/workspace/main_model',
+        }
+
+        su._loadDir('demo_livep', join(dirname(__file__), 'repo', 'impl'))
+        su._dummy_storage_data['demo_livep'][0]['main'] = {
+            '': '_subrepo',
+            'rev': '0',
+            'location': 'http://localhost:55001/plone/workspace/main_private',
         }
 
         # add workspace objects
         self.mkAddWorkspace(portal.workspace, 'rdfmodel')
         self.mkAddWorkspace(portal.workspace, 'main_model')
+        self.mkAddWorkspace(portal.workspace, 'main_private')
         self.mkAddWorkspace(portal.workspace, 'demo_model')
+        self.mkAddWorkspace(portal.workspace, 'demo_modelt')
+        self.mkAddWorkspace(portal.workspace, 'demo_modelp')
+        self.mkAddWorkspace(portal.workspace, 'demo_live')
+        self.mkAddWorkspace(portal.workspace, 'demo_livep')
 
         # publish workspace objects
         helpers.setRoles(portal, TEST_USER_ID, ['Manager'])
         pw = getToolByName(portal, "portal_workflow")
         pw.doActionFor(portal.workspace['rdfmodel'], 'publish')
         pw.doActionFor(portal.workspace['main_model'], 'publish')
+        pw.doActionFor(portal.workspace['demo_model'], 'publish')
+        pw.doActionFor(portal.workspace['demo_modelt'], 'publish')
+        pw.doActionFor(portal.workspace['demo_modelp'], 'publish')
+        pw.doActionFor(portal.workspace['demo_live'], 'publish')
+        pw.doActionFor(portal.workspace['demo_livep'], 'publish')
         helpers.setRoles(portal, TEST_USER_ID, ['Member', 'Authenticated',])
 
         # poke in an exposure

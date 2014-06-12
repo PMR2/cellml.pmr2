@@ -170,12 +170,83 @@ class CellMLLoaderTestCase(unittest.TestCase):
         self.assertEqual(sorted(dict(maths).keys()),
             ['bucket', 'environment', 'tap'])
 
+    def test_model_load_embedded_defined_vhost_map_pathed(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'nohost': u'/plone'}
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_modelt:0:/multi.cellml'
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_defined_vhost_map_privateblock(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'nohost': u''}
+        logout()
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_modelp:0:/multi.cellml'
+        self.assertRaises(Unauthorized, cu.loadModel, target, loader=opener)
+
+
+class CellMLLoaderLiveTestCase(unittest.TestCase):
+
+    layer = CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
+
+    def test_model_load_embedded_undefined_vhost_map(self):
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_live:0:/multi.cellml'
+        model = cu.loadModel(target, loader=opener)
+        # model loaded, imports loaded via http
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_defined_vhost_map(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_live:0:/multi.cellml'
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
+    def test_model_load_embedded_undefined_vhost_map_privateblock(self):
+        # no need to log out because credentials over http are not passed.
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_livep:0:/multi.cellml'
+        # Native CellML failed, permission.
+        self.assertRaises(ValueError, cu.loadModel, target, loader=opener)
+
+    def test_model_load_embedded_defined_vhost_map_internal(self):
+        registry = zope.component.getUtility(IRegistry)
+        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        # no need to log out because credentials over http are not passed.
+        cu = zope.component.getUtility(ICellMLAPIUtility)
+        target = 'pmr:/plone/workspace/demo_livep:0:/multi.cellml'
+        # successfully loaded because vhost is defined, and accessible
+        # through internal methods.
+        model = cu.loadModel(target, loader=opener)
+        self.assertEqual(sorted([i.name for i in model.modelComponents]),
+            ['bucket1', 'bucket2', 'bucket3', 'environment', 'tap1'])
+        maths = cu.extractMaths(model)
+        self.assertEqual(sorted(dict(maths).keys()),
+            ['bucket', 'environment', 'tap'])
+
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(UrlOpenerLocalTestCase))
     suite.addTest(unittest.makeSuite(UrlOpenerSpawnedTestCase))
     suite.addTest(unittest.makeSuite(CellMLLoaderTestCase))
+    suite.addTest(unittest.makeSuite(CellMLLoaderLiveTestCase))
     return suite
 
 if __name__ == '__main__':
