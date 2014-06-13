@@ -21,7 +21,7 @@ try:
     from cellml.pmr2.tests._hglayer import CELLML_MERCURIAL_LIVE_LAYER
     _hgtests = True
 except ImportError:
-    # dummy value
+    # dummy value to make the initialization succeed (and not run)
     CELLML_MERCURIAL_LAYER = CELLML_MERCURIAL_LIVE_LAYER = \
         PLONE_INTEGRATION_TESTING
     _hgtests = False

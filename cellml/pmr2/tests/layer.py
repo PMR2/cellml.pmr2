@@ -13,14 +13,23 @@ from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
 from pmr2.app.workspace.content import Workspace
-from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
 
 from pmr2.testing.base import TestRequest
+
+from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
+from pmr2.app.workspace.tests.layer import WORKSPACE_BASE_FIXTURE
+from pmr2.app.tests.layer import PMR2_FIXTURE
 
 
 class CellMLBaseLayer(PloneSandboxLayer):
 
-    defaultBases = (PLONE_FIXTURE,)
+    # XXX Using the following one to avoid a bug in plone.testing.
+    defaultBases = (WORKSPACE_BASE_FIXTURE,)
+
+    # XXX rather than using the lowest one needed, as if we use this it
+    # will result in the MercurialBase and WorkspaceBase layer be
+    # deconstructed in asymmetric order...
+    # defaultBases = (PMR2_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
         import cellml.pmr2
@@ -42,7 +51,7 @@ CELLML_BASE_INTEGRATION_LAYER = IntegrationTesting(
 
 class CellMLExposureLayer(PloneSandboxLayer):
 
-    defaultBases = (EXPOSURE_FIXTURE,)
+    defaultBases = (CELLML_BASE_FIXTURE, EXPOSURE_FIXTURE,)
 
     def mkAddWorkspace(self, container, id_):
         w = Workspace(id_)
@@ -151,11 +160,11 @@ class CellMLExposureLayer(PloneSandboxLayer):
 CELLML_EXPOSURE_FIXTURE = CellMLExposureLayer()
 
 CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
-    bases=(CELLML_BASE_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
+    bases=(CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_integration",
 )
 
 CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER = IntegrationTesting(
-    bases=(ZSERVER_FIXTURE, CELLML_BASE_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
+    bases=(ZSERVER_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
     name="cellml.pmr2:exposure_all_live_integration",
 )

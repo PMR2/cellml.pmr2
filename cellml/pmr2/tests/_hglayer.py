@@ -14,7 +14,9 @@ from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.testing import helpers
 
 from pmr2.app.workspace.content import Workspace
+from pmr2.app.tests.layer import PMR2_FIXTURE
 from pmr2.app.exposure.tests.layer import EXPOSURE_FIXTURE
+from pmr2.app.workspace.tests.layer import WORKSPACE_BASE_FIXTURE
 
 from pmr2.testing.base import TestRequest
 
@@ -25,7 +27,8 @@ from cellml.pmr2.tests.layer import CELLML_BASE_FIXTURE
 
 class CellMLMercurialLayer(PloneSandboxLayer):
 
-    defaultBases = (MERCURIAL_BASE_FIXTURE,)
+    defaultBases = (CELLML_BASE_FIXTURE, MERCURIAL_BASE_FIXTURE,
+        WORKSPACE_BASE_FIXTURE,)
 
     def setUpPloneSite(self, portal):
         import pmr2.mercurial.tests
@@ -51,11 +54,11 @@ class CellMLMercurialLayer(PloneSandboxLayer):
 CELLML_MERCURIAL_FIXTURE = CellMLMercurialLayer()
 
 CELLML_MERCURIAL_LAYER = IntegrationTesting(
-    bases=(CELLML_BASE_FIXTURE, CELLML_MERCURIAL_FIXTURE,),
+    bases=(CELLML_MERCURIAL_FIXTURE,),
     name="cellml.pmr2:mercurial_integration",
 )
 
-CELLML_MERCURIAL_LIVE_LAYER = FunctionalTesting(
-    bases=(ZSERVER_FIXTURE, CELLML_BASE_FIXTURE, CELLML_MERCURIAL_FIXTURE,),
+CELLML_MERCURIAL_LIVE_LAYER = IntegrationTesting(
+    bases=(CELLML_MERCURIAL_FIXTURE, ZSERVER_FIXTURE,),
     name="cellml.pmr2:mercurial_live_integration",
 )
