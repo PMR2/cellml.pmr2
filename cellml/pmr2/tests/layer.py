@@ -164,7 +164,8 @@ CELLML_EXPOSURE_INTEGRATION_LAYER = IntegrationTesting(
     name="cellml.pmr2:exposure_all_integration",
 )
 
+# keep ZSERVER_FIXTURE at the end for consistency.
 CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER = IntegrationTesting(
-    bases=(ZSERVER_FIXTURE, CELLML_EXPOSURE_FIXTURE,),
+    bases=(CELLML_EXPOSURE_FIXTURE, ZSERVER_FIXTURE,),
     name="cellml.pmr2:exposure_all_live_integration",
 )
