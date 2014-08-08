@@ -114,6 +114,12 @@ class ICellMLMathNote(zope.interface.Interface):
     )
 
 
+class IPrefixMap(zope.interface.Interface):
+    """
+    A marker interface.
+    """
+
+
 class IVHostRemap(zope.interface.Interface):
     """
     For configuration registry for mapping a http(s?) url back to a
@@ -123,8 +129,8 @@ class IVHostRemap(zope.interface.Interface):
 
     prefix_maps = zope.schema.Dict(
         title=u'Virtual Host Prefix Mappings',
-        description=u'Map a virtual hostname applicable for this instance '
-            'to a valid physical path on this instance.',
+        description=u'Map a hostname to a valid physical path on this '
+            'instance.  One per line, format is `hostname path`.',
         key_type=zope.schema.TextLine(
             title=u'Virtual Hostname',
         ),
@@ -134,3 +140,14 @@ class IVHostRemap(zope.interface.Interface):
             title=u'Physical root',
         ),
     )
+
+# XXX workaround the way IPersistentField adapts against things that
+# alsoProvides something else but failing to properly persist the...
+# persist interfaces even though the underlying object CLEARLY provides
+# that...
+
+from plone.registry.interfaces import IPersistentField
+from persistent.interfaces import IPersistent
+
+zope.interface.alsoProvides(IVHostRemap['prefix_maps'],
+    IPrefixMap, IPersistentField, IPersistent)

@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pmr2">
+
+  <include package="Products.CMFCore" file="permissions.zcml" />
+
+  <adapter factory=".vhost.DictTextAreaConverter" />
+
+  <browser:page
+      for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+      name="cellml_vhost_map"
+      class=".vhost.VHostRemapEditForm"
+      permission="cmf.ManagePortal"
+      />
+
+</configure>

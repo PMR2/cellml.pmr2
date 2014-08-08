@@ -8,6 +8,8 @@
       <include file="json.zcml" />
   </configure>
 
+  <include file="vhost.zcml" />
+
   <!-- Browser pages -->
 
   <browser:page
