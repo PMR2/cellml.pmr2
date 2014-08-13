@@ -1,6 +1,18 @@
 Changelog
 =========
 
+0.8 - Released (2014-08-14)
+---------------------------
+
+* New model loader that will be able to resolve CellML files that are
+  known (or made known to be) part of the repo.
+* Facilities that resolve absolutely linked references that have
+  hostnames that are virtual hosts of the current instance are provided,
+  including editors for the configuration of this.  This is mostly for
+  embedded workspaces which parent workspaces must use absolute URLs for
+  them.
+* New test harnesses - uses the test runner layer facilities.
+
 0.7 - Released (2014-04-03)
 ---------------------------
 
