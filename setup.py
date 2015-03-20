@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = 'trunk'
+version = '0.9'
 
 setup(name='cellml.pmr2',
       version=version,
