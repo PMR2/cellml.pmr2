@@ -1,6 +1,16 @@
 Changelog
 =========
 
+0.9 - Released (2015-03-20)
+---------------------------
+
+* Main test no longer directly depend on ``pmr2.mercurial`` for the data
+  as ``pmr2.app`` now has a test case that provides the data.
+* Fixed the setup for the mercurial specific live test case such that it
+  is completely excluded from the testsuite as it was interfering with
+  comprehensive testing of all relevant packages if ``pmr2.mercurial``
+  was missing.
+
 0.8 - Released (2014-08-14)
 ---------------------------
 
