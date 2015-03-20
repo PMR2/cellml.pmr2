@@ -17,13 +17,10 @@ from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LAYER
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
 
 try:
-    from cellml.pmr2.tests._hglayer import CELLML_MERCURIAL_LAYER
     from cellml.pmr2.tests._hglayer import CELLML_MERCURIAL_LIVE_LAYER
     _hgtests = True
 except ImportError:
-    # dummy value to make the initialization succeed (and not run)
-    CELLML_MERCURIAL_LAYER = CELLML_MERCURIAL_LIVE_LAYER = \
-        PLONE_INTEGRATION_TESTING
+    CELLML_MERCURIAL_LIVE_LAYER = None
     _hgtests = False
 
 # a single instance _should_ suffice
@@ -317,7 +314,8 @@ def test_suite():
     suite.addTest(unittest.makeSuite(UrlOpenerSpawnedTestCase))
     suite.addTest(unittest.makeSuite(CellMLLoaderTestCase))
     suite.addTest(unittest.makeSuite(CellMLLoaderLiveTestCase))
-    suite.addTest(unittest.makeSuite(CellMLMercurialLiveTestCase))
+    if _hgtests:
+        suite.addTest(unittest.makeSuite(CellMLMercurialLiveTestCase))
     return suite
 
 if __name__ == '__main__':
