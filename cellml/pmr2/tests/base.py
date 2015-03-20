@@ -16,8 +16,8 @@ from pmr2.app.exposure.content import ExposureContainer
 from pmr2.app.exposure.browser.browser import ExposureAddForm
 from pmr2.app.exposure.browser.browser import ExposureFileGenForm
 from pmr2.app.exposure.tests.base import ExposureDocTestCase
+from pmr2.app.exposure.tests.base import ExposureExtendedDocTestCase
 
-from pmr2.mercurial.tests.base import MercurialDocTestCase
 
 @onsetup
 def setup():
@@ -39,18 +39,12 @@ teardown()
 ptc.setupPloneSite(products=('cellml.pmr2',))
 
 
-class CellMLDocTestCase(MercurialDocTestCase):
+class CellMLDocTestCase(ExposureExtendedDocTestCase):
 
     def setUp(self):
         super(CellMLDocTestCase, self).setUp()
         import cellml.pmr2
-        rawrevs = [
-            'b94d1701154be42acf63ee6b4bd4a99d09ba043c',
-            '2647d4389da6345c26d168bbb831f6512322d4f9',
-            '006f11cd9211abd2a879df0f6c7f27b9844a8ff2',
-        ]
-        rawrev = rawrevs[2]
-        rev = unicode(rawrev)
+        rev = u'2'
         request = TestRequest(
             form={
                 'form.widgets.workspace': u'rdfmodel',
