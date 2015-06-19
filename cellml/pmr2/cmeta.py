@@ -108,8 +108,8 @@ class Cmeta(RdfXmlObject):
         """\
         Shortcut to query to include the namespace map.
         """
-        return self.graph.query(
-            q, initBindings=initBindings, initNs=self.nsmap)
+        return list(self.graph.query(
+            q, initBindings=initBindings, initNs=self.nsmap))
 
     # XXX pubmed_id should be deprecated in favor for a unified urn scheme
     citation_key = ['_id', 'pubmed_id', 'title', 'journal', 'volume', 
@@ -208,7 +208,7 @@ class Cmeta(RdfXmlObject):
         }
         ORDER BY ?li
         """
-        standard = list(self.query(q, bindings))
+        standard = self.query(q, bindings)
 
         q = """\
         SELECT ?vcname
@@ -218,7 +218,7 @@ class Cmeta(RdfXmlObject):
         }
         ORDER BY ?li
         """
-        pmr = list(self.query(q, bindings))
+        pmr = self.query(q, bindings)
 
         vcards = standard + pmr
 
@@ -247,9 +247,9 @@ class Cmeta(RdfXmlObject):
                 rdflib.Variable("?vcname"): n[0],
             }
             # XXX only care about the first one
-            family = self.query(vcard_family, bindings).selected[0]
-            # XXX should care about all of them
-            other = self.query(vcard_other, bindings).selected
+            family = self.query(vcard_family, bindings)[0]
+            # XXX should care about all of them, the first/only element.
+            other = [r[0] for r in self.query(vcard_other, bindings)]
             family = mkstring(family)
             other = mkstring(other)
             family.append(other)
@@ -287,7 +287,7 @@ class Cmeta(RdfXmlObject):
             ?node dc:creator ?creator .
             ?creator ?li ?creators .
             ?creator rdf:type ?containertype .
-            FILTER regex(str(?li), 
+            FILTER regex(?li,
                 '^http://www.w3.org/1999/02/22-rdf-syntax-ns#_') .
             OPTIONAL {
                 ?creators vCard:N ?vcname .
@@ -302,7 +302,7 @@ class Cmeta(RdfXmlObject):
         }
         """
 
-        vcards_multi = self.query(q_multi, bindings).selected
+        vcards_multi = self.query(q_multi, bindings)
         result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
                   for i in vcards_multi if i != ["", "", "", ""]]
         # SPARQL does not support namespaces in query values
@@ -326,7 +326,7 @@ class Cmeta(RdfXmlObject):
         }
         """
 
-        vcards = self.query(q, bindings).selected
+        vcards = self.query(q, bindings)
         result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
                   for i in vcards]
         return result
@@ -349,7 +349,7 @@ class Cmeta(RdfXmlObject):
             rdflib.Variable("?node"): node,
         }
 
-        results = [s.strip() for s in self.query(q, bindings).selected]
+        results = [s[0].strip() for s in self.query(q, bindings)]
         if results:
             return results
 
