@@ -17,7 +17,7 @@ from cellml.pmr2.interfaces import IPrefixMap
 
 @zope.component.adapter(IPrefixMap, ITextAreaWidget)
 class DictTextAreaConverter(BaseDataConverter):
-    
+
     def toWidgetValue(self, value):
         if not value:
             return u''

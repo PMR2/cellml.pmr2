@@ -53,7 +53,7 @@ class CmetaNote(ExposureFileNoteBase):
 
     def get_authors_family_index(self):
         if self.citation_authors:
-            return [normal_kw(i[0]) 
+            return [normal_kw(i[0])
                     for i in self.citation_authors]
         else:
             return []

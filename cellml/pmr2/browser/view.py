@@ -71,7 +71,7 @@ class CellMLCodegenNote(SourceTextNote):
     def update(self):
 
         if not self.traverse_subpath:
-            return 
+            return
 
         if len(self.traverse_subpath) > 2:
             raise NotFound(self.context, self.traverse_subpath[-1])
@@ -137,7 +137,7 @@ class OpenCellSessionNote(ExposureFileViewBase):
             self.context, IExposureSourceAdapter)
         exposure, workspace, path = helper.source()
         filename = self.note.filename or path
-        target_uri = '%s/@@%s/%s/%s' % (workspace.absolute_url(), 
+        target_uri = '%s/@@%s/%s/%s' % (workspace.absolute_url(),
             self.target_view, exposure.commit_id, filename)
         return self.request.response.redirect(target_uri)
 

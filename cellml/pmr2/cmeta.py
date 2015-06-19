@@ -66,7 +66,7 @@ class Cmeta(RdfXmlObject):
         self.nsmap.update(base_nsmap)
 
         # determine CellML namespace to use
-        cellml_ns_set = set([v for v in self.dom.getroot().nsmap.values() 
+        cellml_ns_set = set([v for v in self.dom.getroot().nsmap.values()
             if v and 'http://www.cellml.org/cellml/' in v])
         if len(cellml_ns_set) > 1:
             raise ValueError('CellML file with more than one CellML namespace '
@@ -84,7 +84,7 @@ class Cmeta(RdfXmlObject):
         self.__cmetaid_attribs = self.dom.xpath(
             './/@cmeta:id', namespaces=self.nsmap)
         self.__cmetaids = [n.strip() for n in self.__cmetaid_attribs]
-        # self.__cmetaid_map = [(n.strip(), n.getparent()) 
+        # self.__cmetaid_map = [(n.strip(), n.getparent())
         #                       for n in self.__cmetaid_attribs]
 
     @property
@@ -99,7 +99,7 @@ class Cmeta(RdfXmlObject):
     @property
     def root_cmetaid(self):
         model_tag = '{%s}model' % self.nsmap['cellml']
-        nodes = [n for n in self.__cmetaid_attribs 
+        nodes = [n for n in self.__cmetaid_attribs
                  if n.getparent().tag == model_tag]
         if len(nodes) == 1:
             return nodes[0].strip()
@@ -112,16 +112,16 @@ class Cmeta(RdfXmlObject):
             q, initBindings=initBindings, initNs=self.nsmap))
 
     # XXX pubmed_id should be deprecated in favor for a unified urn scheme
-    citation_key = ['_id', 'pubmed_id', 'title', 'journal', 'volume', 
+    citation_key = ['_id', 'pubmed_id', 'title', 'journal', 'volume',
         'first_page', 'last_page', 'issued', 'creator']
 
     def get_citation(self, cmetaid=None, subject=None, preserve=False):
         """\
         Returns a list of citations.
 
-        subject - the subject, in the form of a uri, from which citation 
+        subject - the subject, in the form of a uri, from which citation
                   will be queried from.
-        cmetaid - the cmetaid, in the form of a string, from which 
+        cmetaid - the cmetaid, in the form of a string, from which
                   citaiton will be queried from.
 
         The above parameters cannot be both specified.
@@ -168,10 +168,10 @@ class Cmeta(RdfXmlObject):
             for v in rawvalues:
                 if isinstance(v, rdflib.Literal):
                     v = unicode(v).strip()  # encoding?
-                    # since all of these literals will be represented 
+                    # since all of these literals will be represented
                     # in html, extra spaces are meaningless.
                     if not preserve:
-                        v = u' '.join(v.split()) 
+                        v = u' '.join(v.split())
                 # not too sure how to handle rdflib.URIRef
                 values.append(v)
 
@@ -294,7 +294,7 @@ class Cmeta(RdfXmlObject):
                 OPTIONAL { ?vcname vCard:Family ?family } .
                 OPTIONAL { ?vcname vCard:Given ?given } .
             } .
-            OPTIONAL { 
+            OPTIONAL {
                 ?creators vCard:ORG ?vcorg .
                 OPTIONAL { ?vcorg vCard:Orgname ?name } .
                 OPTIONAL { ?vcorg vCard:Orgunit ?unit } .
@@ -303,7 +303,7 @@ class Cmeta(RdfXmlObject):
         """
 
         vcards_multi = self.query(q_multi, bindings)
-        result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
+        result = [dict(zip(self.dc_vcard_info, mkstring(i, u'')))
                   for i in vcards_multi if i != ["", "", "", ""]]
         # SPARQL does not support namespaces in query values
         if result:
@@ -318,7 +318,7 @@ class Cmeta(RdfXmlObject):
                 OPTIONAL { ?vcname vCard:Family ?family } .
                 OPTIONAL { ?vcname vCard:Given ?given } .
             } .
-            OPTIONAL { 
+            OPTIONAL {
                 ?creator vCard:ORG ?vcorg .
                 OPTIONAL { ?vcorg vCard:Orgname ?name } .
                 OPTIONAL { ?vcorg vCard:Orgunit ?unit } .
@@ -327,7 +327,7 @@ class Cmeta(RdfXmlObject):
         """
 
         vcards = self.query(q, bindings)
-        result = [dict(zip(self.dc_vcard_info, mkstring(i, u''))) 
+        result = [dict(zip(self.dc_vcard_info, mkstring(i, u'')))
                   for i in vcards]
         return result
 
@@ -379,7 +379,7 @@ class Cmeta(RdfXmlObject):
             ?container ?li ?value .
         }
         """
-        # XXX doing selection of *all* keywords within the metadata 
+        # XXX doing selection of *all* keywords within the metadata
         results = []
         for i in self.query(q):
             if isinstance(i[1], rdflib.Literal):

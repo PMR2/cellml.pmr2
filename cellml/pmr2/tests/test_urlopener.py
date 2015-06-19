@@ -39,7 +39,7 @@ class UrlOpenerUtilityTestCase(unittest.TestCase):
         r = opener.urljoin('pmr:/some/path:1:/file',
             'newmodel/a.cellml')
         self.assertEqual(r, 'pmr:/some/path:1:/newmodel/a.cellml')
-    
+
     def test_urljoin_nonstandard_multi(self):
         r = opener.urljoin('pmr:/some/path:1:/another/path/file',
             '../to/a.cellml')
@@ -54,7 +54,7 @@ class UrlOpenerLocalTestCase(unittest.TestCase):
     # test various failure modes
     # - wrong encoding of uri
     # fallback modes, i.e. fallback to http:// with mercurial
-    # relative uri access to embedded workspaces with mercurial 
+    # relative uri access to embedded workspaces with mercurial
 
     def test_safe_standard_load_missing_obj(self):
         self.assertRaises(AttributeError, opener.loadURL,

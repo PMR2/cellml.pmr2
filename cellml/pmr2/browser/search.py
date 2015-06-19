@@ -79,7 +79,7 @@ class CellMLSearch(Search):
         cmeta_indexes = (
             'pmr2_authors_family_name',
             # XXX ^ this will become
-            # 'cmeta_authors_family_name', 
+            # 'cmeta_authors_family_name',
             'cmeta_citation_title_keyword',
             'cmeta_citation_publication_year',
         )
@@ -99,7 +99,7 @@ class CellMLSearch(Search):
         valid_keys = tuple(catalog.indexes())
 
         for k, v in request.form.items():
-            # XXX not sure what facet is, aside from a deprecated 
+            # XXX not sure what facet is, aside from a deprecated
             # product.
             # if v and ((k in valid_keys) or k.startswith('facet.')):
             if v and (k in valid_keys):
@@ -144,12 +144,12 @@ class CellMLSearch(Search):
             sort_option = [(sort_on, sort_order)]
         else:
             sort_option = [RankByQueries_Sum(
-                (In('pmr2_authors_family_name', 
-                    query['pmr2_authors_family_name']), 20), 
-                (In('cmeta_citation_publication_year', 
-                    query['cmeta_citation_publication_year']), 15), 
+                (In('pmr2_authors_family_name',
+                    query['pmr2_authors_family_name']), 20),
+                (In('cmeta_citation_publication_year',
+                    query['cmeta_citation_publication_year']), 15),
                 (In('cmeta_citation_title_keyword',
-                    query['cmeta_citation_title_keyword']), 10), 
+                    query['cmeta_citation_title_keyword']), 10),
             )]
 
         return sort_option
@@ -157,7 +157,7 @@ class CellMLSearch(Search):
     def filter_advanced_query(self, query):
         # convert the standard query into advanced query.
 
-        and_keys = ('review_state', 'pmr2_review_state', 'portal_type', 
+        and_keys = ('review_state', 'pmr2_review_state', 'portal_type',
                     'path', 'created')
 
         and_query = []

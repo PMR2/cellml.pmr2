@@ -14,7 +14,7 @@ uri_prefix = {
 
 def uri2http(uri):
     """\
-    Resolves an info-uri into an http link based on the lookup table 
+    Resolves an info-uri into an http link based on the lookup table
     above.
     """
 
@@ -46,13 +46,13 @@ def fix_pcenv_externalurl(xml, base):
     represented as a literal string, hence it does not benefit from
     the declaration of xml:base.
 
-    This manually replaces externalurl with the xml:base fragment 
+    This manually replaces externalurl with the xml:base fragment
     inserted in front of it.
     ::
 
         >>> from cellml.pmr2.util import fix_pcenv_externalurl
         >>> input = \"\"\"<?xml version='1.0' encoding='utf-8'?>
-        ... <rdf:RDF 
+        ... <rdf:RDF
         ...   xmlns:pcenv="http://www.cellml.org/tools/pcenv/"
         ...   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         ... >
@@ -71,7 +71,7 @@ def fix_pcenv_externalurl(xml, base):
     ::
 
         >>> input = \"\"\"<?xml version='1.0' encoding='utf-8'?>
-        ... <rdf:RDF 
+        ... <rdf:RDF
         ...   xmlns:pcenv="http://www.cellml.org/tools/pcenv/"
         ...   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         ... >
@@ -88,13 +88,13 @@ def fix_pcenv_externalurl(xml, base):
         >>> uri + '/external.xul' in output
         True
 
-    If the pcenv:externalurl were ever changed to allow URI reference 
-    along (or replace) with Literals, the node and value shouldn't be 
+    If the pcenv:externalurl were ever changed to allow URI reference
+    along (or replace) with Literals, the node and value shouldn't be
     rewritten.
     ::
 
         >>> input = \"\"\"<?xml version='1.0' encoding='utf-8'?>
-        ... <rdf:RDF 
+        ... <rdf:RDF
         ...   xmlns:pcenv="http://www.cellml.org/tools/pcenv/"
         ...   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         ... >
@@ -123,7 +123,7 @@ def fix_pcenv_externalurl(xml, base):
     xulnodes = dom.xpath('.//rdf:Description[@pcenv:externalurl]',
         namespaces=CELLML_NSMAP)
     for node in xulnodes:
-        xulname = node.xpath('string(@pcenv:externalurl)', 
+        xulname = node.xpath('string(@pcenv:externalurl)',
             namespaces=CELLML_NSMAP)
         if xulname:
             node.attrib[externalurl] = '/'.join([base, xulname])
@@ -140,7 +140,7 @@ def fix_pcenv_externalurl(xml, base):
     xulnodes = dom.xpath('.//rdf:Description[@opencell:externalurl]',
         namespaces=CELLML_NSMAP)
     for node in xulnodes:
-        xulname = node.xpath('string(@opencell:externalurl)', 
+        xulname = node.xpath('string(@opencell:externalurl)',
             namespaces=CELLML_NSMAP)
         if xulname:
             node.attrib[externalurl] = '/'.join([base, xulname])

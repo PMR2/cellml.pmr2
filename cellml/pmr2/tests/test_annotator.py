@@ -15,10 +15,10 @@ def read_file(fn):
 
 class SimpleCmetaAnnotator(CmetaAnnotator):
     """
-    Since we are skipping the whole registration of components 
+    Since we are skipping the whole registration of components
     altogether here, we instantiate the annotator directly with the
     input changed to whatever we are trying to parse, so the context in
-    our case is the actual content, thus the input property need to be 
+    our case is the actual content, thus the input property need to be
     adjusted.
     """
 

@@ -10,7 +10,7 @@ class DummyCodegenAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'Dummy Code'
     description = u'A dummy code generator'
-    
+
     def generate(self):
         return (
             ('code', {

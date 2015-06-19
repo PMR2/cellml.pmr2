@@ -95,7 +95,7 @@ CellMLCodegenAnnotatorFactory = named_factory(CellMLCodegenAnnotator)
 
 
 class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
-    zope.interface.implements(IExposureFileAnnotator, 
+    zope.interface.implements(IExposureFileAnnotator,
                               IExposureFileEditAnnotator)
     title = u'OpenCell Session Link'
     label = u'Simulate using OpenCell'
@@ -152,7 +152,7 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
                     other = ''
                 fn = (family, given, other)
                 authors.append(fn)
-                
+
             result['citation_authors'] = authors
 
         def generate_keywords():
@@ -171,7 +171,7 @@ class CmetaAnnotator(ExposureFileAnnotatorBase):
             info = dcvc[0]
             result['model_author'] = '%s %s' % (info['given'], info['family'])
             result['model_author_org'] = \
-                '%s, %s' % (info['orgunit'], info['orgname']) 
+                '%s, %s' % (info['orgunit'], info['orgname'])
 
         result = {}
         metadata = Cmeta(StringIO(self.input))

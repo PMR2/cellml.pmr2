@@ -40,7 +40,7 @@ class CmetaTestCase(unittest.TestCase):
         cmeta = Cmeta(f)
         self.assertEqual(cmeta.root_cmetaid, 'complex_model')
         # returns the cmeta:id in the order they showed up
-        self.assertEqual(cmeta.get_cmetaid(), 
+        self.assertEqual(cmeta.get_cmetaid(),
             ['complex_model', 'interface', 'membrane_potential'])
 
     def test_0021_cmeta_id(self):
@@ -73,7 +73,7 @@ class CmetaTestCase(unittest.TestCase):
     def test_0031_cmeta_citation(self):
         # this one tests the namespace where the cellml namespace prefix
         # is not defined.
-        f = open(join(input_dir, 
+        f = open(join(input_dir,
                       'noble_varghese_kohl_noble_1998_variant03.cellml'))
         cmeta = Cmeta(f)
         # returns the cmeta:id in the order they showed up
@@ -116,7 +116,7 @@ class CmetaTestCase(unittest.TestCase):
         ]
         keywords = cmeta.get_keywords()
         for a in answers:
-            self.assert_(a in keywords, '%s not in keywords: %s' % 
+            self.assert_(a in keywords, '%s not in keywords: %s' %
                         (a, keywords))
         # done
 
