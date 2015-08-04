@@ -7,7 +7,7 @@
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="cmeta"
       class=".json.JsonCmetaNote"
-      layer="pmr2.json.interfaces.ISimpleJsonLayer"
+      layer="pmr2.json.v0.interfaces.IJsonLayer"
       permission="zope2.View"
       />
 
@@ -16,7 +16,23 @@
       name="cellml_codegen"
       class=".json.JsonCellMLCodegenNote"
       permission="zope2.View"
-      layer="pmr2.json.interfaces.ISimpleJsonLayer"
+      layer="pmr2.json.v0.interfaces.IJsonLayer"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cmeta"
+      class=".json.JsonCollectionCmetaNote"
+      layer="pmr2.json.v1.interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cellml_codegen"
+      class=".json.JsonCollectionCellMLCodegenNote"
+      permission="zope2.View"
+      layer="pmr2.json.v1.interfaces.IJsonLayer"
       />
 
 </configure>
