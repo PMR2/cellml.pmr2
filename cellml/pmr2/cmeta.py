@@ -287,7 +287,7 @@ class Cmeta(RdfXmlObject):
             ?node dc:creator ?creator .
             ?creator ?li ?creators .
             ?creator rdf:type ?containertype .
-            FILTER regex(?li,
+            FILTER regex(str(?li),
                 '^http://www.w3.org/1999/02/22-rdf-syntax-ns#_') .
             OPTIONAL {
                 ?creators vCard:N ?vcname .
@@ -394,7 +394,7 @@ class Cmeta(RdfXmlObject):
         q = """\
         SELECT ?license
         WHERE {
-            '' dcterms:license ?license .
+            <> dcterms:license ?license .
         }
         """
 
