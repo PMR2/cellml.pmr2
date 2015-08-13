@@ -47,6 +47,8 @@ class Cmeta(RdfXmlObject):
     object to get to the nodes.  One instance per CellML/XML input.
     """
 
+    format = 'cmeta'
+
     def __init__(self, input=None):
         super(Cmeta, self).__init__()
         # XXX to support old use case.
