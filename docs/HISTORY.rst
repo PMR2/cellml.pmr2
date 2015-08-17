@@ -10,8 +10,8 @@ Changelog
 * Include a custom parser that restores the less strict method of rdfxml
   parsing.
 
-0.9.x - Unreleased
-------------------
+0.9.1 - Released (2015-08-18)
+-----------------------------
 
 * Fixed an issue where empty CellML Metadata attributes would result in
   a raw rdflib object serialized into the note object, causing potential
