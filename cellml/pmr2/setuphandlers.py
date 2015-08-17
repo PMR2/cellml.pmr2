@@ -37,3 +37,50 @@ def cellml_pmr2_v0_6(context):
             logger.error('Could not migrate curation for %s' % b.getPath())
             logger.warning(traceback.format_exc())
 
+
+def cellml_cmeta_rdflib_fix(context):
+    """
+    Remove instances of `rdflib.Literal` in the cmeta notes.
+    """
+
+    logger = getLogger('cellml.pmr2')
+
+    def check(item):
+        if isinstance(item, (list, tuple)):
+            for i in item:
+                if not check(i):
+                    return False
+        return not item.__class__.__name__ == 'Literal'
+
+
+    from cellml.pmr2.interfaces import ICmetaNote
+    from cellml.pmr2.cmeta import mkstring
+    attributes = ICmetaNote.names()
+
+    path = ''
+
+    results = context.portal_catalog(path=path, portal_type="ExposureFile")
+    count = 0
+    for b in results:
+        try:
+            note = zope.component.getAdapter(b.getObject(), name='cmeta')
+        except:
+            logger.error('`rdflib.Literal.Literal` must exist to run')
+            break
+
+        good = True
+        for a in attributes:
+            v = getattr(note, a)
+            if not check(v):
+                if a == 'citation_authors':
+                    logger.warning('fixing:<%s>.%s: %s', b.getPath(), a, v)
+                    fixed = [tuple(mkstring(names)) for names in v]
+                    setattr(note, a, fixed)
+                else:
+                    logger.warning('error:<%s>.%s: %s', b.getPath(), a, v)
+                good = False
+        if not good:
+            count += 1
+
+    if count:
+        logger.warning('%d failed.', count)
