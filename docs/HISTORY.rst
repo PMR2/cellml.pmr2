@@ -1,6 +1,22 @@
 Changelog
 =========
 
+0.10.x - Unreleased
+------------------
+
+* Support for the latest web service version (i.e. Collection+JSON).
+* Various changes to make it compatible with rdflib-4.x, as the package
+  ``pmr2.rdf`` has pinned its dependency to the latest versions.
+* Include a custom parser that restores the less strict method of rdfxml
+  parsing.
+
+0.9.x - Unreleased
+------------------
+
+* Fixed an issue where empty CellML Metadata attributes would result in
+  a raw rdflib object serialized into the note object, causing potential
+  issues later.
+
 0.9 - Released (2015-03-20)
 ---------------------------
 
