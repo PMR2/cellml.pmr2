@@ -29,10 +29,8 @@ def mkstring(input, replace=None):
         return input
     result = []
     for i in input:
-        if i:
+        if i is not None:
             result.append(unicode(i).strip())
-        elif i is not None:
-            result.append(i)
         elif replace is not None:
             # i must be None here as per above
             result.append(replace)

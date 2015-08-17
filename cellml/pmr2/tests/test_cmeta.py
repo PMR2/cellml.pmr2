@@ -4,6 +4,7 @@ from os.path import dirname, join
 from cStringIO import StringIO
 
 import rdflib
+from rdflib import Literal
 
 from cellml.pmr2.cmeta import *
 
@@ -238,9 +239,41 @@ class CmetaTestCase(unittest.TestCase):
         self.assertRaises(XMLSyntaxError, Cmeta, f)
 
 
+class CmetaMiscTestCase(unittest.TestCase):
+
+    def assertNotLiterals(self, values):
+        for v in values:
+            self.assertFalse(isinstance(v, Literal))
+
+    def test_standard(self):
+        result = mkstring([Literal(u'test'), Literal(u'test')])
+        self.assertNotLiterals(result)
+        self.assertEqual(result, [u'test', u'test'])
+
+    def test_empty_strings(self):
+        result = mkstring([Literal(u'test'), Literal(u'')])
+        self.assertNotLiterals(result)
+        self.assertEqual(result, [u'test', u''])
+
+        result = mkstring([Literal(u''), Literal(u'')])
+        self.assertNotLiterals(result)
+        self.assertEqual(result, [u'', u''])
+
+    def test_none(self):
+        result = mkstring([Literal(u'test'), None])
+        self.assertNotLiterals(result)
+        self.assertEqual(result, [u'test'])
+
+    def test_none_replace(self):
+        result = mkstring([Literal(u'test'), None], u'<None>')
+        self.assertNotLiterals(result)
+        self.assertEqual(result, [u'test', u'<None>'])
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(CmetaTestCase))
+    suite.addTest(unittest.makeSuite(CmetaMiscTestCase))
     return suite
 
 if __name__ == '__main__':
