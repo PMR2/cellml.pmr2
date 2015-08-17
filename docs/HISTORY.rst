@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.9.1 - Released (2015-08-18)
+-----------------------------
+
+* Fixed an issue where empty CellML Metadata attributes would result in
+  a raw rdflib object serialized into the note object, causing potential
+  issues later.
+
 0.9 - Released (2015-03-20)
 ---------------------------
 
