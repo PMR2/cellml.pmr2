@@ -63,6 +63,10 @@ def pmr1_citation_authors_exposurefile(context):
         sa = zope.component.getAdapter(context, IExposureSourceAdapter)
         exposure = sa.exposure()
         if exposure is not None:
+            # Grabbing the id instead of going through the catalog
+            # because it could be being built now.  Alternative method
+            # is to use a restrictedTraverse to get the title or id of
+            # the workspace, but defer this for now.
             workspace = exposure.workspace.split('/')[-1]
             return workspace.replace('_', ', ').title()
         return ''
