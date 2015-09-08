@@ -59,7 +59,7 @@ def pmr2_citation_title(context):
 @indexer(IExposureFile)
 def pmr1_citation_authors_exposurefile(context):
     note = zope.component.queryAdapter(context, name='cmeta')
-    if not (note and note.citation_authors and note.citation_issued):
+    if not (note and note.citation_authors):
         sa = zope.component.getAdapter(context, IExposureSourceAdapter)
         exposure = sa.exposure()
         if exposure is not None:
@@ -67,7 +67,8 @@ def pmr1_citation_authors_exposurefile(context):
             return workspace.replace('_', ', ').title()
         return ''
     authors = u', '.join([i[0] for i in note.citation_authors])
-    return u'%s, %s' % (authors, note.citation_issued[:4])
+    year = note.citation_issued and note.citation_issued[:4] or u''
+    return u'%s, %s' % (authors, year)
 
 @indexer(IExposureFile)
 def pmr1_citation_title_exposurefile(context):
