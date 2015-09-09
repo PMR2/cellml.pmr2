@@ -11,6 +11,12 @@ from pmr2.annotation.shjs.browser import SourceTextNote
 
 from cellml.pmr2.util import fix_pcenv_externalurl
 
+try:
+    from pmr2.bives.view import call_bives
+    BIVES = True
+except ImportError:
+    BIVES = False
+
 
 class BasicCCodeNote(SourceTextNote):
     """\
@@ -120,12 +126,33 @@ class CellMLMathNote(DeferredMathJaxNote):
 
     template = ViewPageTemplateFile('cellml_math.pt')
 
+    def has_bives(self):
+        return BIVES
+
     def maths(self):
         for comp, math in self.note.maths:
             yield {
                 'id': comp,
                 'math': ''.join(math),
             }
+
+
+class CellMLBiVeSMathView(CellMLMathNote):
+
+    template = ViewPageTemplateFile('cellml_bives_math.pt')
+
+    @property
+    def note(self):
+        # This is currently leveraging the standard view as above.
+        return zope.component.queryAdapter(self.context, name='cellml_math')
+
+    def update(self):
+        super(CellMLBiVeSMathView, self).update()
+        self.bives_results = '{"error": "pmr2.bives is not installed."}'
+        if not BIVES:
+            return
+        self.bives_results = call_bives([self.context.absolute_url()],
+            ['singleCompHierarchyJson',])
 
 
 class OpenCellSessionNote(ExposureFileViewBase):

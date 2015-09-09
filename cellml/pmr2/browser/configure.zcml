@@ -39,6 +39,13 @@
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="cellml_bives_math"
+      class=".view.CellMLBiVeSMathView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       name="basic_ccode"
       class=".view.BasicCCodeNote"
       permission="zope2.View"
@@ -96,6 +103,15 @@
       class=".viewlets.CellMLSearchViewlet"
       layer="..interfaces.ICellMLPMR2Layer"
       permission="zope2.View"
+      />
+
+  <!--
+    Resource directories
+  -->
+
+  <browser:resourceDirectory
+      name="cellml.pmr2.css"
+      directory="css"
       />
 
 </configure>

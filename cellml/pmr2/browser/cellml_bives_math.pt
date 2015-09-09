@@ -1,0 +1,61 @@
+<h1>Model Mathematics</h1>
+<div>
+  <script tal:content="structure string:var data = ${view/bives_results};">
+  </script>
+  <script type="text/javascript">
+  //<![CDATA[
+    function process() {
+      var components = $('#mathjax-render > *');
+      for (var i = 0; i < components.length; i++) {
+        var component = $(components[i]); //.clone();
+        var equations = component.find('math > mrow');
+        for (var j = 0; j < equations.length; j++) {
+          var math = $('<' + 'div class="eq"><' + '/div>').append(
+                        $('<' + 'math>' + '<' + '/math>').append(
+                           equations[j]));
+          component.append(math);
+        }
+      }
+    }
+
+    var last_component_id = null;
+
+    function showComponentMath(component_id) {
+      var comp = $('#comp_' + component_id)
+      var last_comp = $('#comp_' + last_component_id)
+      if (last_comp) {
+        last_comp.attr('class', 'component hidden');
+      }
+      if (comp) {
+        comp.attr('class', 'component');
+        last_component_id = component_id;
+      }
+    }
+
+    $(document).ready(function() {
+      process();
+      drawDiffHierarchyJS(data.singleCompHierarchyJson);
+      loadMathJax();
+      cy = $('#cytoscapejs').cytoscape('get');
+      cy.on('tap', 'node', function(evt) {
+        var parent = evt.cyTarget.parent();
+        var target = parent.length > 0 ? parent[0] : evt.cyTarget;
+        showComponentMath(target.data().name);
+      });
+    });
+
+  //]]>
+  </script>
+
+  <div id="cytoscapejs">
+  </div>
+
+  <div id="mathjax-render" class="bives-cellml-math">
+    <div tal:repeat="i view/maths"
+        class="component hidden" tal:attributes="id string:comp_${i/id}">
+      <h3>Component: <span tal:replace="i/id"></span></h3>
+      <div tal:content="structure i/math"></div>
+    </div>
+  </div>
+
+</div>

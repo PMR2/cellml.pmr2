@@ -24,6 +24,11 @@
   //]]>
   </script>
 
+  <div tal:condition="view/has_bives">
+    <a tal:attributes="href string:${context/absolute_url}/cellml_bives_math"
+        >Component based math viewer is available</a>
+  </div>
+
   <div id="mathjax-render">
     <div tal:repeat="i view/maths">
       <h3>Component: <span tal:replace="i/id"></span></h3>
