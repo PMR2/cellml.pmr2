@@ -32,11 +32,11 @@ class OpenCORTestCase(unittest.TestCase):
         urltool = zope.component.queryAdapter(
             context, IExposureNoteTarget, name='opencor')
         url = urltool('opencor')
-        self.assertTrue(url.startswith(
-            'opencor://openFile/http://nohost/plone/exposure/'))
-        self.assertTrue(url.endswith(
-            'example_model.cellml/opencor'))
+        self.assertEqual(url,
+            'opencor://openFile/http://nohost/plone/workspace/rdfmodel/rawfile'
+            '/2/README')
 
+        # Not really needed any longer, but kept here for completness.
         view = zope.component.queryMultiAdapter(
             (context, self.layer['portal'].REQUEST), name='opencor')
         view.__call__()

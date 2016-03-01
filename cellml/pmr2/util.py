@@ -1,4 +1,6 @@
 from lxml import etree
+from zope.component import getAdapter
+from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 
 CELLML_NSMAP = {
     'tmpdoc': 'http://cellml.org/tmp-documentation',
@@ -159,5 +161,11 @@ def fix_pcenv_externalurl(xml, base):
 
 def opencor_url(context):
     def url(view):
-        return 'opencor://openFile/%s/%s' % (context.absolute_url(), view)
+        helper = getAdapter(context, IExposureSourceAdapter)
+        exposure, workspace, path = helper.source()
+        note = getAdapter(context, name=view)
+        filename = note.filename or path
+        return 'opencor://openFile/%s/rawfile/%s/%s' % (
+            workspace.absolute_url(), exposure.commit_id, filename)
+
     return url
