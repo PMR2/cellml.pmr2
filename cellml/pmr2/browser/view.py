@@ -169,6 +169,20 @@ class OpenCellSessionNote(ExposureFileViewBase):
         return self.request.response.redirect(target_uri)
 
 
+class OpenCORNote(ExposureFileViewBase):
+    target_view = 'rawfile'
+
+    def __call__(self):
+        helper = zope.component.queryAdapter(
+            self.context, IExposureSourceAdapter)
+        exposure, workspace, path = helper.source()
+        filename = self.note.filename or path
+        target_uri = '%s/@@%s/%s/%s' % (
+            workspace.absolute_url(),
+            self.target_view, exposure.commit_id, filename)
+        return self.request.response.redirect(target_uri)
+
+
 class WorkspaceRawfileXmlBasePCEnv(WorkspaceRawfileXmlBase):
 
     def find_type(self):

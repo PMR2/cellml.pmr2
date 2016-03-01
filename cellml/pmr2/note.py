@@ -96,6 +96,15 @@ class OpenCellSessionNote(ExposureFileEditableNoteBase):
     filename = fieldproperty.FieldProperty(IOpenCellSessionNote['filename'])
 
 
+class OpenCORNote(ExposureFileEditableNoteBase):
+    """
+    Points to a target location that OpenCOR should open (like SedML)
+    """
+
+    zope.interface.implements(IOpenCORNote)
+    filename = fieldproperty.FieldProperty(IOpenCORNote['filename'])
+
+
 class CellMLCodegenNote(ExposureFileNoteBase):
 
     zope.interface.implements(ICellMLCodegenNote)

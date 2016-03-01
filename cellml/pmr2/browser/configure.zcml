@@ -72,6 +72,13 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="opencor"
+      class=".view.OpenCORNote"
+      permission="zope2.View"
+      />
+
   <!--
     CellML requires application specific view.
   -->

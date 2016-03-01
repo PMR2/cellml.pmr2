@@ -88,6 +88,20 @@ class IOpenCellSessionNote(zope.interface.Interface):
     )
 
 
+class IOpenCORNote(zope.interface.Interface):
+    """
+    OpenCOR Note
+    """
+
+    filename = StorageFileChoice(
+        title=u'SedML file',
+        description=u'The SedML file associated with this model file.  If not '
+                     'selected, this file will be used for the "Launch" link.',
+        vocabulary='pmr2.vocab.manifest',
+        required=False,
+    )
+
+
 class ICellMLCodegenNote(zope.interface.Interface):
     """\
     Code generation results.

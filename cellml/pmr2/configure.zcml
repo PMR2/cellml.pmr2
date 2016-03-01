@@ -3,6 +3,13 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="pmr2">
 
+  <adapter
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      factory=".util.opencor_url"
+      provides="pmr2.app.annotation.interfaces.IExposureNoteTarget"
+      name="opencor"
+      />
+
   <include package=".browser" />
   <include file="annotator.zcml" />
   <include file="citation.zcml" />

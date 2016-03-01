@@ -107,6 +107,19 @@ class OpenCellSessionAnnotator(ExposureFileAnnotatorBase):
 OpenCellSessionAnnotatorFactory = named_factory(OpenCellSessionAnnotator)
 
 
+class OpenCORAnnotator(ExposureFileAnnotatorBase):
+    zope.interface.implements(IExposureFileAnnotator,
+                              IExposureFileEditAnnotator)
+    title = u'OpenCOR Launch Link'
+    label = u'Launch with OpenCOR'
+    for_interface = IOpenCORNote
+
+    def generate(self):
+        return ()
+
+OpenCORAnnotatorFactory = named_factory(OpenCORAnnotator)
+
+
 class CmetaAnnotator(ExposureFileAnnotatorBase):
     zope.interface.implements(IExposureFileAnnotator)
     title = u'Basic CellML Metadata'

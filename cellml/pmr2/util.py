@@ -155,3 +155,9 @@ def fix_pcenv_externalurl(xml, base):
 
     result = etree.tostring(dom, encoding='utf-8', xml_declaration=True)
     return result
+
+
+def opencor_url(context):
+    def url(view):
+        return 'opencor://openFile/%s/%s' % (context.absolute_url(), view)
+    return url

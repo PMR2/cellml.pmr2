@@ -42,6 +42,13 @@
 
   <adapter
       for="pmr2.app.exposure.interfaces.IExposureFile"
+      factory=".OpenCORNoteFactory"
+      provides=".interfaces.IOpenCORNote"
+      name="opencor"
+      />
+
+  <adapter
+      for="pmr2.app.exposure.interfaces.IExposureFile"
       factory=".CellMLCodegenNoteFactory"
       provides=".interfaces.ICellMLCodegenNote"
       name="cellml_codegen"
@@ -64,6 +71,12 @@
   <utility
       name="opencellsession"
       component=".annotator.OpenCellSessionAnnotatorFactory"
+      provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
+      />
+
+  <utility
+      name="opencor"
+      component=".annotator.OpenCORAnnotatorFactory"
       provides="pmr2.app.annotation.interfaces.IExposureFileAnnotator"
       />
 
