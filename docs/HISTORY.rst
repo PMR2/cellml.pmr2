@@ -9,6 +9,8 @@ Changelog
   ``pmr2.rdf`` has pinned its dependency to the latest versions.
 * Include a custom parser that restores the less strict method of rdfxml
   parsing.
+* BiVeS based interactive component viewer for mathematic equations.
+* OpenCOR launch link through the ExposureFileNote mechanism.
 
 0.9.1 - Released (2015-08-18)
 -----------------------------
