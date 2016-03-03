@@ -63,6 +63,14 @@ class JsonCollectionCellMLCodegenNote(JsonCollectionPage, CellMLCodegenNote):
     Code generation.
     """
 
+    def generate_lang_links(self):
+        return [{
+            'href': '%s/%s/%s' %
+                (self.context.absolute_url(), self.__name__, lang),
+            'prompt': lang,
+            'rel': 'section',
+        } for lang in self.available_langs()]
+
     def update(self):
         super(JsonCollectionCellMLCodegenNote, self).update()
         if self.language:
@@ -70,4 +78,4 @@ class JsonCollectionCellMLCodegenNote(JsonCollectionPage, CellMLCodegenNote):
                 {self.language: self.content()}
             )]
         else:
-            self._jc_links = cellml_codegen_links(self)
+            self._jc_links = self.generate_lang_links()
