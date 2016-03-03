@@ -1,4 +1,4 @@
-<h1>Model Mathematics</h1>
+<h1>Model Mathematics, Interactive Component Viewer</h1>
 <div>
   <script tal:content="structure string:var data = ${view/bives_results};">
   </script>
@@ -46,6 +46,13 @@
 
   //]]>
   </script>
+
+  <p>
+    When the graph appears, select a component to see its associated
+    mathematical equations.  Elements within the viewport can be rearranged
+    by click and drag with the cursor.  The viewport can be moved by click
+    and drag on an empty area.  Zooming can be adjusted by the scroll wheel.
+  </p>
 
   <div id="cytoscapejs">
   </div>
