@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.10.x - Unreleased
-------------------
+0.10.0 - Released (2016-03-08)
+------------------------------
 
 * Support for the latest web service version (i.e. Collection+JSON).
 * Various changes to make it compatible with rdflib-4.x, as the package
