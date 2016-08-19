@@ -31,11 +31,11 @@ def pmr1_citation_authors_sortable(context):
 
 @indexer(IExposure)
 def pmr1_citation_authors_exposure(context):
-    return context.Title()
+    return context.title
 
 @indexer(IExposure)
 def pmr1_citation_title_exposure(context):
-    return context.Description()
+    return context.description
 
 
 # Apply to exposure files.
@@ -82,7 +82,7 @@ def pmr1_citation_title_exposurefile(context):
             return note.model_title
         elif note.citation_title:
             return note.citation_title
-    return context.Title()
+    return context.title
 
 @indexer(IExposureFile)
 def cmeta_citation_title_keyword(context):
