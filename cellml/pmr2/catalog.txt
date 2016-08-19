@@ -29,7 +29,7 @@ Citation Authors for PMR1 style listing the root exposure.
 
     >>> from cellml.pmr2.catalog import pmr1_citation_authors_exposure
     >>> pmr1_citation_authors_exposure(self.exposure1)()
-    ''
+    u''
     >>> # currently nothing because exposure1 has no data generated.
 
 Citation Title for PMR1 style listing for the root exposure.
@@ -83,7 +83,7 @@ what fields are set.  Model title takes precedence over citation title.
     u'One Example Paper - Model'
     >>> cmeta.model_title = u''
     >>> pmr1_citation_title_exposurefile(self.exposure_file1)()
-    'example_model.cellml'
+    u'example_model.cellml'
 
 Lastly, the slightly more complicated one that works on all exposure
 objects, but behave differently depending on its specific type.
@@ -91,7 +91,7 @@ objects, but behave differently depending on its specific type.
 
     >>> from cellml.pmr2.catalog import pmr1_citation_authors_sortable
     >>> pmr1_citation_authors_sortable(self.exposure1)()
-    ''
+    u''
     >>> # currently nothing because exposure 1 has no data generated.
     >>> pmr1_citation_authors_sortable(self.exposure_file1)()
     u'family1, family2, family2, 2004'
