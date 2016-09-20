@@ -121,4 +121,9 @@
       directory="css"
       />
 
+  <browser:resourceDirectory
+      name="cellml.pmr2.js"
+      directory="js"
+      />
+
 </configure>
