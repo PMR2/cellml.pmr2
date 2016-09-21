@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.10.1 - Released (2016-09-21)
+------------------------------
+
+* Fix the issue where using unicode in titles may result in errors.
+* Tooltip for the OpenCOR launch link, though done purely in JavaScript
+  due to framework limitations.
+
 0.10.0 - Released (2016-03-08)
 ------------------------------
 
