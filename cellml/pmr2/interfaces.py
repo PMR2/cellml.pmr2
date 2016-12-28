@@ -81,8 +81,10 @@ class IOpenCellSessionNote(zope.interface.Interface):
 
     filename = StorageFileChoice(
         title=u'Session File',
-        description=u'The session file that is made for this file.  If not '
-                     'selected, this file will be used for the "Launch" link.',
+        description=u'The session file associated with this model file.  If a '
+                     'file is selected, it will be opened with the "Launch '
+                     'with OpenCell" link, instead of the default option, '
+                     'the current model file.',
         vocabulary='pmr2.vocab.manifest',
         required=False,
     )
@@ -95,8 +97,10 @@ class IOpenCORNote(zope.interface.Interface):
 
     filename = StorageFileChoice(
         title=u'SedML file',
-        description=u'The SedML file associated with this model file.  If not '
-                     'selected, this file will be used for the "Launch" link.',
+        description=u'The SedML file associated with this model file.  If a '
+                     'file is selected, it will be opened with the "Launch '
+                     'with OpenCOR" link, instead of the default option, '
+                     'the current model file.',
         vocabulary='pmr2.vocab.manifest',
         required=False,
     )
