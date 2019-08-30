@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.10.3 - Released (2019-08-30)
+------------------------------
+
+* Replacing the legacy PMR1 title generator to not rely on the source
+  workspace for the generation of "citation author, year" title for any
+  given exposure files, as all legacy exposures are assumed to have been
+  properly annotated.
+
 0.10.2 - Released (2016-12-29)
 ------------------------------
 
