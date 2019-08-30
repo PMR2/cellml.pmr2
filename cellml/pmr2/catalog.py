@@ -60,16 +60,16 @@ def pmr2_citation_title(context):
 def pmr1_citation_authors_exposurefile(context):
     note = zope.component.queryAdapter(context, name='cmeta')
     if not (note and note.citation_authors):
-        sa = zope.component.getAdapter(context, IExposureSourceAdapter)
-        exposure = sa.exposure()
-        if exposure is not None:
-            # Grabbing the id instead of going through the catalog
-            # because it could be being built now.  Alternative method
-            # is to use a restrictedTraverse to get the title or id of
-            # the workspace, but defer this for now.
-            workspace = exposure.workspace.split('/')[-1]
-            return workspace.replace('_', ', ').title()
-        return ''
+        # sa = zope.component.getAdapter(context, IExposureSourceAdapter)
+        # exposure = sa.exposure()
+        # if exposure is not None:
+        #     # Grabbing the id instead of going through the catalog
+        #     # because it could be being built now.  Alternative method
+        #     # is to use a restrictedTraverse to get the title or id of
+        #     # the workspace, but defer this for now.
+        #     workspace = exposure.workspace.split('/')[-1]
+        #     return workspace.replace('_', ', ').title()
+        return context.title
     authors = u', '.join([i[0] for i in note.citation_authors])
     year = note.citation_issued and note.citation_issued[:4] or u''
     return u'%s, %s' % (authors, year)
