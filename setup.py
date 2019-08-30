@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.10.2'
+version = '0.10.3'
 
 setup(name='cellml.pmr2',
       version=version,
