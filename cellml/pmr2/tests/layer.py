@@ -58,16 +58,8 @@ class CellMLExposureLayer(PloneSandboxLayer):
         w.storage = 'dummy_storage'
         container[id_] = w
 
-    def setUpPloneSite(self, portal):
-
+    def create_dummy_storage_backend(self, port=55001):
         from pmr2.app.workspace.interfaces import IStorageUtility
-        from pmr2.app.exposure.browser.browser import ExposureAddForm
-        from pmr2.app.exposure.browser.browser import ExposureFileGenForm
-
-        import pmr2.testing
-
-        # instantiate test data on disk as dummy_storage backed
-        # workspaces.
         su = zope.component.getUtility(IStorageUtility, name='dummy_storage')
 
         # TODO handle cleanup when that dummy provide support.
@@ -99,18 +91,40 @@ class CellMLExposureLayer(PloneSandboxLayer):
         }
 
         su._loadDir('demo_live', join(dirname(__file__), 'repo', 'impl'))
+        su._loadDir('demo_livep', join(dirname(__file__), 'repo', 'impl'))
+        self.update_live_port_for_dummy_storage(port=port)
+
+    def update_live_port_for_dummy_storage(self, port=55001):
+        """
+        Needed to ensure that when a new live server instance is
+        started, the internal redirections be updated.
+        """
+
+        from pmr2.app.workspace.interfaces import IStorageUtility
+        su = zope.component.getUtility(IStorageUtility, name='dummy_storage')
         su._dummy_storage_data['demo_live'][0]['main'] = {
             '': '_subrepo',
             'rev': '0',
-            'location': 'http://localhost:55001/plone/workspace/main_model',
+            'location': 'http://localhost:%s/plone/workspace/main_model' % (
+                port),
         }
 
-        su._loadDir('demo_livep', join(dirname(__file__), 'repo', 'impl'))
         su._dummy_storage_data['demo_livep'][0]['main'] = {
             '': '_subrepo',
             'rev': '0',
-            'location': 'http://localhost:55001/plone/workspace/main_private',
+            'location': 'http://localhost:%s/plone/workspace/main_private' % (
+                port),
         }
+
+    def setUpPloneSite(self, portal):
+        from pmr2.app.exposure.browser.browser import ExposureAddForm
+        from pmr2.app.exposure.browser.browser import ExposureFileGenForm
+
+        import pmr2.testing
+
+        # instantiate test data on disk as dummy_storage backed
+        # workspaces.
+        self.create_dummy_storage_backend()
 
         # add workspace objects
         self.mkAddWorkspace(portal.workspace, 'rdfmodel')

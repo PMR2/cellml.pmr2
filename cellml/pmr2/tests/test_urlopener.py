@@ -13,6 +13,7 @@ from cellml.api.pmr2.interfaces import UnapprovedProtocolError
 from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 
 from cellml.pmr2.urlopener import PmrUrlOpener
+from cellml.pmr2.tests.layer import CELLML_EXPOSURE_FIXTURE
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LAYER
 from cellml.pmr2.tests.layer import CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
 
@@ -129,8 +130,8 @@ class UrlOpenerSpawnedTestCase(UrlOpenerLocalTestCase):
     layer = CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
 
     def test_safe_standard_load_http(self):
-        f = opener.loadURL('http://localhost:55001/plone/workspace/'
-            'main_model/@@rawfile/0/README')
+        f = opener.loadURL('http://localhost:%s/plone/workspace/'
+            'main_model/@@rawfile/0/README' % self.layer['port'])
         self.assertEqual(f, 'A test main repo.\n')
 
 
@@ -202,6 +203,10 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
 
     layer = CELLML_EXPOSURE_INTEGRATION_LIVE_LAYER
 
+    def setUp(self):
+        CELLML_EXPOSURE_FIXTURE.update_live_port_for_dummy_storage(
+            self.layer['port'])
+
     def test_model_load_embedded_undefined_vhost_map(self):
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_live:0:/multi.cellml'
@@ -216,7 +221,8 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
 
     def test_model_load_embedded_defined_vhost_map(self):
         registry = zope.component.getUtility(IRegistry)
-        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        registry['cellml.pmr2.vhost.prefix_maps'] = {
+            u'localhost:%s' % self.layer['port']: u''}
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_live:0:/multi.cellml'
         model = cu.loadModel(target, loader=opener)
@@ -235,7 +241,8 @@ class CellMLLoaderLiveTestCase(unittest.TestCase):
 
     def test_model_load_embedded_defined_vhost_map_internal(self):
         registry = zope.component.getUtility(IRegistry)
-        registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
+        registry['cellml.pmr2.vhost.prefix_maps'] = {
+            u'localhost:%s' % self.layer['port']: u''}
         # no need to log out because credentials over http are not passed.
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_livep:0:/multi.cellml'
@@ -271,6 +278,7 @@ class CellMLMercurialLiveTestCase(unittest.TestCase):
             ['bucket', 'environment', 'tap'])
 
     def test_model_load_embedded_defined_vhost_map(self):
+        # the prefix maps are based on the port numbers in the hg repo
         registry = zope.component.getUtility(IRegistry)
         registry['cellml.pmr2.vhost.prefix_maps'] = {u'localhost:55001': u''}
         cu = zope.component.getUtility(ICellMLAPIUtility)
