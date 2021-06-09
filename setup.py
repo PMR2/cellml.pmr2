@@ -26,6 +26,7 @@ setup(name='cellml.pmr2',
           'setuptools',
           # -*- Extra requirements: -*-
           'pmr2.rdf',
+          'pmr2.virtuoso',
           'cellml.api.pmr2',
           'plone.app.search',
           'Products.AdvancedQuery',
