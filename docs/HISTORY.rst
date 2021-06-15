@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.10.4 - Released (2021-06-10)
+------------------------------
+
+* Updated test cases to work with plone.testing-4.1.x.
+
 0.10.3 - Released (2019-08-30)
 ------------------------------
 
