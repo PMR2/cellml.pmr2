@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.10.5 - Released (2021-06-23)
+------------------------------
+
+* Correct the pmr specific urljoin helper such that it will not clobber
+  a provided url's external scheme if it was presen; fixes joining an
+  absolute url.
+
 0.10.4 - Released (2021-06-10)
 ------------------------------
 
