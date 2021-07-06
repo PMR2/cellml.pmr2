@@ -43,8 +43,9 @@ class PmrUrlOpener(DefaultURLOpener):
 
     def urljoin(self, base, url, allow_fragments=True):
         p = urlparse.urlparse(base)
-        if p.scheme != 'pmr':
-            # standard
+        if p.scheme != 'pmr' or urlparse.urlparse(url).scheme:
+            # use standard join if the base scheme is not pmr, or that
+            # the url to be joined has a scheme specified
             return urlparse.urljoin(base, url)
 
         alt = urlparse.urlunparse(

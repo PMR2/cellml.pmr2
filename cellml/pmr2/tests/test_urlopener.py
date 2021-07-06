@@ -10,6 +10,7 @@ from zExceptions import Unauthorized
 from pmr2.app.workspace.exceptions import PathNotFoundError
 from pmr2.app.workspace.exceptions import RevisionNotFoundError
 from cellml.api.pmr2.interfaces import UnapprovedProtocolError
+from cellml.api.pmr2.interfaces import CellMLLoaderError
 from cellml.api.pmr2.interfaces import ICellMLAPIUtility
 
 from cellml.pmr2.urlopener import PmrUrlOpener
@@ -161,7 +162,14 @@ class CellMLLoaderTestCase(unittest.TestCase):
     def test_model_load_embedded_undefined_vhost_map(self):
         cu = zope.component.getUtility(ICellMLAPIUtility)
         target = 'pmr:/plone/workspace/demo_model:0:/multi.cellml'
-        model = cu.loadModel(target, loader=opener)
+        with self.assertRaises(CellMLLoaderError) as e:
+            cu.loadModel(target, loader=opener)
+        self.assertEqual(
+            str(e.exception), "3 import loader errored while loading model "
+            "from 'pmr:/plone/workspace/demo_model:0:/multi.cellml'"
+        )
+        # model provided through the loader error exception
+        model = e.exception.model
         # model loaded but imports cannot be instantiated.
         self.assertEqual([i.wasInstantiated for i in model.imports],
             [False, False, False])
