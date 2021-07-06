@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.10.6 - Released (2021-07-06)
+------------------------------
+
+* Fix the test case to cater to the exception introduced for handling of
+  import loading errors through cellml.api.pmr2.
+
 0.10.5 - Released (2021-06-23)
 ------------------------------
 
