@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.10.5'
+version = '0.10.6'
 
 setup(name='cellml.pmr2',
       version=version,
@@ -27,7 +27,7 @@ setup(name='cellml.pmr2',
           # -*- Extra requirements: -*-
           'pmr2.rdf',
           'pmr2.virtuoso',
-          'cellml.api.pmr2',
+          'cellml.api.pmr2>=0.7.0',
           'plone.app.search',
           'Products.AdvancedQuery',
       ],
