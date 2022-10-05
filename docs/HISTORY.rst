@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.10.7 - Released (20??-??-??)
+------------------------------
+
+* Support for the vhost map that got implemented in pmr2.app-0.14.1
+* Support for the CellML 2.0 namespace
+
 0.10.6 - Released (2021-07-06)
 ------------------------------
 
