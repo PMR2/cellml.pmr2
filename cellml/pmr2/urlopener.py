@@ -21,7 +21,12 @@ def external_to_url(kws):
 
     p = urlparse.urlparse(kws['location'])
     # look up whether the netloc is a vhost that needs mangling.
-    mappings = getUtility(IRegistry).get('cellml.pmr2.vhost.prefix_maps') or {}
+    registry = getUtility(IRegistry)
+    mappings = (
+        registry.get('pmr2.app.settings.prefix_maps') or
+        registry.get('cellml.pmr2.vhost.prefix_maps') or
+        {}
+    )
     if not p.netloc in mappings:
         # XXX in theory another registry entry should resolve the name
         # of the view, but it should be integrated into PMR proper.
