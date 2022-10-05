@@ -11,6 +11,7 @@ from lxml.etree import XMLSyntaxError
 cellml_namespaces = [
     'http://www.cellml.org/cellml/1.0#',
     'http://www.cellml.org/cellml/1.1#',
+    'http://www.cellml.org/cellml/2.0#',
 ]
 
 base_nsmap = {
